@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoexFilm">
         <activity
+            android:name=".views.CreateLibraryActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.fileExplorer.FileExplorerActivity"
             android:exported="false" />
         <activity

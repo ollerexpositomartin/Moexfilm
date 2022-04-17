@@ -31,4 +31,13 @@
     <string name="noDriveScope_error">Tienes que aceptar los permisos de Drive para poder usar la aplicación</string>
     <string name="selectFolder_text">Selecciona una carpeta</string>
     <string name="select_text">Seleccionar</string>
+    <string name="movies_text">Peliculas</string>
+    <string name="tvShows_text">Series</string>
+    <string name="createLibrary_text">Crea tu Biblioteca</string>
+    <string name="selectFolderBtn_text">Seleccionar carpeta</string>
+    <string name="noFolderSelected_text">Ninguna carpeta seleccionada</string>
+    <string name="finish_text">Terminar</string>
+    <string name="name_text">Nombre</string>
+    <string name="loadingFolders_url">https://assets3.lottiefiles.com/packages/lf20_qcdpfl7i.json</string>
+    <string name="wait_text">Espera mientras obtenemos\n las carpetas</string>
 </resources>

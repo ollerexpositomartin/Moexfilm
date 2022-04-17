@@ -12,3 +12,10 @@ object Util {
         return false
     }
 }
+
+/*
+@Override
+public boolean dispatchTouchEvent(MotionEvent ev){
+  return true;//consume
+}
+ */

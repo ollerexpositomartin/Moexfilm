@@ -14,7 +14,7 @@ class AuthViewModel : ViewModel() {
 
     fun signinWithGoogle(googleAuthCredential: AuthCredential) {
         viewModelScope.launch {
-            val isAuthenticated = AuthRepository().firebaseSigninWithGoogle(googleAuthCredential)
+            val isAuthenticated = AuthRepository.firebaseSigninWithGoogle(googleAuthCredential)
             authenticatedUserLiveData.postValue(isAuthenticated)
         }
     }
@@ -22,14 +22,14 @@ class AuthViewModel : ViewModel() {
     fun registerEmailPassword(email: String, password: String) {
         viewModelScope.launch {
             val isRegistered =
-                AuthRepository().firebaseCreateUserWithEmailAndPassword(email, password)
+                AuthRepository.firebaseCreateUserWithEmailAndPassword(email, password)
             registeredUserLiveData.postValue(isRegistered)
         }
     }
 
     fun signinEmailPassword(email: String, password: String) {
         viewModelScope.launch {
-            val isAuthenticated = AuthRepository().firebaseSigninEmailPassword(email, password)
+            val isAuthenticated = AuthRepository.firebaseSigninEmailPassword(email, password)
             authenticatedUserLiveData.postValue(isAuthenticated)
         }
     }

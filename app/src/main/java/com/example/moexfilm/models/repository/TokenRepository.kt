@@ -8,7 +8,7 @@ import com.example.moexfilm.util.Application.Access.clientSecret
 import com.example.moexfilm.util.Application.Access.refreshToken
 import com.example.moexfilm.util.RetrofitHelper
 
-class TokenRepository {
+object TokenRepository {
     private val GOOGLE_URL_TOKEN = "https://oauth2.googleapis.com"
 
     suspend fun getTokens(authCode:String, idToken:String,callback:TokenCallBack) {

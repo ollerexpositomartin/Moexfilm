@@ -4,7 +4,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 
-class AuthRepository {
+object AuthRepository {
     private val firebaseAuth = FirebaseAuth.getInstance()
 
     suspend fun firebaseSigninWithGoogle(googleAuthCredential: AuthCredential?): Boolean {

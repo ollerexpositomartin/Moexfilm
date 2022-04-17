@@ -10,6 +10,7 @@
     <color name="background_moexfilm">#10181F</color>
     <color name="accent_moexfilm">#FF124B</color>
     <color name="secondPlane_moexfilm">#959595</color>
+    <color name="secondPlaneLoading_moexfilm">#DC000000</color>
     <color name="red_moexfilm">#FF0000</color>
     <color name="background2_moexfilm">#283138</color>
 </resources>

@@ -1,0 +1,94 @@
+package com.example.moexfilm.views
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.moexfilm.R
+import com.example.moexfilm.databinding.ActivityCreateLibraryBinding
+import com.example.moexfilm.util.Application.Access.clientId
+import com.example.moexfilm.views.fileExplorer.FileExplorerActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
+
+class CreateLibraryActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCreateLibraryBinding
+    private lateinit var googleSignInClient: GoogleSignInClient
+
+    private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
+            if (response.resultCode == AppCompatActivity.RESULT_OK) {
+                val data = response.data
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+                try {
+                    val account = task.getResult(ApiException::class.java)
+                    if (account != null) {
+                        selectFolder(account.serverAuthCode!!, account.idToken!!)
+                    }
+                } catch (e: ApiException) {
+                }
+            }
+            if (response.resultCode == AppCompatActivity.RESULT_CANCELED)
+                Toast.makeText(this, getString(R.string.noDriveScope_error), Toast.LENGTH_LONG)
+                    .show()
+        }
+
+    private var responseFolderSelected = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityCreateLibraryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initSpinners()
+        setListener()
+    }
+
+    private fun initSpinners() {
+        val types = listOf(getString(R.string.movies_text), getString(R.string.tvShows_text))
+        val languages = listOf("ES")
+        val adapterTypes = ArrayAdapter(this, R.layout.list_item, types)
+        val adapterLanguages = ArrayAdapter(this, R.layout.list_item, languages)
+
+        (binding.spinnerTypeLibrary.editText as? AutoCompleteTextView)?.apply {
+            setAdapter(adapterTypes)
+            setText(adapter.getItem(0).toString(), false)
+        }
+
+        (binding.spinnerLanguages.editText as? AutoCompleteTextView)?.apply {
+            setAdapter(adapterLanguages)
+            setText(adapter.getItem(0).toString(), false)
+        }
+    }
+
+    private fun setListener() {
+        binding.btnSelectFolder.setOnClickListener { signinGoogle() }
+    }
+
+    private fun signinGoogle() {
+        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(clientId)
+            .requestScopes(Scope(Scopes.DRIVE_FULL))
+            .requestServerAuthCode(clientId, true)
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+        responseGoogleSignIn.launch(googleSignInClient.signInIntent)
+        googleSignInClient.signOut()
+    }
+
+    private fun selectFolder(authCode: String, idToken: String) {
+        val i = Intent(this, FileExplorerActivity::class.java).apply {
+            putExtra("AUTHCODE", authCode)
+            putExtra("IDTOKEN", idToken)
+        }
+        responseFolderSelected.launch(i)
+    }
+
+}
