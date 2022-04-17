@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">MoexFilm</string>
+    <string name="signIn_text">Iniciar Sesión</string>
+    <string name="register_text">Registrarse</string>
+    <string name="signInGoogle_text">Iniciar Sesión con Google</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Contraseña</string>
+    <string name="confirmPassword_text">Confirmar Contraseña</string>
+
+    <string name="signInYourAccount_text">Ingrese a su cuenta</string>
+    <string name="otherSignIn_text">O inicia sesión con</string>
+    <string name="account_text">Tienes cuenta?</string>
+    <string name="noAccount_text">No tienes cuenta?</string>
+    <string name="createAccount_text">Crea tu cuenta</string>
+    <string name="oauth_client" translatable="false">908879042178-aodqmho8411tejpk7bo00r9rdlof53op.apps.googleusercontent.com</string>
+    <string name="oauth_secret" translatable="false">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</string>
+    <string name="signIn_error">error al iniciar sesión</string>
+    <string name="register_error">error al registrarse</string>
+    <string name="invalidEmail_error">El email no es valido</string>
+    <string name="passwordMatch_error">las contraseñas no coinciden</string>
+    <string name="fieldEmpty_error">Rellena este campo</string>
+    <string name="passwordLength_error">la contraseña tiene contener como minimo 6 caracteres</string>
+    <string name="home">Inicio</string>
+    <string name="favorite">Favoritos</string>
+    <string name="search">Buscar</string>
+    <string name="libraries">Bibliotecas</string>
+    <string name="profile">Perfil</string>
+    <string name="add_text">Añadir</string>
+    <string name="baseErrorRetry_error">Ha ocurrido un error reintetelo mas tarde</string>
+    <string name="noLibraries_text">No hemos encontrado\n bibliotecas. ¡Prueba a\n añadir a una! </string>
+    <string name="noDriveScope_error">Tienes que aceptar los permisos de Drive para poder usar la aplicación</string>
+    <string name="selectFolder_text">Selecciona una carpeta</string>
+    <string name="select_text">Seleccionar</string>
+</resources>
