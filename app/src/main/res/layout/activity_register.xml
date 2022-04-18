@@ -135,7 +135,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/ic_btn_google"
+        android:background="@drawable/button_google_ripple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

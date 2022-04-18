@@ -11,10 +11,13 @@ import com.example.moexfilm.databinding.ItemFolderLayoutBinding
 import com.example.moexfilm.models.data.GDriveElement
 
 
-class FileExplorerAdapter():ListAdapter<GDriveElement,FileExplorerAdapter.ViewHolder>(DiffUtilCallBack)  {
+class FileExplorerAdapter(val onFolderTouchListener:(GDriveElement)->Unit):ListAdapter<GDriveElement,FileExplorerAdapter.ViewHolder>(DiffUtilCallBack)  {
 
-    class ViewHolder(v: View):RecyclerView.ViewHolder(v) {
+    inner class ViewHolder(v: View):RecyclerView.ViewHolder(v){
         val binding = ItemFolderLayoutBinding.bind(v)
+        init {
+            binding.root.setOnClickListener { onFolderTouchListener(getItem(adapterPosition)) }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileExplorerAdapter.ViewHolder {
