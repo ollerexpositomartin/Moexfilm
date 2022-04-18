@@ -13,4 +13,5 @@
     <color name="secondPlaneLoading_moexfilm">#DC000000</color>
     <color name="red_moexfilm">#FF0000</color>
     <color name="background2_moexfilm">#283138</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#6b7176</color>
 </resources>

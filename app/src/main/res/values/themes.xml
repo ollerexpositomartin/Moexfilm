@@ -33,7 +33,6 @@
     </style>
 
     <style name="Widget.TextInputLayout.Moexfilm" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxBackgroundColor">@color/background_moexfilm</item>
         <item name="boxStrokeColor">@color/accent_moexfilm</item>
         <item name="android:textColorHint">@color/white</item>
     </style>
