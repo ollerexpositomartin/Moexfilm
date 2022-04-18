@@ -2,47 +2,80 @@ package com.example.moexfilm.models.repository
 
 import android.util.Log
 import com.example.moexfilm.models.data.GDriveElement
+import com.example.moexfilm.models.data.ResponseGDrive
+import com.example.moexfilm.models.interfaces.listeners.GDriveCallBack
 import com.example.moexfilm.models.interfaces.services.GDriveService
 import com.example.moexfilm.util.Application.Access.accessToken
 import com.example.moexfilm.util.RetrofitHelper
 
 object GDriveRepository {
-    val CHILD_FOLDERS_URL:String = "https://www.googleapis.com"
-    val CHILD_TEAMDRIVE_URL:String = ""
+    val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"
 
-    suspend fun getChildFolders(item:GDriveElement){
+    suspend fun getChildFolders(item: GDriveElement,gDriveCallBack: GDriveCallBack) {
+        var nextPageToken: String = ""
+        var success: Boolean = true
+        val folders: ArrayList<GDriveElement> = ArrayList()
+        do {
+            val response = RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
+                    .getChildFolders(
+                        "'${item.id}' in parents and mimeType = 'application/vnd.google-apps.folder'",
+                        nextPageToken,
+                        1000,
+                        true,
+                        true,
+                        true,
+                        "files(id,name),nextPageToken",
+                        "Bearer $accessToken"
+                    )
+            if (response.isSuccessful) {
+                    val responseListDrive:ResponseGDrive = response.body()!!
+                    folders.addAll(responseListDrive.ListGDriveElements)
+                    nextPageToken = responseListDrive.nextPageToken ?: ""
+            } else {
+                nextPageToken = ""
+                success = false
+            }
+        } while (nextPageToken.isNotEmpty() && success)
+
+        if (success) {
+            gDriveCallBack.onSuccess(folders)
+            return
+        }
+        gDriveCallBack.onFailure()
+    }
+
+    suspend fun getTeamDrives(gDriveCallBack: GDriveCallBack){
         var nextPageToken:String = ""
         var success:Boolean = true
-        val folders:ArrayList<GDriveElement> = ArrayList()
-            do {
-                Log.d("ACCESSTOKEN", accessToken)
-                val response =
-                    RetrofitHelper.getRetrofit(CHILD_FOLDERS_URL).create(GDriveService::class.java)
-                        .getChildFolders(
-                            "'${item.id}' in parents and mimeType = 'application/vnd.google-apps.folder'",
-                            nextPageToken,
-                            1000,
-                            true,
-                            true,
-                            true,
-                            "files(id,name),nextPageToken",
-                            "Bearer $accessToken"
+        val teamDrives:ArrayList<GDriveElement> = ArrayList()
+        Log.d("accessToken", accessToken)
+        do {
+            val response =
+                RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
+                    .getTeamDrives(
+                        "hidden = false",
+                        nextPageToken,
+                        100,
+                        "Bearer $accessToken"
                         )
-                if (response.isSuccessful) {
-                    val responseListDrive = response.body()
-                    folders.addAll(responseListDrive!!.ListGDriveElements)
-                    nextPageToken = responseListDrive.nextPageToken
-                    Log.d("BIEN---->",response.message())
-                } else {
-                    nextPageToken = ""
-                    success = false
-                    Log.d("MAL---->",response.raw().toString())
-                }
-            } while (nextPageToken.isNotEmpty() && success)
 
-            if (success) {
-                Log.d("RESULTADO----->", folders.toString())
+            if(response.isSuccessful){
+                val responseListDrive:ResponseGDrive = response.body()!!
+                Log.d("RESPONSE------->",response.body()!!.toString())
+                teamDrives.addAll(responseListDrive.ListGDriveElements)
+                nextPageToken = responseListDrive.nextPageToken?:""
+            }else{
+                nextPageToken = ""
+                Log.d("RESPONSE------->",response.raw().toString())
+                success = false
             }
+        }while (nextPageToken.isNotEmpty() && success)
 
+        if(success){
+            gDriveCallBack.onSuccess(teamDrives)
+            return
+        }
+        gDriveCallBack.onFailure()
     }
+
 }

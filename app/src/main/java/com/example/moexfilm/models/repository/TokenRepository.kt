@@ -1,5 +1,6 @@
 package com.example.moexfilm.models.repository
 
+import android.util.Log
 import com.example.moexfilm.models.interfaces.listeners.TokenCallBack
 import com.example.moexfilm.models.interfaces.services.TokenAuthService
 import com.example.moexfilm.util.Application.Access.accessToken
@@ -16,6 +17,7 @@ object TokenRepository {
         val response = RetrofitHelper.getRetrofit(GOOGLE_URL_TOKEN).create(TokenAuthService::class.java)
             .getAccessToken("authorization_code", clientId,
                 clientSecret,"",authCode,idToken,"offline","consent")
+
 
         if(response.isSuccessful){
             val token = response.body()

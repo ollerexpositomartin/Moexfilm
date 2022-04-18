@@ -19,4 +19,12 @@ interface GDriveService {
         @Query("fields") fields: String,
         @Header("Authorization") accessToken:String
     ): Response<ResponseGDrive>
+
+    @GET("/drive/v3/drives")
+    suspend fun getTeamDrives(
+        @Query("q") q: String,
+        @Query("pageToken") pageToken: String,
+        @Query("pageSize") pageSize: Int,
+        @Header("Authorization") accessToken:String
+    ): Response<ResponseGDrive>
 }
