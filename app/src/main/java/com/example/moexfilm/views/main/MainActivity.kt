@@ -10,7 +10,7 @@ import com.example.moexfilm.views.main.fragments.HomeFragment
 import com.example.moexfilm.views.main.fragments.LibrariesMenuFragment
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding:ActivityMainBinding
+    private lateinit var binding:ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun loadFragment(fragment:Fragment){
+    private fun loadFragment(fragment:Fragment){
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView,fragment)
             .commit()

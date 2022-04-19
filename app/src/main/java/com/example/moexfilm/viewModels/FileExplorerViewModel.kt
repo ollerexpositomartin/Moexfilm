@@ -26,7 +26,7 @@ class FileExplorerViewModel:ViewModel() {
         val sharedWithMe = GDriveElement("Shared With Me","drives")
         val list = arrayListOf<GDriveElement>(myUnit,sharedWithMe)
         foldersMutableLiveData.postValue(list)
-        routeFoldersMutableLiveData.postValue(arrayListOf(GDriveElement("Base","Base")))
+        routeFoldersMutableLiveData.postValue(arrayListOf(GDriveElement("/","/")))
     }
 
     fun getTokens(authCode:String, idToken:String){
@@ -70,7 +70,6 @@ class FileExplorerViewModel:ViewModel() {
                         }
                     })
                 }
-
                 routeFolders.size == 2 -> loadInitFolders()
                 routeFolders.size == 1 -> routeFoldersMutableLiveData.postValue(arrayListOf())
             }

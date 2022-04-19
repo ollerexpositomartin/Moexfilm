@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoexFilm">
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".views.CreateLibraryActivity"
             android:exported="false" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".views.fileExplorer.FileExplorerActivity"
             android:exported="false" />
         <activity

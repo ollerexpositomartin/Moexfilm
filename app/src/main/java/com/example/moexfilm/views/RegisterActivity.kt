@@ -33,7 +33,7 @@ class RegisterActivity : AuthActivity() {
                 if (Util.validateEmailFormat(email)){
                     setErrorFormatEmail(true)
                     if(checkPasswordLength()){
-                        if(validatePasswordMatch()) { registerWithEmailPassword(email,password,passwordConfirm)} }
+                        if(validatePasswordMatch()) { registerWithEmailPassword(email,password)} }
                     }else
                         setErrorFormatEmail(false)
                 }

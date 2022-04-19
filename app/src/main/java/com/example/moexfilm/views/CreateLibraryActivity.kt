@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityCreateLibraryBinding
+import com.example.moexfilm.models.data.GDriveElement
 import com.example.moexfilm.util.Application.Access.clientId
 import com.example.moexfilm.views.fileExplorer.FileExplorerActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,9 +22,10 @@ import com.google.android.gms.common.api.Scope
 class CreateLibraryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateLibraryBinding
     private lateinit var googleSignInClient: GoogleSignInClient
+    private var folderSelected:GDriveElement? = null
 
     private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
-            if (response.resultCode == AppCompatActivity.RESULT_OK) {
+            if (response.resultCode == RESULT_OK) {
                 val data = response.data
                 val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                 try {
@@ -34,12 +36,17 @@ class CreateLibraryActivity : AppCompatActivity() {
                 } catch (e: ApiException) {
                 }
             }
-            if (response.resultCode == AppCompatActivity.RESULT_CANCELED)
+            if (response.resultCode == RESULT_CANCELED)
                 Toast.makeText(this, getString(R.string.noDriveScope_error), Toast.LENGTH_LONG)
                     .show()
         }
 
-    private var responseFolderSelected = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private var responseFolderSelected = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
+        if(response.resultCode == RESULT_OK){
+            val data:Bundle = response.data!!.extras!!
+            //folderSelected = data.getSerializable("FOLDERSELECTED") as GDriveElement
+            binding.tvRouteFolderSelected.text = data.getString("ROUTE")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +62,10 @@ class CreateLibraryActivity : AppCompatActivity() {
         val languages = listOf("ES")
         val adapterTypes = ArrayAdapter(this, R.layout.list_item, types)
         val adapterLanguages = ArrayAdapter(this, R.layout.list_item, languages)
-
         (binding.spinnerTypeLibrary.editText as? AutoCompleteTextView)?.apply {
             setAdapter(adapterTypes)
             setText(adapter.getItem(0).toString(), false)
         }
-
         (binding.spinnerLanguages.editText as? AutoCompleteTextView)?.apply {
             setAdapter(adapterLanguages)
             setText(adapter.getItem(0).toString(), false)
@@ -88,6 +93,7 @@ class CreateLibraryActivity : AppCompatActivity() {
             putExtra("AUTHCODE", authCode)
             putExtra("IDTOKEN", idToken)
         }
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         responseFolderSelected.launch(i)
     }
 

@@ -43,6 +43,7 @@ open class AuthActivity : AppCompatActivity() {
             if (authenticatedUser) {
                 finishAffinity()
                 val i = Intent(applicationContext, MainActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 startActivity(i)
             } else Toast.makeText(this, getString(R.string.signIn_error), Toast.LENGTH_LONG).show()
         }
@@ -53,6 +54,7 @@ open class AuthActivity : AppCompatActivity() {
             if (authenticatedUser) {
                 finishAffinity()
                 val i = Intent(applicationContext, MainActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 startActivity(i)
             } else
                 Toast.makeText(this, getString(R.string.register_error), Toast.LENGTH_LONG)
@@ -89,6 +91,6 @@ open class AuthActivity : AppCompatActivity() {
         authViewModel.signinEmailPassword(email,password)
     }
 
-    fun registerWithEmailPassword(email: String, password: String, passwordConfirm: String) = authViewModel.registerEmailPassword(email, password)
+    fun registerWithEmailPassword(email: String, password: String) = authViewModel.registerEmailPassword(email, password)
 
 }

@@ -9,7 +9,7 @@ import com.example.moexfilm.util.Application.Access.accessToken
 import com.example.moexfilm.util.RetrofitHelper
 
 object GDriveRepository {
-    val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"
+    private const val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"
 
     suspend fun getChildFolders(item: GDriveElement,gDriveCallBack: GDriveCallBack) {
         var nextPageToken: String = ""
@@ -50,8 +50,7 @@ object GDriveRepository {
         val teamDrives:ArrayList<GDriveElement> = ArrayList()
         Log.d("accessToken", accessToken)
         do {
-            val response =
-                RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
+            val response = RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
                     .getTeamDrives(
                         "hidden = false",
                         nextPageToken,
@@ -61,12 +60,10 @@ object GDriveRepository {
 
             if(response.isSuccessful){
                 val responseListDrive:ResponseGDrive = response.body()!!
-                Log.d("RESPONSE------->",response.body()!!.toString())
                 teamDrives.addAll(responseListDrive.ListGDriveElements)
                 nextPageToken = responseListDrive.nextPageToken?:""
             }else{
                 nextPageToken = ""
-                Log.d("RESPONSE------->",response.raw().toString())
                 success = false
             }
         }while (nextPageToken.isNotEmpty() && success)

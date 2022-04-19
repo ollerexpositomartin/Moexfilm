@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_create_library.xml" value="0.25416666666666665" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_file_explorer.xml" value="0.4" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_folder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_create_library.xml" value="0.25" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_file_explorer.xml" value="0.33" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_login.xml" value="0.30085470085470084" />

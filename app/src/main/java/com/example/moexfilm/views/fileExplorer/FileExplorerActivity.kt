@@ -1,5 +1,7 @@
 package com.example.moexfilm.views.fileExplorer
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -14,13 +16,15 @@ import com.example.moexfilm.models.data.GDriveElement
 import com.example.moexfilm.util.changeVisibility
 import com.example.moexfilm.viewModels.FileExplorerViewModel
 import com.example.moexfilm.views.fileExplorer.adapters.FileExplorerAdapter
+import java.lang.StringBuilder
 
 class FileExplorerActivity : AppCompatActivity() {
-    lateinit var binding:ActivityFileExplorerBinding
-    val fileExplorerViewModel:FileExplorerViewModel by viewModels()
-    lateinit var adapter: FileExplorerAdapter
-    lateinit var authCode:String
-    lateinit var idToken:String
+    private lateinit var binding:ActivityFileExplorerBinding
+    private val fileExplorerViewModel:FileExplorerViewModel by viewModels()
+    private lateinit var adapter: FileExplorerAdapter
+    private lateinit var authCode:String
+    private lateinit var idToken:String
+    private lateinit var route: List<GDriveElement>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,7 @@ class FileExplorerActivity : AppCompatActivity() {
 
     private fun setListener() {
         binding.btnBackFolder.setOnClickListener { fileExplorerViewModel.getBackChildFolders();binding.loadingView.changeVisibility }
+        binding.btnSelect.setOnClickListener { returnFolderSelected() }
     }
 
     override fun onBackPressed() {fileExplorerViewModel.getBackChildFolders();binding.loadingView.changeVisibility }
@@ -67,8 +72,21 @@ class FileExplorerActivity : AppCompatActivity() {
         }
     }
 
+    private fun getRouteString():String{
+        val sb = StringBuilder()
+       for ( i in route.indices){
+           if(i == 0)
+               sb.append(route[i].name)
+           else
+               sb.append("${route[i].name}/")
+       }
+        return sb.toString()
+    }
+
     private fun initRouteObserver() {
         fileExplorerViewModel.routeFoldersMutableLiveData.observe(this){ route ->
+            this.route = route
+            binding.tvRoute.text = getRouteString()
             if(route.size>=2)
                 binding.btnSelect.visibility = View.VISIBLE
             if(route.size < 2)
@@ -92,6 +110,16 @@ class FileExplorerActivity : AppCompatActivity() {
     private fun onFolderTouch(item:GDriveElement) {
         binding.loadingView.changeVisibility
         fileExplorerViewModel.getChildFolders(item)
+    }
+
+    private fun returnFolderSelected() {
+        val resultIntent = Intent()
+        resultIntent.apply {
+            putExtra("SELECTEDFOLDER",route[route.size-1])
+            putExtra("ROUTE",getRouteString())
+        }
+        setResult(RESULT_OK,resultIntent)
+        finish()
     }
 
 }
