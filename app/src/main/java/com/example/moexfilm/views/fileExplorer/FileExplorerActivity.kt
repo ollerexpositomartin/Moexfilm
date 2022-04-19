@@ -25,6 +25,7 @@ class FileExplorerActivity : AppCompatActivity() {
     private lateinit var adapter: FileExplorerAdapter
     private lateinit var authCode:String
     private lateinit var idToken:String
+    private lateinit var accountId:String
     private lateinit var childsFolder:List<GDriveElement>
     private lateinit var route: List<GDriveElement>
 
@@ -36,7 +37,7 @@ class FileExplorerActivity : AppCompatActivity() {
         getData()
         setRecycler()
         setListener()
-        fileExplorerViewModel.getTokens(authCode,idToken)
+        fileExplorerViewModel.getTokens(accountId,authCode,idToken)
     }
 
     private fun initObservers() {
@@ -64,7 +65,8 @@ class FileExplorerActivity : AppCompatActivity() {
     private fun getData() {
         val data = intent.extras
         authCode = data?.getString("AUTHCODE","")!!
-        idToken = data.getString("IDTOKEN","")!!
+        idToken = data.getString("IDTOKEN","")
+        accountId = data.getString("ACCOUNTID","")
     }
 
     private fun initFoldersObserver() {

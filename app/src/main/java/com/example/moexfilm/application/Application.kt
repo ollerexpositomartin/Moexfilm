@@ -8,7 +8,6 @@ class Application : Application() {
         lateinit var clientId: String
         lateinit var clientSecret: String
         lateinit var accessToken: String
-        lateinit var refreshToken: String
         lateinit var prefs: Prefs
     }
     override fun onCreate() {

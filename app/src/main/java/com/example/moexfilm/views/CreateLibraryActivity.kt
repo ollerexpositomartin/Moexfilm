@@ -11,12 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityCreateLibraryBinding
-import com.example.moexfilm.models.data.GDriveElement
 import com.example.moexfilm.application.Application.Access.clientId
-import com.example.moexfilm.application.Application.Access.refreshToken
 import com.example.moexfilm.models.data.ComplexGDriveElement
-import com.example.moexfilm.models.data.Library
-import com.example.moexfilm.models.repository.FirebaseDBRepository.createLibrary
 import com.example.moexfilm.viewModels.CreateLibraryViewModel
 import com.example.moexfilm.views.fileExplorer.FileExplorerActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -34,6 +30,8 @@ class CreateLibraryActivity : AppCompatActivity() {
     private lateinit var  name: String
     private lateinit var type: String
     private lateinit var language:String
+    private lateinit var accountId: String
+
 
     private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
             if (response.resultCode == RESULT_OK) {
@@ -42,7 +40,8 @@ class CreateLibraryActivity : AppCompatActivity() {
                 try {
                     val account = task.getResult(ApiException::class.java)
                     if (account != null) {
-                        selectFolder(account.serverAuthCode!!, account.idToken!!)
+                        accountId = account.id!!
+                        selectFolder(account.id!!,account.serverAuthCode!!, account.idToken!!)
                     }
                 } catch (e: ApiException) {
                 }
@@ -96,7 +95,7 @@ class CreateLibraryActivity : AppCompatActivity() {
         binding.btnSelectFolder.setOnClickListener { signinGoogle() }
         binding.btnFinish.setOnClickListener {
             if (checkData())
-                createLibraryViewModel.createLibrary(refreshToken,folderSelected!!.parent.id,name,
+                createLibraryViewModel.createLibrary(accountId,folderSelected!!.parent.id,name,
                     emptyList(),type,language)
         }
     }
@@ -125,7 +124,7 @@ class CreateLibraryActivity : AppCompatActivity() {
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(clientId)
             .requestScopes(Scope(Scopes.DRIVE_FULL))
-            .requestServerAuthCode(clientId, true)
+            .requestServerAuthCode(clientId)
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
@@ -133,9 +132,10 @@ class CreateLibraryActivity : AppCompatActivity() {
         googleSignInClient.signOut()
     }
 
-    private fun selectFolder(authCode: String, idToken: String) {
+    private fun selectFolder(accountId:String,authCode: String, idToken: String) {
         val i = Intent(this, FileExplorerActivity::class.java).apply {
             putExtra("AUTHCODE", authCode)
+            putExtra("ACCOUNTID",accountId)
             putExtra("IDTOKEN", idToken)
         }
         i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)

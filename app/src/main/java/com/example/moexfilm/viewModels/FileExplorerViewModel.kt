@@ -27,9 +27,9 @@ class FileExplorerViewModel:ViewModel() {
         routeFoldersMutableLiveData.postValue(arrayListOf(GDriveElement("/","/")))
     }
 
-    fun getTokens(authCode:String, idToken:String){
+    fun getTokens(accountId:String,authCode:String, idToken:String){
         viewModelScope.launch {
-            TokenRepository.getTokens(authCode,idToken,object: TokenCallBack {
+            TokenRepository.getTokens(accountId,authCode,idToken,object: TokenCallBack {
                 override fun onSucess() {
                     tokenReceivedLiveData.postValue(true)
                 }

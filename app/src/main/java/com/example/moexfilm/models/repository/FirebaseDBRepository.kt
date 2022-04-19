@@ -1,6 +1,9 @@
 package com.example.moexfilm.models.repository
 
+import android.util.Log
+import com.example.moexfilm.models.data.Account
 import com.example.moexfilm.models.data.Library
+import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.example.moexfilm.util.FirebaseUtil
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -27,9 +30,22 @@ TEST
         database.child("users").child("1234").child("Libraries").push().setValue(library)
  */
 
-    fun createLibrary(library:Library){
+    fun createLibrary(library:Library,firebaseDBCallBack: FirebaseDBCallBack){
         database.child("users").child(FirebaseUtil.getUid()).child("libraries").child(library.id).setValue(library)
+            .addOnSuccessListener {
+            firebaseDBCallBack.onSuccess()
+        }
+            .addOnFailureListener {
+                firebaseDBCallBack.onFailure()
+            }
+    }
 
+    fun saveAccountRefreshToken(account:Account){
+            database.child("users").child(FirebaseUtil.getUid()).child("accounts")
+                .child(account.id).setValue(account.refreshToken)
+                .addOnFailureListener {
+                    saveAccountRefreshToken(account)
+                }
     }
 
 }
