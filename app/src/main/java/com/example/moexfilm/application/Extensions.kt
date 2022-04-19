@@ -1,4 +1,4 @@
-package com.example.moexfilm.util
+package com.example.moexfilm.application
 
 import android.view.View
 import androidx.core.view.isVisible

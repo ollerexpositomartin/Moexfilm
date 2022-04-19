@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityLoginBinding
-import com.example.moexfilm.util.Util
+import com.example.moexfilm.util.StringUtil
 
 class LoginActivity : AuthActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -32,7 +32,7 @@ class LoginActivity : AuthActivity() {
         binding.btnSignin.setOnClickListener {
             initEmailPassword()
             setErrorFormatEmail(false)
-            if (validateNoEmptyFields() && Util.validateEmailFormat(email)){ setErrorFormatEmail(true);signinWithEmailPassword(email, password)}
+            if (validateNoEmptyFields() && StringUtil.validateEmailFormat(email)){ setErrorFormatEmail(true);signinWithEmailPassword(email, password)}
         }
         binding.btnSigninGoogle.setOnClickListener { signInGoogle() }
     }

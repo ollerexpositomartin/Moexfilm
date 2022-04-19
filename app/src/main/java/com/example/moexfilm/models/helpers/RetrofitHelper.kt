@@ -1,4 +1,4 @@
-package com.example.moexfilm.util
+package com.example.moexfilm.models.helpers
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

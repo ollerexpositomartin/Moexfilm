@@ -3,14 +3,21 @@ package com.example.moexfilm.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityCreateLibraryBinding
 import com.example.moexfilm.models.data.GDriveElement
-import com.example.moexfilm.util.Application.Access.clientId
+import com.example.moexfilm.application.Application.Access.clientId
+import com.example.moexfilm.application.Application.Access.refreshToken
+import com.example.moexfilm.models.data.ComplexGDriveElement
+import com.example.moexfilm.models.data.Library
+import com.example.moexfilm.models.repository.FirebaseDBRepository.createLibrary
+import com.example.moexfilm.viewModels.CreateLibraryViewModel
 import com.example.moexfilm.views.fileExplorer.FileExplorerActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,7 +29,11 @@ import com.google.android.gms.common.api.Scope
 class CreateLibraryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateLibraryBinding
     private lateinit var googleSignInClient: GoogleSignInClient
-    private var folderSelected:GDriveElement? = null
+    private val createLibraryViewModel:CreateLibraryViewModel by viewModels()
+    private var folderSelected: ComplexGDriveElement? = null
+    private lateinit var  name: String
+    private lateinit var type: String
+    private lateinit var language:String
 
     private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
             if (response.resultCode == RESULT_OK) {
@@ -42,19 +53,28 @@ class CreateLibraryActivity : AppCompatActivity() {
         }
 
     private var responseFolderSelected = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
-        if(response.resultCode == RESULT_OK){
-            val data:Bundle = response.data!!.extras!!
-            //folderSelected = data.getSerializable("FOLDERSELECTED") as GDriveElement
-            binding.tvRouteFolderSelected.text = data.getString("ROUTE")
+            if (response.resultCode == RESULT_OK) {
+                val data: Bundle = response.data!!.extras!!
+                    folderSelected = data.getSerializable("SELECTEDFOLDER") as ComplexGDriveElement
+                    binding.tvRouteFolderSelected.text = data.getString("ROUTE")
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateLibraryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initSpinners()
+        initLibraryCreatedObserver()
         setListener()
+    }
+
+    private fun initLibraryCreatedObserver() {
+        createLibraryViewModel.libraryCreatedLiveData.observe(this){ success ->
+            if(success)
+                Log.d("SUCCESSS","SUCESS")
+            else Log.d("ERROR","ERROR")
+        }
     }
 
     private fun initSpinners() {
@@ -74,7 +94,32 @@ class CreateLibraryActivity : AppCompatActivity() {
 
     private fun setListener() {
         binding.btnSelectFolder.setOnClickListener { signinGoogle() }
+        binding.btnFinish.setOnClickListener {
+            if (checkData())
+                createLibraryViewModel.createLibrary(refreshToken,folderSelected!!.parent.id,name,
+                    emptyList(),type,language)
+        }
     }
+
+    private fun checkData(): Boolean {
+        var valid:Boolean = true
+        name = binding.tfName.text.toString()
+        type = binding.tvTypeLibrary.text.toString()
+        language = binding.tvLanguages.text.toString()
+
+        binding.textInName.error = null
+        if(name.isEmpty()){
+            binding.textInName.error = getString(R.string.fieldEmpty_error)
+            valid = false
+        }
+
+        if(folderSelected == null){
+            Toast.makeText(this,getString(R.string.noFolderSelected_error),Toast.LENGTH_LONG).show()
+            valid = false
+        }
+        return valid
+    }
+
 
     private fun signinGoogle() {
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

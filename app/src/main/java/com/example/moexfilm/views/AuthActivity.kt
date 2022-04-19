@@ -6,20 +6,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moexfilm.R
-import com.example.moexfilm.util.Application.Access.clientId
+import com.example.moexfilm.application.Application.Access.clientId
 import com.example.moexfilm.viewModels.AuthViewModel
 import com.example.moexfilm.views.main.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.Scope
 import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.ktx.Firebase
 
 open class AuthActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient

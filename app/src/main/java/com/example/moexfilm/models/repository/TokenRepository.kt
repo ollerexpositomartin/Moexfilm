@@ -2,11 +2,11 @@ package com.example.moexfilm.models.repository
 
 import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
 import com.example.moexfilm.models.interfaces.services.TokenAuthService
-import com.example.moexfilm.util.Application.Access.accessToken
-import com.example.moexfilm.util.Application.Access.clientId
-import com.example.moexfilm.util.Application.Access.clientSecret
-import com.example.moexfilm.util.Application.Access.refreshToken
-import com.example.moexfilm.util.RetrofitHelper
+import com.example.moexfilm.application.Application.Access.accessToken
+import com.example.moexfilm.application.Application.Access.clientId
+import com.example.moexfilm.application.Application.Access.clientSecret
+import com.example.moexfilm.application.Application.Access.refreshToken
+import com.example.moexfilm.models.helpers.RetrofitHelper
 
 object TokenRepository {
     private val GOOGLE_URL_TOKEN = "https://oauth2.googleapis.com"

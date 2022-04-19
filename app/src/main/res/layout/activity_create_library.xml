@@ -20,49 +20,12 @@
         app:layout_constraintTop_toBottomOf="@+id/spinnerTypeLibrary">
 
         <AutoCompleteTextView
+            android:id="@+id/tvLanguages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="40dp"
-        app:cardBackgroundColor="@color/background2_moexfilm"
-        app:cardElevation="0dp"
-        app:cardMaxElevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerLanguages">
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/tvRouteFolderSelected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/red_hat_display_bold"
-                    android:text="@string/noFolderSelected_text"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="@+id/btnSelectFolder"
-                    app:layout_constraintTop_toBottomOf="@+id/spinnerLanguages" />
-
-
-            </LinearLayout>
-        </HorizontalScrollView>
-
-    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInName"
@@ -99,6 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInName">
 
         <AutoCompleteTextView
+            android:id="@+id/tvTypeLibrary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="none" />
@@ -111,11 +75,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:text="@string/selectFolderBtn_text"
         android:theme="@style/buttonMoexfilm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/red_hat_display_bold"
+        android:text="Selecciona una Carpeta"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLanguages" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/background2_moexfilm"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tvRouteFolderSelected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/red_hat_display_bold"
+                    android:text="@string/noFolderSelected_text"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/btnSelectFolder"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerLanguages" />
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView8"

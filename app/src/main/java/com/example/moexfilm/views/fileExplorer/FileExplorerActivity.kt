@@ -11,9 +11,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
+import com.example.moexfilm.application.changeVisibility
 import com.example.moexfilm.databinding.ActivityFileExplorerBinding
+import com.example.moexfilm.models.data.ComplexGDriveElement
 import com.example.moexfilm.models.data.GDriveElement
-import com.example.moexfilm.util.changeVisibility
 import com.example.moexfilm.viewModels.FileExplorerViewModel
 import com.example.moexfilm.views.fileExplorer.adapters.FileExplorerAdapter
 import java.lang.StringBuilder
@@ -24,6 +25,7 @@ class FileExplorerActivity : AppCompatActivity() {
     private lateinit var adapter: FileExplorerAdapter
     private lateinit var authCode:String
     private lateinit var idToken:String
+    private lateinit var childsFolder:List<GDriveElement>
     private lateinit var route: List<GDriveElement>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +69,7 @@ class FileExplorerActivity : AppCompatActivity() {
 
     private fun initFoldersObserver() {
         fileExplorerViewModel.foldersMutableLiveData.observe(this){folders ->
+            childsFolder = folders
             adapter.submitList(folders)
             binding.loadingView.changeVisibility
         }
@@ -115,7 +118,7 @@ class FileExplorerActivity : AppCompatActivity() {
     private fun returnFolderSelected() {
         val resultIntent = Intent()
         resultIntent.apply {
-            putExtra("SELECTEDFOLDER",route[route.size-1])
+            putExtra("SELECTEDFOLDER",ComplexGDriveElement(route[route.size-1],childsFolder))
             putExtra("ROUTE",getRouteString())
         }
         setResult(RESULT_OK,resultIntent)

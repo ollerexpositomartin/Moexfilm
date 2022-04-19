@@ -1,7 +1,6 @@
 package com.example.moexfilm.models.interfaces.services
 
 import com.example.moexfilm.models.data.ResponseGDrive
-import com.example.moexfilm.util.Application
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

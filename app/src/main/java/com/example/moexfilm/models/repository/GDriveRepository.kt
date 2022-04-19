@@ -5,8 +5,8 @@ import com.example.moexfilm.models.data.GDriveElement
 import com.example.moexfilm.models.data.ResponseGDrive
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.services.GDriveService
-import com.example.moexfilm.util.Application.Access.accessToken
-import com.example.moexfilm.util.RetrofitHelper
+import com.example.moexfilm.application.Application.Access.accessToken
+import com.example.moexfilm.models.helpers.RetrofitHelper
 
 object GDriveRepository {
     private const val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"

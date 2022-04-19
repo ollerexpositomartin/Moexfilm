@@ -6,7 +6,6 @@
     <string name="email_text">Email</string>
     <string name="password_text">Contraseña</string>
     <string name="confirmPassword_text">Confirmar Contraseña</string>
-
     <string name="signInYourAccount_text">Ingrese a su cuenta</string>
     <string name="otherSignIn_text">O inicia sesión con</string>
     <string name="account_text">Tienes cuenta?</string>
@@ -40,4 +39,5 @@
     <string name="name_text">Nombre</string>
     <string name="loadingFolders_url">https://assets3.lottiefiles.com/packages/lf20_qcdpfl7i.json</string>
     <string name="wait_text">Espera mientras obtenemos\n las carpetas</string>
+    <string name="noFolderSelected_error">No has seleccionado ninguna carpeta</string>
 </resources>

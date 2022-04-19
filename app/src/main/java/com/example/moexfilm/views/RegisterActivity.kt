@@ -1,10 +1,9 @@
 package com.example.moexfilm.views
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityRegisterBinding
-import com.example.moexfilm.util.Util
+import com.example.moexfilm.util.StringUtil
 
 
 class RegisterActivity : AuthActivity() {
@@ -30,7 +29,7 @@ class RegisterActivity : AuthActivity() {
         binding.btnRegister.setOnClickListener {
             initEmailPassword()
             if(validateNoEmptyFields()) {
-                if (Util.validateEmailFormat(email)){
+                if (StringUtil.validateEmailFormat(email)){
                     setErrorFormatEmail(true)
                     if(checkPasswordLength()){
                         if(validatePasswordMatch()) { registerWithEmailPassword(email,password)} }
