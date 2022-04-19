@@ -1,7 +1,6 @@
 package com.example.moexfilm.models.repository
 
-import android.util.Log
-import com.example.moexfilm.models.interfaces.listeners.TokenCallBack
+import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
 import com.example.moexfilm.models.interfaces.services.TokenAuthService
 import com.example.moexfilm.util.Application.Access.accessToken
 import com.example.moexfilm.util.Application.Access.clientId

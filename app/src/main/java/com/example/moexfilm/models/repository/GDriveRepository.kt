@@ -3,7 +3,7 @@ package com.example.moexfilm.models.repository
 import android.util.Log
 import com.example.moexfilm.models.data.GDriveElement
 import com.example.moexfilm.models.data.ResponseGDrive
-import com.example.moexfilm.models.interfaces.listeners.GDriveCallBack
+import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.services.GDriveService
 import com.example.moexfilm.util.Application.Access.accessToken
 import com.example.moexfilm.util.RetrofitHelper

@@ -1,16 +1,14 @@
 package com.example.moexfilm.viewModels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moexfilm.models.data.GDriveElement
-import com.example.moexfilm.models.interfaces.listeners.GDriveCallBack
-import com.example.moexfilm.models.interfaces.listeners.TokenCallBack
+import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
+import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
 import com.example.moexfilm.models.repository.GDriveRepository
 import com.example.moexfilm.models.repository.TokenRepository
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class FileExplorerViewModel:ViewModel() {
     val tokenReceivedLiveData: MutableLiveData<Boolean> = MutableLiveData()
