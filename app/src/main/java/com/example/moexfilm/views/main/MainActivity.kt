@@ -1,13 +1,12 @@
 package com.example.moexfilm.views.main
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityMainBinding
 import com.example.moexfilm.views.main.fragments.HomeFragment
-import com.example.moexfilm.views.main.fragments.LibrariesMenuFragment
+import com.example.moexfilm.views.main.fragments.librariesMenu.LibrariesMenuFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding

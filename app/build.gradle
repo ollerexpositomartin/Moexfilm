@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //LottieFiles
     implementation 'com.airbnb.android:lottie:5.0.3'
-    //DRIVE
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:8.0.1'
 
 }

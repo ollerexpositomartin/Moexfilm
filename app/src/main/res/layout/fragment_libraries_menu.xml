@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_moexfilm"
-    tools:context=".views.main.fragments.LibrariesMenuFragment">
+    tools:context=".views.main.fragments.librariesMenu.LibrariesMenuFragment">
 
     <TextView
         android:id="@+id/textView5"

@@ -1,4 +1,4 @@
-package com.example.moexfilm.views.main.fragments
+package com.example.moexfilm.views.main.fragments.librariesMenu
 
 import android.content.Intent
 import android.os.Bundle

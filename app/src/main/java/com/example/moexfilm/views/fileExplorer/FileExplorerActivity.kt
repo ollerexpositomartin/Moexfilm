@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.application.changeVisibility
@@ -47,11 +49,19 @@ class FileExplorerActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
-        binding.btnBackFolder.setOnClickListener { fileExplorerViewModel.getBackChildFolders();binding.loadingView.changeVisibility }
+        binding.btnBackFolder.setOnClickListener { onBackPressed() }
         binding.btnSelect.setOnClickListener { returnFolderSelected() }
     }
 
-    override fun onBackPressed() {fileExplorerViewModel.getBackChildFolders();binding.loadingView.changeVisibility }
+    override fun onBackPressed() {
+        //Podria cambiar esto para que directamente cuando la ruta no corresponde con el parent de la carpeta cargada no los cargue
+        // lo pongo para que no se pueda ir hacia atras mientras se estan cargando datos
+        if(binding.loadingIndicator.isInvisible) {
+            binding.loadingIndicator.changeVisibility
+            adapter.submitList(emptyList())
+            fileExplorerViewModel.getBackChildFolders()
+        }
+    }
 
     private fun setRecycler() {
         adapter = FileExplorerAdapter{item ->
@@ -73,7 +83,7 @@ class FileExplorerActivity : AppCompatActivity() {
         fileExplorerViewModel.foldersMutableLiveData.observe(this){folders ->
             childsFolder = folders
             adapter.submitList(folders)
-            binding.loadingView.changeVisibility
+            binding.loadingIndicator.changeVisibility
         }
     }
 
@@ -97,7 +107,7 @@ class FileExplorerActivity : AppCompatActivity() {
             if(route.size < 2)
                 binding.btnSelect.visibility = View.INVISIBLE
             if(route.size == 0) {
-                binding.loadingView.changeVisibility
+                binding.loadingIndicator.changeVisibility
                 finish()
             }
         }
@@ -113,7 +123,8 @@ class FileExplorerActivity : AppCompatActivity() {
     }
 
     private fun onFolderTouch(item:GDriveElement) {
-        binding.loadingView.changeVisibility
+        binding.loadingIndicator.changeVisibility
+        adapter.submitList(emptyList())
         fileExplorerViewModel.getChildFolders(item)
     }
 
