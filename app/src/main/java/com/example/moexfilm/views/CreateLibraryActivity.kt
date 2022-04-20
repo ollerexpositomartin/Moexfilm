@@ -1,8 +1,11 @@
 package com.example.moexfilm.views
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -12,9 +15,12 @@ import androidx.activity.viewModels
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityCreateLibraryBinding
 import com.example.moexfilm.application.Application.Access.clientId
+import com.example.moexfilm.application.services.ScanLibraryService
 import com.example.moexfilm.models.data.ComplexGDriveElement
 import com.example.moexfilm.viewModels.CreateLibraryViewModel
 import com.example.moexfilm.views.fileExplorer.FileExplorerActivity
+import com.example.moexfilm.views.main.MainActivity
+import com.example.moexfilm.views.main.MainActivity.Companion.connection
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -31,7 +37,7 @@ class CreateLibraryActivity : AppCompatActivity() {
     private lateinit var type: String
     private lateinit var language:String
     private lateinit var accountId: String
-
+    private lateinit var agua:ServiceConnection
     private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
             if (response.resultCode == RESULT_OK) {
                 val data = response.data
@@ -69,8 +75,9 @@ class CreateLibraryActivity : AppCompatActivity() {
 
     private fun initLibraryCreatedObserver() {
         createLibraryViewModel.libraryCreatedLiveData.observe(this){ success ->
-            if(success)
-                Log.d("SUCCESSS","SUCESS")
+            if(success){
+                bindService(Intent(this, ScanLibraryService::class.java), connection, BIND_AUTO_CREATE)
+            }
             else Log.d("ERROR","ERROR")
         }
     }

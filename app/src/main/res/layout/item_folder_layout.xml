@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="80dp"
@@ -7,12 +7,12 @@
     app:cardBackgroundColor="@color/background_moexfilm"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:rippleColor="@color/accent_moexfilm">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_ripple"
         android:padding="5dp">
 
         <View
@@ -39,4 +39,4 @@
             tools:text="My Unit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

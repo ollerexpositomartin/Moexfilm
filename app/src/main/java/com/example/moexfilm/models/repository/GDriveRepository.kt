@@ -48,7 +48,6 @@ object GDriveRepository {
         var nextPageToken:String = ""
         var success:Boolean = true
         val teamDrives:ArrayList<GDriveElement> = ArrayList()
-        Log.d("accessToken", accessToken)
         do {
             val response = RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
                     .getTeamDrives(

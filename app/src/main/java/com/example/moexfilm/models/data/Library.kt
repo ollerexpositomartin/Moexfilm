@@ -1,10 +1,21 @@
 package com.example.moexfilm.models.data
 
-data class Library(
-    val owner:String,
-    val id:String,
-    val name:String,
-    val content:List<Movie>,
-    val type:String,
-    val language:String
-)
+class Library {
+    lateinit var owner: String
+    lateinit var id: String
+    lateinit var name: String
+    lateinit var content: List<Movie>
+    lateinit var type: String
+    lateinit var language: String
+
+    constructor()
+
+    constructor(owner: String,id: String,name: String, content: List<Movie>, type: String, language: String){
+        this.owner = owner
+        this.id = id
+        this.name = name
+        this.content = content
+        this.type = type
+        this.language = language
+    }
+}

@@ -1,10 +1,6 @@
 package com.example.moexfilm.models.repository
 
-import android.os.Handler
-import android.util.Log
-import com.example.moexfilm.application.Application.Access.FIREBASE_DB_URL
 import com.example.moexfilm.application.Application.Access.prefs
-import com.example.moexfilm.application.Prefs
 import com.example.moexfilm.models.data.Account
 import com.example.moexfilm.models.data.Library
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
@@ -12,9 +8,6 @@ import com.example.moexfilm.util.FirebaseUtil
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.tasks.await
-
 
 object FirebaseDBRepository {
     private const val FIREBASE_DB_URL = "https://moexfilm-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -52,7 +45,7 @@ TEST
     }
 
     fun getLibraries():Query{
-        return database.child("users").child(prefs.readUid()!!).child("libraries").orderByKey()
+        return database.child("users").child(FirebaseUtil.getUid()).child("libraries").orderByKey()
     }
 
 }
