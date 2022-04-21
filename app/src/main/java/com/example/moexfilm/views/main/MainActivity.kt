@@ -12,10 +12,11 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.moexfilm.R
-import com.example.moexfilm.application.isServiceRunning
+import com.example.moexfilm.application.changeVisibility
 import com.example.moexfilm.application.services.ScanLibraryService
 import com.example.moexfilm.databinding.ActivityMainBinding
 import com.example.moexfilm.views.main.fragments.HomeFragment
@@ -29,9 +30,14 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
-    companion object{
-        lateinit var connection:ServiceConnection
+    private lateinit var connection:ServiceConnection
+
+    val responseLibraryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ response ->
+        if(response.resultCode == RESULT_OK){
+            Log.d("ALGO","ALGO")
+        }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +48,8 @@ class MainActivity : AppCompatActivity() {
         connection = object:ServiceConnection {
             override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
                 (p1 as ScanLibraryService.LocalBinder).getService()
+                binding.tvScanningLibrary.isSelected = true
+                binding.tvScanningLibrary.changeVisibility
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {

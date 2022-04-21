@@ -3,28 +3,28 @@ package com.example.moexfilm.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moexfilm.models.data.GDriveElement
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
-import com.example.moexfilm.models.repository.GDriveRepository
-import com.example.moexfilm.models.repository.TokenRepository
+import com.example.moexfilm.repositories.GDriveRepository
+import com.example.moexfilm.repositories.TokenRepository
 import kotlinx.coroutines.launch
 
 class FileExplorerViewModel:ViewModel() {
     val tokenReceivedLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    val foldersMutableLiveData:MutableLiveData<ArrayList<GDriveElement>> = MutableLiveData()
-    val routeFoldersMutableLiveData:MutableLiveData<ArrayList<GDriveElement>> = MutableLiveData()
+    val foldersMutableLiveData:MutableLiveData<ArrayList<GDriveItem>> = MutableLiveData()
+    val routeFoldersMutableLiveData:MutableLiveData<ArrayList<GDriveItem>> = MutableLiveData()
 
     init {
         loadInitFolders()
     }
 
     private fun loadInitFolders() {
-        val myUnit = GDriveElement("My Unit","root")
-        val sharedWithMe = GDriveElement("Shared With Me","drives")
-        val list = arrayListOf<GDriveElement>(myUnit,sharedWithMe)
+        val myUnit = GDriveItem("My Unit","root")
+        val sharedWithMe = GDriveItem("Shared With Me","drives")
+        val list = arrayListOf<GDriveItem>(myUnit,sharedWithMe)
         foldersMutableLiveData.postValue(list)
-        routeFoldersMutableLiveData.postValue(arrayListOf(GDriveElement("/","/")))
+        routeFoldersMutableLiveData.postValue(arrayListOf(GDriveItem("/","/")))
     }
 
     fun getTokens(accountId:String,authCode:String, idToken:String){
@@ -47,7 +47,7 @@ class FileExplorerViewModel:ViewModel() {
                 routeFolders.size > 2 && routeFolders[routeFolders.size-2].id != "drives" -> {
                     routeFolders.removeAt(routeFolders.size - 1)
                     GDriveRepository.getChildFolders(routeFolders[routeFolders.size - 1],object :GDriveCallBack{
-                        override fun onSuccess(response: ArrayList<GDriveElement>) {
+                        override fun onSuccess(response: ArrayList<GDriveItem>) {
                             foldersMutableLiveData.postValue(response)
                             routeFoldersMutableLiveData.postValue(routeFolders)
                         }
@@ -59,7 +59,7 @@ class FileExplorerViewModel:ViewModel() {
                 routeFolders.size > 2 && routeFolders[routeFolders.size-2].id == "drives" -> {
                     routeFolders.removeAt(routeFolders.size - 1)
                     GDriveRepository.getTeamDrives(object :GDriveCallBack{
-                        override fun onSuccess(response: ArrayList<GDriveElement>) {
+                        override fun onSuccess(response: ArrayList<GDriveItem>) {
                             foldersMutableLiveData.postValue(response)
                             routeFoldersMutableLiveData.postValue(routeFolders)
                         }
@@ -74,11 +74,11 @@ class FileExplorerViewModel:ViewModel() {
         }
     }
 
-    fun getChildFolders(item:GDriveElement){
+    fun getChildFolders(item:GDriveItem){
         viewModelScope.launch {
             if(item.id != "drives")
                 GDriveRepository.getChildFolders(item, object : GDriveCallBack {
-                    override fun onSuccess(response: ArrayList<GDriveElement>) {
+                    override fun onSuccess(response: ArrayList<GDriveItem>) {
                         routeFoldersMutableLiveData.value!!.add(item)
                         routeFoldersMutableLiveData.postValue(routeFoldersMutableLiveData.value)
                         foldersMutableLiveData.postValue(response)
@@ -89,7 +89,7 @@ class FileExplorerViewModel:ViewModel() {
                 })
             else
                 GDriveRepository.getTeamDrives(object : GDriveCallBack {
-                    override fun onSuccess(response: ArrayList<GDriveElement>) {
+                    override fun onSuccess(response: ArrayList<GDriveItem>) {
                         routeFoldersMutableLiveData.value!!.add(item)
                         routeFoldersMutableLiveData.postValue(routeFoldersMutableLiveData.value)
                         foldersMutableLiveData.postValue(response)

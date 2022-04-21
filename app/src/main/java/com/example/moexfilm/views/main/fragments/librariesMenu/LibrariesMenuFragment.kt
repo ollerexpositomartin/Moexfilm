@@ -14,6 +14,7 @@ import com.example.moexfilm.databinding.FragmentLibrariesMenuBinding
 import com.example.moexfilm.models.data.Library
 import com.example.moexfilm.models.interfaces.listeners.FireBaseAdapterListener
 import com.example.moexfilm.views.CreateLibraryActivity
+import com.example.moexfilm.views.main.MainActivity
 import com.example.moexfilm.views.main.fragments.librariesMenu.adapter.LibrariesMenuAdapter
 
 class LibrariesMenuFragment : Fragment(),FireBaseAdapterListener {
@@ -27,7 +28,8 @@ class LibrariesMenuFragment : Fragment(),FireBaseAdapterListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnAdd.setOnClickListener { startActivity(Intent(requireContext(),CreateLibraryActivity::class.java)) }
+
+        binding.btnAdd.setOnClickListener {(activity as MainActivity).responseLibraryLauncher.launch(Intent(requireContext(),CreateLibraryActivity::class.java)) }
         adapter = LibrariesMenuAdapter(this)
         setRecycler()
     }

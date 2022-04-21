@@ -1,4 +1,4 @@
-package com.example.moexfilm.models.repository
+package com.example.moexfilm.repositories
 
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
@@ -31,7 +31,7 @@ TEST
     fun createLibrary(library:Library,firebaseDBCallBack: FirebaseDBCallBack){
         database.child("users").child(prefs.readUid()).child("libraries").child(library.id).setValue(library)
             .addOnSuccessListener {
-            firebaseDBCallBack.onSuccess()
+            firebaseDBCallBack.onSuccess(library)
         }
             .addOnFailureListener {
                 firebaseDBCallBack.onFailure()
@@ -43,6 +43,7 @@ TEST
                 .child(account.id).setValue(account.refreshToken)
     }
 
+    //HABRIA QUE CAMBIAR ESTE METODO A OTRA CLASE YA QUE EL NO REALIZA NINGUNA LLAMADA ??
     fun getLibraries():Query{
         return database.child("users").child(prefs.readUid()).child("libraries").orderByKey()
     }

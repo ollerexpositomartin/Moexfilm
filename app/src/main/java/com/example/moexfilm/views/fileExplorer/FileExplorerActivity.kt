@@ -1,22 +1,18 @@
 package com.example.moexfilm.views.fileExplorer
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.application.changeVisibility
 import com.example.moexfilm.databinding.ActivityFileExplorerBinding
-import com.example.moexfilm.models.data.ComplexGDriveElement
-import com.example.moexfilm.models.data.GDriveElement
+import com.example.moexfilm.models.data.SubGDriveItem
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.viewModels.FileExplorerViewModel
 import com.example.moexfilm.views.fileExplorer.adapters.FileExplorerAdapter
 import java.lang.StringBuilder
@@ -28,8 +24,8 @@ class FileExplorerActivity : AppCompatActivity() {
     private lateinit var authCode:String
     private lateinit var idToken:String
     private lateinit var accountId:String
-    private lateinit var childsFolder:List<GDriveElement>
-    private lateinit var route: List<GDriveElement>
+    private lateinit var subFolder:SubGDriveItem
+    private lateinit var route: List<GDriveItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +77,7 @@ class FileExplorerActivity : AppCompatActivity() {
 
     private fun initFoldersObserver() {
         fileExplorerViewModel.foldersMutableLiveData.observe(this){folders ->
-            childsFolder = folders
+            subFolder = SubGDriveItem(folders)
             adapter.submitList(folders)
             binding.loadingIndicator.changeVisibility
         }
@@ -122,7 +118,7 @@ class FileExplorerActivity : AppCompatActivity() {
         }
     }
 
-    private fun onFolderTouch(item:GDriveElement) {
+    private fun onFolderTouch(item:GDriveItem) {
         binding.loadingIndicator.changeVisibility
         adapter.submitList(emptyList())
         fileExplorerViewModel.getChildFolders(item)
@@ -131,7 +127,8 @@ class FileExplorerActivity : AppCompatActivity() {
     private fun returnFolderSelected() {
         val resultIntent = Intent()
         resultIntent.apply {
-            putExtra("SELECTEDFOLDER",ComplexGDriveElement(route[route.size-1],childsFolder))
+            putExtra("SELECTEDFOLDER",route[route.size-1])
+            putExtra("SUBFOLDERS",subFolder)
             putExtra("ROUTE",getRouteString())
         }
         setResult(RESULT_OK,resultIntent)

@@ -6,7 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moexfilm.R
-import com.example.moexfilm.application.Application.Access.clientId
+import com.example.moexfilm.application.Application.Access.CLIENT_ID
 import com.example.moexfilm.viewModels.AuthViewModel
 import com.example.moexfilm.views.main.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -60,7 +60,7 @@ open class AuthActivity : AppCompatActivity() {
 
     fun initGoogleSignInClient() {
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(clientId)
+            .requestIdToken(CLIENT_ID)
             .requestEmail()
             .build()
 

@@ -9,7 +9,7 @@ import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ItemMenuLibraryLayoutBinding
 import com.example.moexfilm.models.data.Library
 import com.example.moexfilm.models.interfaces.listeners.FireBaseAdapterListener
-import com.example.moexfilm.models.repository.FirebaseDBRepository
+import com.example.moexfilm.repositories.FirebaseDBRepository
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 
@@ -47,5 +47,20 @@ class LibrariesMenuAdapter(val fireBaseAdapterListener: FireBaseAdapterListener)
 private object DiffUtilCallBack: DiffUtil.ItemCallback<Library>(){
     override fun areItemsTheSame(oldItem: Library, newItem: Library): Boolean = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Library, newItem: Library): Boolean = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Library, newItem: Library): Boolean  {
+        var isSame = true
+
+        if(oldItem.language != newItem.language)
+            isSame = false
+        if(oldItem.content != newItem.content)
+            isSame = false
+        if(oldItem.name != newItem.name)
+            isSame = false
+        if(oldItem.owner != newItem.owner)
+            isSame = false
+        if(oldItem.type != newItem.type)
+            isSame = false
+
+        return isSame
+    }
 }

@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseGDrive(
     @SerializedName("nextPageToken") val nextPageToken: String,
-    @SerializedName("files", alternate = ["drives"]) val ListGDriveElements: List<GDriveElement>
+    @SerializedName("files", alternate = ["drives"]) val listGDriveItems: List<GDriveItem>
 )

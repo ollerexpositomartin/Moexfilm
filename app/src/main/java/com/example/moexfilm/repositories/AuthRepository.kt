@@ -1,4 +1,4 @@
-package com.example.moexfilm.models.repository
+package com.example.moexfilm.repositories
 
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth

@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ItemFolderLayoutBinding
-import com.example.moexfilm.models.data.GDriveElement
+import com.example.moexfilm.models.data.GDriveItem
 
 
-class FileExplorerAdapter(val onFolderTouchListener:(GDriveElement)->Unit):ListAdapter<GDriveElement,FileExplorerAdapter.ViewHolder>(DiffUtilCallBack)  {
+class FileExplorerAdapter(val onFolderTouchListener:(GDriveItem)->Unit):ListAdapter<GDriveItem,FileExplorerAdapter.ViewHolder>(DiffUtilCallBack)  {
 
     inner class ViewHolder(v: View):RecyclerView.ViewHolder(v){
         val binding = ItemFolderLayoutBinding.bind(v)
@@ -32,9 +32,9 @@ class FileExplorerAdapter(val onFolderTouchListener:(GDriveElement)->Unit):ListA
     }
 }
 
-private object DiffUtilCallBack: DiffUtil.ItemCallback<GDriveElement>(){
-    override fun areItemsTheSame(oldItem: GDriveElement, newItem: GDriveElement): Boolean = oldItem.id == newItem.id
+private object DiffUtilCallBack: DiffUtil.ItemCallback<GDriveItem>(){
+    override fun areItemsTheSame(oldItem: GDriveItem, newItem: GDriveItem): Boolean = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: GDriveElement, newItem: GDriveElement): Boolean = oldItem == newItem
+    override fun areContentsTheSame(oldItem: GDriveItem, newItem: GDriveItem): Boolean = oldItem == newItem
 }
 
