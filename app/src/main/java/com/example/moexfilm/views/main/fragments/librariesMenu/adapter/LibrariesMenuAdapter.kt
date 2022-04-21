@@ -1,6 +1,5 @@
 package com.example.moexfilm.views.main.fragments.librariesMenu.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ItemMenuLibraryLayoutBinding
-import com.example.moexfilm.models.data.GDriveElement
 import com.example.moexfilm.models.data.Library
 import com.example.moexfilm.models.interfaces.listeners.FireBaseAdapterListener
 import com.example.moexfilm.models.repository.FirebaseDBRepository

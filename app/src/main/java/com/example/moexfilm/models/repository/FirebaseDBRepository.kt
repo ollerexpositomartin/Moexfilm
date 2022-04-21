@@ -4,7 +4,6 @@ import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
 import com.example.moexfilm.models.data.Library
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
-import com.example.moexfilm.util.FirebaseUtil
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
@@ -30,7 +29,7 @@ TEST
  */
 
     fun createLibrary(library:Library,firebaseDBCallBack: FirebaseDBCallBack){
-        database.child("users").child(FirebaseUtil.getUid()).child("libraries").child(library.id).setValue(library)
+        database.child("users").child(prefs.readUid()).child("libraries").child(library.id).setValue(library)
             .addOnSuccessListener {
             firebaseDBCallBack.onSuccess()
         }
@@ -40,12 +39,12 @@ TEST
     }
 
     fun saveAccountRefreshToken(account:Account){
-            database.child("users").child(FirebaseUtil.getUid()).child("accounts")
+            database.child("users").child(prefs.readUid()).child("accounts")
                 .child(account.id).setValue(account.refreshToken)
     }
 
     fun getLibraries():Query{
-        return database.child("users").child(FirebaseUtil.getUid()).child("libraries").orderByKey()
+        return database.child("users").child(prefs.readUid()).child("libraries").orderByKey()
     }
 
 }

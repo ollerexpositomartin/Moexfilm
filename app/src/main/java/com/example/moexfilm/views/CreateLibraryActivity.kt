@@ -37,7 +37,7 @@ class CreateLibraryActivity : AppCompatActivity() {
     private lateinit var type: String
     private lateinit var language:String
     private lateinit var accountId: String
-    private lateinit var agua:ServiceConnection
+
     private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
             if (response.resultCode == RESULT_OK) {
                 val data = response.data

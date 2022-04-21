@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         connection = object:ServiceConnection {
             override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-                Log.d("HOLA","HOLA")
+                (p1 as ScanLibraryService.LocalBinder).getService()
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {
