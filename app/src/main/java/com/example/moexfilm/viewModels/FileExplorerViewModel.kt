@@ -15,6 +15,8 @@ class FileExplorerViewModel:ViewModel() {
     val foldersMutableLiveData:MutableLiveData<ArrayList<GDriveItem>> = MutableLiveData()
     val routeFoldersMutableLiveData:MutableLiveData<ArrayList<GDriveItem>> = MutableLiveData()
 
+    private val queryChildFolders = "'%s' in parents and mimeType = 'application/vnd.google-apps.folder'"
+
     init {
         loadInitFolders()
     }
@@ -46,7 +48,8 @@ class FileExplorerViewModel:ViewModel() {
             when {
                 routeFolders.size > 2 && routeFolders[routeFolders.size-2].id != "drives" -> {
                     routeFolders.removeAt(routeFolders.size - 1)
-                    GDriveRepository.getChildFolders(routeFolders[routeFolders.size - 1],object :GDriveCallBack{
+                    val item:GDriveItem = routeFolders[routeFolders.size - 1]
+                    GDriveRepository.getChildItems(queryChildFolders.format(item.id),object :GDriveCallBack{
                         override fun onSuccess(response: ArrayList<GDriveItem>) {
                             foldersMutableLiveData.postValue(response)
                             routeFoldersMutableLiveData.postValue(routeFolders)
@@ -77,7 +80,7 @@ class FileExplorerViewModel:ViewModel() {
     fun getChildFolders(item:GDriveItem){
         viewModelScope.launch {
             if(item.id != "drives")
-                GDriveRepository.getChildFolders(item, object : GDriveCallBack {
+                GDriveRepository.getChildItems(queryChildFolders.format(item.id), object : GDriveCallBack {
                     override fun onSuccess(response: ArrayList<GDriveItem>) {
                         routeFoldersMutableLiveData.value!!.add(item)
                         routeFoldersMutableLiveData.postValue(routeFoldersMutableLiveData.value)

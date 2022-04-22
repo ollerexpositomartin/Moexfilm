@@ -19,6 +19,8 @@ import com.example.moexfilm.R
 import com.example.moexfilm.application.changeVisibility
 import com.example.moexfilm.application.services.ScanLibraryService
 import com.example.moexfilm.databinding.ActivityMainBinding
+import com.example.moexfilm.models.data.ScanItem
+import com.example.moexfilm.models.interfaces.listeners.ServiceListener
 import com.example.moexfilm.views.main.fragments.HomeFragment
 import com.example.moexfilm.views.main.fragments.librariesMenu.LibrariesMenuFragment
 import kotlinx.coroutines.CoroutineScope
@@ -28,28 +30,40 @@ import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),ServiceListener {
     private lateinit var binding:ActivityMainBinding
     private lateinit var connection:ServiceConnection
+    var service: ScanLibraryService? = null
+    lateinit var scanItem:ScanItem
 
     val responseLibraryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ response ->
         if(response.resultCode == RESULT_OK){
-            Log.d("ALGO","ALGO")
+            val data = response.data!!.extras
+            scanItem = data!!.getSerializable("SCANITEM") as ScanItem
+            initService()
         }
     }
 
+    private fun initService() {
+        if(service == null){
+            val service = Intent(this, ScanLibraryService::class.java).also { service ->
+                startService(service)
+                bindService(service, connection, BIND_AUTO_CREATE)
+            }
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         connection = object:ServiceConnection {
             override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-                (p1 as ScanLibraryService.LocalBinder).getService()
-                binding.tvScanningLibrary.isSelected = true
-                binding.tvScanningLibrary.changeVisibility
+                service = (p1 as ScanLibraryService.LocalBinder).getService()
+                service!!.setScanServiceListener(this@MainActivity)
+                service!!.startScan(scanItem)
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {
@@ -91,5 +105,10 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView,fragment)
             .commit()
+    }
+
+    override fun isRunning() {
+        binding.tvScanningLibrary.isSelected = true
+        binding.scanningNotification.changeVisibility
     }
 }

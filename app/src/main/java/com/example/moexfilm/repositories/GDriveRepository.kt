@@ -10,14 +10,14 @@ import com.example.moexfilm.models.helpers.RetrofitHelper
 object GDriveRepository {
     private const val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"
 
-    suspend fun getChildFolders(item: GDriveItem, gDriveCallBack: GDriveCallBack) {
+    suspend fun getChildItems(query:String, gDriveCallBack: GDriveCallBack) {
         var nextPageToken: String = ""
         var success: Boolean = true
         val folders: ArrayList<GDriveItem> = ArrayList()
         do {
             val response = RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
                     .getChildFolders(
-                        "'${item.id}' in parents and mimeType = 'application/vnd.google-apps.folder'",
+                        query,
                         nextPageToken,
                         1000,
                         true,
@@ -42,6 +42,7 @@ object GDriveRepository {
         }
         gDriveCallBack.onFailure()
     }
+
 
     suspend fun getTeamDrives(gDriveCallBack: GDriveCallBack){
         var nextPageToken:String = ""

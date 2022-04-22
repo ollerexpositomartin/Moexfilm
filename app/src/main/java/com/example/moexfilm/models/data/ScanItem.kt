@@ -6,5 +6,5 @@ data class ScanItem(
     val id: String,
     val type: String,
     val language: String,
-    val subFolders:List<GDriveItem>?
+    val subFolders:MutableList<GDriveItem>?
 ):Serializable
