@@ -27,7 +27,7 @@
             android:name=".views.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".views.SplashScreenActivity"
+            android:name=".views.RoutingActivity"
             android:exported="true"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>

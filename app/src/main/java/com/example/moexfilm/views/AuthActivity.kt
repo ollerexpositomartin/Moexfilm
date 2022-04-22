@@ -39,9 +39,8 @@ abstract class AuthActivity : AppCompatActivity() {
         authViewModel.authenticatedUserLiveData.observe(this) { authenticatedUser ->
             if (authenticatedUser) {
                 val i = Intent(this, MainActivity::class.java)
-                if(!isFinishing)
                 startActivity(i)
-                finishAffinity()
+                finish()
             } else Toast.makeText(this, getString(R.string.signIn_error), Toast.LENGTH_LONG).show()
         }
     }
@@ -50,7 +49,6 @@ abstract class AuthActivity : AppCompatActivity() {
         authViewModel.registeredUserLiveData.observe(this) { authenticatedUser ->
             if (authenticatedUser) {
                 val i = Intent(this, MainActivity::class.java)
-                if(!isFinishing)
                 startActivity(i)
                 finishAffinity()
             } else

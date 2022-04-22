@@ -41,7 +41,11 @@ class LibrariesMenuFragment : Fragment(),FireBaseAdapterListener {
     }
 
     override fun sizeListener(size: Int) {
-        if(size>0){binding.noLibrariesIndicator.visibility = View.INVISIBLE; return}
+        if(size>0){
+            binding.noLibrariesIndicator.visibility = View.INVISIBLE
+            binding.recyclerView.scheduleLayoutAnimation()
+            return
+        }
         binding.noLibrariesIndicator.visibility = View.VISIBLE
     }
 
