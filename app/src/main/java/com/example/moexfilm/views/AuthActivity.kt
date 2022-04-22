@@ -17,9 +17,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 
-open class AuthActivity : AppCompatActivity() {
+abstract class AuthActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val authViewModel: AuthViewModel by viewModels()
+
 
     private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
             if (response.resultCode == RESULT_OK) {
@@ -37,10 +38,10 @@ open class AuthActivity : AppCompatActivity() {
     fun initSignInObserver(){
         authViewModel.authenticatedUserLiveData.observe(this) { authenticatedUser ->
             if (authenticatedUser) {
-                finishAffinity()
-                val i = Intent(applicationContext, MainActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                val i = Intent(this, MainActivity::class.java)
+                if(!isFinishing)
                 startActivity(i)
+                finishAffinity()
             } else Toast.makeText(this, getString(R.string.signIn_error), Toast.LENGTH_LONG).show()
         }
     }
@@ -48,10 +49,10 @@ open class AuthActivity : AppCompatActivity() {
     fun initRegisteredObserver(){
         authViewModel.registeredUserLiveData.observe(this) { authenticatedUser ->
             if (authenticatedUser) {
-                finishAffinity()
-                val i = Intent(applicationContext, MainActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                val i = Intent(this, MainActivity::class.java)
+                if(!isFinishing)
                 startActivity(i)
+                finishAffinity()
             } else
                 Toast.makeText(this, getString(R.string.register_error), Toast.LENGTH_LONG)
                     .show()
@@ -74,7 +75,7 @@ open class AuthActivity : AppCompatActivity() {
     }
 
     private fun getGoogleAuthCredential(account: GoogleSignInAccount) {
-        val googleTokenId: String = account.getIdToken()!!
+        val googleTokenId: String = account.idToken!!
         val googleAuthCredential = GoogleAuthProvider.getCredential(googleTokenId, null)
         signInWithGoogleAuthCredential(googleAuthCredential)
     }

@@ -34,7 +34,7 @@ class LoginActivity : AuthActivity() {
             setErrorFormatEmail(false)
             if (validateNoEmptyFields() && StringUtil.validateEmailFormat(email)){ setErrorFormatEmail(true);signinWithEmailPassword(email, password)}
         }
-        binding.btnSigninGoogle.setOnClickListener { signInGoogle() }
+        binding.btnSigninGoogle.setOnClickListener {signInGoogle()}
     }
 
     private fun validateNoEmptyFields():Boolean{
