@@ -13,9 +13,9 @@ class CreateLibraryViewModel: ViewModel() {
 
     val libraryCreatedLiveData: MutableLiveData<Library?> = MutableLiveData()
 
-    fun createLibrary(accountId: String, id: String, name: String, content: List<Movie>, type: String, language: String) {
+    fun createLibrary(accountId: String, id: String, name: String,type: String, language: String) {
         viewModelScope.launch {
-            val library: Library = Library(accountId, id, name, content, type, language)
+            val library: Library = Library(accountId, id,name,type, language)
             FirebaseDBRepository.createLibrary(library, object : FirebaseDBCallBack {
                 override fun onSuccess(library: Library) {
                     libraryCreatedLiveData.postValue(library)

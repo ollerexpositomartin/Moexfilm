@@ -1,6 +1,6 @@
 package com.example.moexfilm.models.interfaces.services
 
-import com.example.moexfilm.models.data.ResponseGDrive
+import com.example.moexfilm.models.data.GDriveResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -18,7 +18,7 @@ interface GDriveService {
         @Query("supportsAllDrives") supportsAllDrives:Boolean,
         @Query("fields") fields: String,
         @Header("Authorization") accessToken:String
-    ): Response<ResponseGDrive>
+    ): Response<GDriveResponse>
 
     @GET("/drive/v3/drives")
     suspend fun getTeamDrives(
@@ -26,5 +26,5 @@ interface GDriveService {
         @Query("pageToken") pageToken: String,
         @Query("pageSize") pageSize: Int,
         @Header("Authorization") accessToken:String
-    ): Response<ResponseGDrive>
+    ): Response<GDriveResponse>
 }

@@ -1,8 +1,7 @@
 package com.example.moexfilm.repositories
 
-import android.util.Log
 import com.example.moexfilm.models.data.GDriveItem
-import com.example.moexfilm.models.data.ResponseGDrive
+import com.example.moexfilm.models.data.GDriveResponse
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.services.GDriveService
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
@@ -29,9 +28,9 @@ object GDriveRepository {
                         "Bearer $ACCESS_TOKEN"
                     )
             if (response.isSuccessful) {
-                    val responseListDrive:ResponseGDrive = response.body()!!
-                    folders.addAll(responseListDrive.listGDriveItems)
-                    nextPageToken = responseListDrive.nextPageToken ?: ""
+                    val listDriveResponse:GDriveResponse = response.body()!!
+                    folders.addAll(listDriveResponse.listGDriveItems)
+                    nextPageToken = listDriveResponse.nextPageToken ?: ""
             } else {
                 nextPageToken = ""
                 success = false
@@ -60,9 +59,9 @@ object GDriveRepository {
                         )
 
             if(response.isSuccessful){
-                val responseListDrive:ResponseGDrive = response.body()!!
-                teamDrives.addAll(responseListDrive.listGDriveItems)
-                nextPageToken = responseListDrive.nextPageToken?:""
+                val listDriveResponse:GDriveResponse = response.body()!!
+                teamDrives.addAll(listDriveResponse.listGDriveItems)
+                nextPageToken = listDriveResponse.nextPageToken?:""
             }else{
                 nextPageToken = ""
                 success = false

@@ -12,10 +12,7 @@ import androidx.activity.viewModels
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityCreateLibraryBinding
 import com.example.moexfilm.application.Application.Access.CLIENT_ID
-import com.example.moexfilm.models.data.SubGDriveItem
-import com.example.moexfilm.models.data.GDriveItem
-import com.example.moexfilm.models.data.Library
-import com.example.moexfilm.models.data.ScanItem
+import com.example.moexfilm.models.data.*
 import com.example.moexfilm.viewModels.CreateLibraryViewModel
 import com.example.moexfilm.views.fileExplorer.FileExplorerActivity
 import com.example.moexfilm.views.main.MainActivity
@@ -78,7 +75,7 @@ class CreateLibraryActivity : AppCompatActivity() {
     private fun initLibraryCreatedObserver() {
         createLibraryViewModel.libraryCreatedLiveData.observe(this) { library ->
             if (library != null) {
-                returnScanItem(library)
+                 returnScanItem(library)
             } else Log.d("ERROR", "ERROR")
         }
     }
@@ -94,7 +91,7 @@ class CreateLibraryActivity : AppCompatActivity() {
 
     private fun initSpinners() {
         val types = listOf(getString(R.string.movies_text), getString(R.string.tvShows_text))
-        val languages = listOf("ES")
+        val languages = listOf("es-ES")
         val adapterTypes = ArrayAdapter(this, R.layout.list_item, types)
         val adapterLanguages = ArrayAdapter(this, R.layout.list_item, languages)
         (binding.spinnerTypeLibrary.editText as? AutoCompleteTextView)?.apply {
@@ -112,9 +109,7 @@ class CreateLibraryActivity : AppCompatActivity() {
         binding.btnFinish.setOnClickListener {
             if (checkData())
                 createLibraryViewModel.createLibrary(
-                    accountId, folderSelected!!.id, name,
-                    emptyList(), type, language
-                )
+                    accountId, folderSelected!!.id, name,type, language)
         }
     }
 

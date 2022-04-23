@@ -5,16 +5,20 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import com.example.moexfilm.models.data.GDriveItem
+import com.example.moexfilm.models.data.Movie
 import com.example.moexfilm.models.data.ScanItem
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
+import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
 import com.example.moexfilm.models.interfaces.listeners.ServiceListener
+import com.example.moexfilm.repositories.FirebaseDBRepository
 import com.example.moexfilm.repositories.GDriveRepository
+import com.example.moexfilm.repositories.TMDBRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.lang.Exception
 import java.lang.StringBuilder
 import kotlin.properties.Delegates
 
@@ -45,6 +49,7 @@ class ScanLibraryService : Service() {
     }
 
     fun startScan(scanItem: ScanItem) {
+        try {
         CoroutineScope(Dispatchers.IO).launch {
             val foldersToScan: MutableList<GDriveItem> = scanItem.subFolders ?: mutableListOf()
             val query: StringBuilder = StringBuilder()
@@ -64,8 +69,15 @@ class ScanLibraryService : Service() {
 
             GDriveRepository.getChildItems(query.toString(), object : GDriveCallBack {
                 override fun onSuccess(response: ArrayList<GDriveItem>) {
-                    files = response
-                    Log.d("FILES", files.toString())
+                    CoroutineScope(Dispatchers.IO).launch {
+                        TMDBRepository.searchMovies(response,
+                            scanItem.language, object : TMDBCallBack {
+                                override fun onSearchCompleted(movie: Movie) {
+                                    FirebaseDBRepository.saveMovieInLibrary(scanItem.id,movie)
+                                }
+                            })
+                    }
+
                 }
 
                 override fun onFailure() {
@@ -73,6 +85,9 @@ class ScanLibraryService : Service() {
                 }
             })
 
+        }
+        }catch (e:Exception){
+            Log.d("Error",e.message.toString())
         }
 
     }

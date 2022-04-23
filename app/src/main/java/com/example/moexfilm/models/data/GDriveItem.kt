@@ -5,7 +5,7 @@ import java.io.Serializable
 
 
 data class GDriveItem(
-    @SerializedName("name") val name:String,
+    @SerializedName("name") var name:String,
     @SerializedName("id") val id:String
 ):Serializable
 
