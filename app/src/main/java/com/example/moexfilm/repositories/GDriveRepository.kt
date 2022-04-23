@@ -1,5 +1,6 @@
 package com.example.moexfilm.repositories
 
+import android.util.Log
 import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.ResponseGDrive
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
@@ -16,7 +17,8 @@ object GDriveRepository {
         val folders: ArrayList<GDriveItem> = ArrayList()
         do {
             val response = RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
-                    .getChildFolders(
+                    .getChildItems(
+                        "allDrives",
                         query,
                         nextPageToken,
                         1000,

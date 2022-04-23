@@ -12,6 +12,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -26,6 +27,7 @@ import com.example.moexfilm.views.main.fragments.librariesMenu.LibrariesMenuFrag
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
@@ -107,8 +109,20 @@ class MainActivity : AppCompatActivity(),ServiceListener {
             .commit()
     }
 
-    override fun isRunning() {
+    private fun scanItemListToText(scanItemList:MutableList<ScanItem>):String{
+        val text:StringBuilder = StringBuilder()
+        for(i in scanItemList.indices){
+            if(i != scanItemList.size-1)
+            text.append(scanItemList[i].name).append(", ")
+            else
+                text.append(scanItemList[i].name)
+        }
+        return text.toString()
+    }
+
+    override fun isRunning(scanItemList:MutableList<ScanItem>) {
+        binding.tvScanningLibrary.text = getString(R.string.scanningLibrary_text).format(scanItemListToText(scanItemList))
         binding.tvScanningLibrary.isSelected = true
-        binding.scanningNotification.changeVisibility
+        binding.scanningNotification.visibility = View.VISIBLE
     }
 }

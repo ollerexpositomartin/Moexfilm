@@ -13,6 +13,7 @@
     <string name="createAccount_text">Crea tu cuenta</string>
     <string name="oauth_client" translatable="false">908879042178-aodqmho8411tejpk7bo00r9rdlof53op.apps.googleusercontent.com</string>
     <string name="oauth_secret" translatable="false">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</string>
+    <string name="tmdb_client" translatable="false">8be905875a365e0038efdb4a5a19d4fe</string>
     <string name="signIn_error">error al iniciar sesión</string>
     <string name="register_error">error al registrarse</string>
     <string name="invalidEmail_error">El email no es valido</string>

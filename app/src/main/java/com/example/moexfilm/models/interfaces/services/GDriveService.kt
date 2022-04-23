@@ -8,7 +8,8 @@ import retrofit2.http.Query
 
 interface GDriveService {
     @GET("/drive/v3/files")
-    suspend fun getChildFolders(
+    suspend fun getChildItems(
+        @Query("corpora")corpora:String,
         @Query("q") q: String,
         @Query("pageToken") pageToken: String,
         @Query("pageSize") pageSize: Int,

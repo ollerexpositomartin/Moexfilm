@@ -84,7 +84,7 @@ class CreateLibraryActivity : AppCompatActivity() {
     }
 
     private fun returnScanItem(library: Library) {
-        val scanItem = ScanItem(library.id, type, language, subFolderSelected?.children)
+        val scanItem = ScanItem(library.id,library.name,type, language, subFolderSelected?.children)
         val resultIntent = Intent().apply {
             putExtra("SCANITEM", scanItem)
         }
