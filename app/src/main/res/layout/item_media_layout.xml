@@ -4,23 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     app:cardBackgroundColor="@android:color/transparent"
-    app:cardUseCompatPadding="true">
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true"
+    app:rippleColor="@color/accent_moexfilm">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:cardCornerRadius="25dp">
 
             <ImageView
                 android:id="@+id/imvMedia"
                 android:layout_width="110dp"
-                android:layout_height="165dp"
+                android:layout_height="150dp"
                 android:background="@drawable/background_media_item"
                 tools:srcCompat="@drawable/movie_image" />
         </androidx.cardview.widget.CardView>
@@ -29,6 +33,7 @@
             android:id="@+id/tvMediaName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
             android:fontFamily="@font/red_hat_display_bold"
             android:paddingStart="3dp"

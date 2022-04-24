@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity(),ServiceListener {
                 service!!.startScan(library)
             }
             override fun onServiceDisconnected(p0: ComponentName?) {
-                Log.d("HOLA","HOLA")
             }
         }
 

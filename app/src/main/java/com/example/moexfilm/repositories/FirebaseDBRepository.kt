@@ -43,17 +43,36 @@ object FirebaseDBRepository {
             database.child("users").child(prefs.readUid()).child("libraries")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                            val list = ArrayList<Library>()
+                        val list = ArrayList<Library>()
 
-                            for (dataSnapShot in snapshot.children) {
-                                list.add(dataSnapShot.getValue(Library::class.java)!!)
-                            }
-                            libraries.postValue(list)
+                        for (dataSnapShot in snapshot.children) {
+                            list.add(dataSnapShot.getValue(Library::class.java)!!)
+                        }
+                        libraries.postValue(list)
                     }
+
                     override fun onCancelled(error: DatabaseError) {
                     }
 
                 })
-
         }
+
+    fun setListenerItemsLibrary(id:String,items: MutableLiveData<List<Movie>>) {
+        database.child("users").child(prefs.readUid()).child("libraries").child(id).child("content")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val list = ArrayList<Movie>()
+
+                    for (dataSnapShot in snapshot.children) {
+                        list.add(dataSnapShot.getValue(Movie::class.java)!!)
+                    }
+                    items.postValue(list)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
+    }
+
     }

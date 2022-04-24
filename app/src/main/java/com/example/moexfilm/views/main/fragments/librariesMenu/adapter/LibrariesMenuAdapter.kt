@@ -16,8 +16,6 @@ import com.example.moexfilm.models.data.Library
 import com.example.moexfilm.models.data.Movie
 import com.example.moexfilm.models.interfaces.listeners.FireBaseAdapterListener
 import com.example.moexfilm.repositories.FirebaseDBRepository
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
 
 
 class LibrariesMenuAdapter(val onFolderTouchListener:(Library)->Unit): ListAdapter<Library, LibrariesMenuAdapter.ViewHolder>(DiffUtilCallBack) {

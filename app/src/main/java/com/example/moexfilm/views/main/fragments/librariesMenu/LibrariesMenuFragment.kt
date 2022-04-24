@@ -16,6 +16,7 @@ import com.example.moexfilm.models.data.Library
 import com.example.moexfilm.models.interfaces.listeners.FireBaseAdapterListener
 import com.example.moexfilm.viewModels.LibrariesMenuViewModel
 import com.example.moexfilm.views.CreateLibraryActivity
+import com.example.moexfilm.views.library.LibraryActivity
 import com.example.moexfilm.views.main.MainActivity
 import com.example.moexfilm.views.main.fragments.librariesMenu.adapter.LibrariesMenuAdapter
 import kotlin.properties.Delegates
@@ -25,7 +26,7 @@ class LibrariesMenuFragment : Fragment() {
     private lateinit var adapter: LibrariesMenuAdapter
     private val libraryMenuViewModel:LibrariesMenuViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLibrariesMenuBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -46,8 +47,10 @@ class LibrariesMenuFragment : Fragment() {
         }
     }
 
-    fun onClickLibrary(library: Library) {
-
+    private fun onClickLibrary(library: Library) {
+        startActivity(Intent(requireContext(),LibraryActivity::class.java).apply {
+            putExtra("LIBRARYID",library.id)
+        })
     }
 
     private fun setRecycler() {
