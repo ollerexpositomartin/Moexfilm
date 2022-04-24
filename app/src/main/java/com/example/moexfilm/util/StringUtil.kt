@@ -2,8 +2,10 @@ package com.example.moexfilm.util
 
 import android.util.Log
 import com.example.moexfilm.models.data.FormatTitle
+import com.example.moexfilm.models.data.Library
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
+import java.lang.StringBuilder
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -33,6 +35,17 @@ object StringUtil {
         }
         formatTitle.name = title
         return formatTitle
+    }
+
+     fun scanItemListToText(libraryItemList:MutableList<Library>):String{
+        val text: StringBuilder = StringBuilder()
+        for(i in libraryItemList.indices){
+            if(i != libraryItemList.size-1)
+                text.append(libraryItemList[i].name).append(", ")
+            else
+                text.append(libraryItemList[i].name)
+        }
+        return text.toString()
     }
 
 }

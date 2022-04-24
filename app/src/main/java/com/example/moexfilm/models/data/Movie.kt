@@ -3,37 +3,36 @@ package com.example.moexfilm.models.data
 import com.google.gson.annotations.SerializedName
 
 class Movie {
-    lateinit var idDrive: String
-    var duration: Int = 0
-    var timePlayed: Int = 0
+    var idDrive: String = ""
+     var parent:String = ""
+    var duration: Long = 0
+    var timePlayed: Long = 0
+    var quality:Long = 0
 
     @SerializedName("title")
-    lateinit var name: String
-
+     var name: String = ""
+    var fileName:String = ""
     @SerializedName("genre_ids")
-    lateinit var genre_ids: List<Int>
-
+    var genre_ids: List<Int> = emptyList()
     @SerializedName("overview")
-    lateinit var overview: String
-
+    var overview: String = ""
     @SerializedName("poster_path")
-    lateinit var poster_path: String
-
+    var poster_path: String = ""
     @SerializedName("backdrop_path")
-    lateinit var backdrop_path: String
-
+    var backdrop_path: String = ""
     @SerializedName("popularity")
     var popularity: Double = 0.0
-
     @SerializedName("vote_average")
     var vote_average: Double = 0.0
 
     constructor()
     constructor(
         idDrive: String,
+        parent:String,
         name: String,
-        duration: Int,
-        timePlayed: Int,
+        fileName:String,
+        duration: Long,
+        timePlayed: Long,
         genre_ids: List<Int>,
         overview: String,
         poster_path: String,
@@ -43,6 +42,8 @@ class Movie {
     ){
         this.idDrive = idDrive
         this.name = name
+        this.fileName = fileName
+        this.parent = parent
         this.duration = duration
         this.timePlayed = timePlayed
         this.genre_ids = genre_ids

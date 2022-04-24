@@ -3,5 +3,6 @@ package com.example.moexfilm.models.interfaces.callBacks
 import com.example.moexfilm.models.data.Movie
 
 interface TMDBCallBack {
-    fun onSearchCompleted(movie:Movie)
+    fun onSearchItemCompleted(movie:Movie)
+    fun onAllSearchsFinish()
 }

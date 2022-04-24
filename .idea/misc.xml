@@ -9,6 +9,7 @@
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_folder_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/background_media_item.xml" value="0.3675" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.363" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_create_library.xml" value="0.25" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_file_explorer.xml" value="0.33" />
@@ -18,6 +19,7 @@
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/fragment_home.xml" value="0.396011396011396" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/fragment_libraries_menu.xml" value="0.25" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_folder_layout.xml" value="0.33" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_media_layout.xml" value="0.75" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_menu_library_layout.xml" value="0.4088397790055249" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/list_item.xml" value="0.30085470085470084" />
         <entry key="..\:/MoexFilm/app/src/main/res/drawable/button_ripple.xml" value="0.3675" />

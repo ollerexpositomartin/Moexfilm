@@ -15,7 +15,6 @@ import com.example.moexfilm.application.Application.Access.CLIENT_ID
 import com.example.moexfilm.models.data.*
 import com.example.moexfilm.viewModels.CreateLibraryViewModel
 import com.example.moexfilm.views.fileExplorer.FileExplorerActivity
-import com.example.moexfilm.views.main.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -28,7 +27,6 @@ class CreateLibraryActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val createLibraryViewModel: CreateLibraryViewModel by viewModels()
     private var folderSelected: GDriveItem? = null
-    private var subFolderSelected: SubGDriveItem? = null
     private lateinit var name: String
     private lateinit var type: String
     private lateinit var language: String
@@ -58,7 +56,6 @@ class CreateLibraryActivity : AppCompatActivity() {
             if (response.resultCode == RESULT_OK) {
                 val data: Bundle = response.data!!.extras!!
                 folderSelected = data.getSerializable("SELECTEDFOLDER") as GDriveItem
-                subFolderSelected = data.getSerializable("SUBFOLDERS") as SubGDriveItem
                 binding.tvRouteFolderSelected.text = data.getString("ROUTE")
             }
         }
@@ -75,15 +72,14 @@ class CreateLibraryActivity : AppCompatActivity() {
     private fun initLibraryCreatedObserver() {
         createLibraryViewModel.libraryCreatedLiveData.observe(this) { library ->
             if (library != null) {
-                 returnScanItem(library)
+                 returnLibrary(library)
             } else Log.d("ERROR", "ERROR")
         }
     }
 
-    private fun returnScanItem(library: Library) {
-        val scanItem = ScanItem(library.id,library.name,type, language, subFolderSelected?.children)
+    private fun returnLibrary(library: Library) {
         val resultIntent = Intent().apply {
-            putExtra("SCANITEM", scanItem)
+            putExtra("LIBRARY", library)
         }
         setResult(RESULT_OK,resultIntent)
         finish()
@@ -108,8 +104,7 @@ class CreateLibraryActivity : AppCompatActivity() {
         binding.btnSelectFolder.setOnClickListener { signinGoogle() }
         binding.btnFinish.setOnClickListener {
             if (checkData())
-                createLibraryViewModel.createLibrary(
-                    accountId, folderSelected!!.id, name,type, language)
+                createLibraryViewModel.createLibrary(accountId, folderSelected!!.id, name,emptyMap<String,Any>(),type, language)
         }
     }
 

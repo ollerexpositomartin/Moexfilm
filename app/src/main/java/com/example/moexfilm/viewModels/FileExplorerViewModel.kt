@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class FileExplorerViewModel:ViewModel() {
     val tokenReceivedLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    val foldersMutableLiveData:MutableLiveData<ArrayList<GDriveItem>> = MutableLiveData()
+    val foldersMutableLiveData:MutableLiveData<ArrayList<GDriveItem>?> = MutableLiveData()
     val routeFoldersMutableLiveData:MutableLiveData<ArrayList<GDriveItem>> = MutableLiveData()
 
     private val queryChildFolders = "'%s' in parents and mimeType = 'application/vnd.google-apps.folder'"
@@ -50,7 +50,7 @@ class FileExplorerViewModel:ViewModel() {
                     routeFolders.removeAt(routeFolders.size - 1)
                     val item:GDriveItem = routeFolders[routeFolders.size - 1]
                     GDriveRepository.getChildItems(queryChildFolders.format(item.id),object :GDriveCallBack{
-                        override fun onSuccess(response: ArrayList<GDriveItem>) {
+                        override fun onSuccess(response: ArrayList<GDriveItem>?) {
                             foldersMutableLiveData.postValue(response)
                             routeFoldersMutableLiveData.postValue(routeFolders)
                         }
@@ -62,7 +62,7 @@ class FileExplorerViewModel:ViewModel() {
                 routeFolders.size > 2 && routeFolders[routeFolders.size-2].id == "drives" -> {
                     routeFolders.removeAt(routeFolders.size - 1)
                     GDriveRepository.getTeamDrives(object :GDriveCallBack{
-                        override fun onSuccess(response: ArrayList<GDriveItem>) {
+                        override fun onSuccess(response: ArrayList<GDriveItem>?) {
                             foldersMutableLiveData.postValue(response)
                             routeFoldersMutableLiveData.postValue(routeFolders)
                         }
@@ -81,7 +81,7 @@ class FileExplorerViewModel:ViewModel() {
         viewModelScope.launch {
             if(item.id != "drives")
                 GDriveRepository.getChildItems(queryChildFolders.format(item.id), object : GDriveCallBack {
-                    override fun onSuccess(response: ArrayList<GDriveItem>) {
+                    override fun onSuccess(response: ArrayList<GDriveItem>?) {
                         routeFoldersMutableLiveData.value!!.add(item)
                         routeFoldersMutableLiveData.postValue(routeFoldersMutableLiveData.value)
                         foldersMutableLiveData.postValue(response)
@@ -92,7 +92,7 @@ class FileExplorerViewModel:ViewModel() {
                 })
             else
                 GDriveRepository.getTeamDrives(object : GDriveCallBack {
-                    override fun onSuccess(response: ArrayList<GDriveItem>) {
+                    override fun onSuccess(response: ArrayList<GDriveItem>?) {
                         routeFoldersMutableLiveData.value!!.add(item)
                         routeFoldersMutableLiveData.postValue(routeFoldersMutableLiveData.value)
                         foldersMutableLiveData.postValue(response)

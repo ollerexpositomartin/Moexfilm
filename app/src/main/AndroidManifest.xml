@@ -13,15 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoexFilm">
         <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:name=".views.CreateLibraryActivity"
+            android:name=".views.LibraryActivity"
             android:exported="false" />
         <activity
+            android:name=".views.CreateLibraryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false" />
+        <activity
             android:name=".views.fileExplorer.FileExplorerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".views.main.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".views.RegisterActivity"
@@ -44,10 +48,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name=".application.services.ScanLibraryService"
+        <service
+            android:name=".application.services.ScanLibraryService"
             android:enabled="true"
-            android:exported="false"
-            />
+            android:exported="false" />
     </application>
 
 </manifest>

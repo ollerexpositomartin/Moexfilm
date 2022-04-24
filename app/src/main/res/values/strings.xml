@@ -37,6 +37,7 @@
     <string name="noFolderSelected_text">Ninguna carpeta seleccionada</string>
     <string name="finish_text">Terminar</string>
     <string name="name_text">Nombre</string>
+    <string name="scanningLibraries_error">Error escaneando la biblioteca %s</string>
     <string name="loadingFolders_url">https://assets3.lottiefiles.com/packages/lf20_qcdpfl7i.json</string>
     <string name="wait_text">Espera mientras obtenemos\n las carpetas</string>
     <string name="noFolderSelected_error">No has seleccionado ninguna carpeta</string>
