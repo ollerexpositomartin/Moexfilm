@@ -3,7 +3,7 @@ package com.example.moexfilm.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moexfilm.models.data.GDriveItem
+import com.example.moexfilm.models.data.mediaObjects.GDriveItem
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
 import com.example.moexfilm.repositories.GDriveRepository
@@ -48,7 +48,7 @@ class FileExplorerViewModel:ViewModel() {
             when {
                 routeFolders.size > 2 && routeFolders[routeFolders.size-2].id != "drives" -> {
                     routeFolders.removeAt(routeFolders.size - 1)
-                    val item:GDriveItem = routeFolders[routeFolders.size - 1]
+                    val item: GDriveItem = routeFolders[routeFolders.size - 1]
                     GDriveRepository.getChildItems(queryChildFolders.format(item.id),object :GDriveCallBack{
                         override fun onSuccess(response: ArrayList<GDriveItem>?) {
                             foldersMutableLiveData.postValue(response)
@@ -77,7 +77,7 @@ class FileExplorerViewModel:ViewModel() {
         }
     }
 
-    fun getChildFolders(item:GDriveItem){
+    fun getChildFolders(item: GDriveItem){
         viewModelScope.launch {
             if(item.id != "drives")
                 GDriveRepository.getChildItems(queryChildFolders.format(item.id), object : GDriveCallBack {
@@ -101,9 +101,6 @@ class FileExplorerViewModel:ViewModel() {
                         tokenReceivedLiveData.postValue(false)
                     }
                 })
-
-
-
         }
     }
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.application.changeVisibility
 import com.example.moexfilm.databinding.ActivityFileExplorerBinding
-import com.example.moexfilm.models.data.GDriveItem
+import com.example.moexfilm.models.data.mediaObjects.GDriveItem
 import com.example.moexfilm.viewModels.FileExplorerViewModel
 import com.example.moexfilm.views.fileExplorer.adapters.FileExplorerAdapter
 import java.lang.StringBuilder
@@ -115,7 +115,7 @@ class FileExplorerActivity : AppCompatActivity() {
         }
     }
 
-    private fun onFolderTouch(item:GDriveItem) {
+    private fun onFolderTouch(item: GDriveItem) {
         binding.loadingIndicator.changeVisibility
         adapter.submitList(emptyList())
         fileExplorerViewModel.getChildFolders(item)

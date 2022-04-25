@@ -1,7 +1,5 @@
 package com.example.moexfilm.views.main.fragments.librariesMenu.adapter
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moexfilm.R
-import com.example.moexfilm.databinding.ItemFolderLayoutBinding
 import com.example.moexfilm.databinding.ItemMenuLibraryLayoutBinding
-import com.example.moexfilm.models.data.GDriveItem
-import com.example.moexfilm.models.data.Library
-import com.example.moexfilm.models.data.Movie
-import com.example.moexfilm.models.interfaces.listeners.FireBaseAdapterListener
-import com.example.moexfilm.repositories.FirebaseDBRepository
+import com.example.moexfilm.models.data.mediaObjects.Library
 
 
 class LibrariesMenuAdapter(val onFolderTouchListener:(Library)->Unit): ListAdapter<Library, LibrariesMenuAdapter.ViewHolder>(DiffUtilCallBack) {

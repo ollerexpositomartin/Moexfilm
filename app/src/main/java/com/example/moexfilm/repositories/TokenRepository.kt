@@ -20,7 +20,7 @@ object TokenRepository {
         if(response.isSuccessful){
             val token = response.body()
             if(token != null){
-                ACCESS_TOKEN = token.accessToken
+                ACCESS_TOKEN = token.accessToken!!
 
                 if(token.refreshToken != null){
                     val account = Account(accountId, token.refreshToken)

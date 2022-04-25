@@ -1,14 +1,12 @@
 package com.example.moexfilm.repositories
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
-import com.example.moexfilm.models.data.Library
-import com.example.moexfilm.models.data.Movie
+import com.example.moexfilm.models.data.mediaObjects.Library
+import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
-import java.lang.Exception
 
 object FirebaseDBRepository {
     private const val FIREBASE_DB_URL = "https://moexfilm-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -20,7 +18,7 @@ object FirebaseDBRepository {
         database = dataBaseReference.reference
     }
 
-    fun createLibrary(library:Library,firebaseDBCallBack: FirebaseDBCallBack){
+    fun createLibrary(library: Library, firebaseDBCallBack: FirebaseDBCallBack){
         database.child("users").child(prefs.readUid()).child("libraries").child(library.id).setValue(library)
             .addOnSuccessListener {
             firebaseDBCallBack.onSuccess(library)
@@ -30,7 +28,7 @@ object FirebaseDBRepository {
             }
     }
 
-    fun saveMovieInLibrary(movie:Movie) {
+    fun saveMovieInLibrary(movie: Movie) {
         database.child("users").child(prefs.readUid()).child("libraries").child(movie.parent).child("content").child(movie.idDrive).setValue(movie)
     }
 

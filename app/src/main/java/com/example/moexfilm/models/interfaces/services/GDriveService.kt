@@ -1,6 +1,6 @@
 package com.example.moexfilm.models.interfaces.services
 
-import com.example.moexfilm.models.data.GDriveResponse
+import com.example.moexfilm.models.data.responseObjects.GDriveResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

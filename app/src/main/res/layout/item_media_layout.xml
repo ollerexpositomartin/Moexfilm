@@ -7,8 +7,7 @@
     android:layout_margin="5dp"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="0dp"
-    app:cardUseCompatPadding="true"
-    app:rippleColor="@color/accent_moexfilm">
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -16,10 +15,12 @@
         android:background="@null"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="25dp">
+            app:cardCornerRadius="25dp"
+            app:rippleColor="@color/accent_moexfilm">
 
             <ImageView
                 android:id="@+id/imvMedia"
@@ -27,16 +28,20 @@
                 android:layout_height="150dp"
                 android:background="@drawable/background_media_item"
                 tools:srcCompat="@drawable/movie_image" />
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/tvMediaName"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="3dp"
             android:layout_weight="1"
+            android:breakStrategy="high_quality"
+            android:ellipsize="end"
             android:fontFamily="@font/red_hat_display_bold"
+            android:maxLines="2"
             android:paddingStart="3dp"
+            android:paddingEnd="3dp"
             android:text="TextView"
             android:textStyle="bold"
             tools:text="Eternals" />

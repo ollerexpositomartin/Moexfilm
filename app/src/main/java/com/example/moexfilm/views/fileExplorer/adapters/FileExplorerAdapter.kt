@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ItemFolderLayoutBinding
-import com.example.moexfilm.models.data.GDriveItem
+import com.example.moexfilm.models.data.mediaObjects.GDriveItem
 
 
 class FileExplorerAdapter(val onFolderTouchListener:(GDriveItem)->Unit):ListAdapter<GDriveItem,FileExplorerAdapter.ViewHolder>(DiffUtilCallBack)  {

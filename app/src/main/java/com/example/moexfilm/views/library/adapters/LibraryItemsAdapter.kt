@@ -1,6 +1,5 @@
 package com.example.moexfilm.views.library.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,23 +7,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.moexfilm.R
-import com.example.moexfilm.databinding.ItemFolderLayoutBinding
+import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.databinding.ItemMediaLayoutBinding
-import com.example.moexfilm.models.data.GDriveItem
-import com.example.moexfilm.models.data.Movie
+import com.example.moexfilm.models.data.mediaObjects.Movie
 
 
 class LibraryItemsAdapter(val onItemTouchListener:(Movie)->Unit): ListAdapter<Movie, LibraryItemsAdapter.ViewHolder>(DiffUtilCallBack) {
 
-    val TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w342/%s"
+    private val TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w342/%s"
     lateinit var context: Context
 
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v){
         val binding = ItemMediaLayoutBinding.bind(v)
         init {
-            binding.root.setOnClickListener { onItemTouchListener(getItem(adapterPosition)) }
+            binding.card.setOnClickListener { onItemTouchListener(getItem(adapterPosition)) }
         }
     }
 
@@ -38,7 +35,7 @@ class LibraryItemsAdapter(val onItemTouchListener:(Movie)->Unit): ListAdapter<Mo
     override fun onBindViewHolder(holder: LibraryItemsAdapter.ViewHolder, position: Int) {
         val media = getItem(position)
         holder.binding.tvMediaName.text = media.name
-        Glide.with(context).load(TMDB_IMAGE_URL.format(media.poster_path)).centerCrop().into(holder.binding.imvMedia)
+        holder.binding.imvMedia.loadImage(TMDB_IMAGE_URL.format(media.poster_path))
     }
 }
 

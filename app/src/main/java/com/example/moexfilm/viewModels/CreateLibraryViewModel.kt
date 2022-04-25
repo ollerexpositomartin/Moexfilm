@@ -3,8 +3,7 @@ package com.example.moexfilm.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moexfilm.models.data.Library
-import com.example.moexfilm.models.data.Movie
+import com.example.moexfilm.models.data.mediaObjects.Library
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.example.moexfilm.repositories.FirebaseDBRepository
 import kotlinx.coroutines.launch

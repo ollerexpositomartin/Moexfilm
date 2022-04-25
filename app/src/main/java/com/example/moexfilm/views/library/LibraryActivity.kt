@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.databinding.ActivityLibraryBinding
-import com.example.moexfilm.models.data.Movie
+import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.viewModels.LibraryViewModel
 import com.example.moexfilm.views.library.adapters.LibraryItemsAdapter
 
@@ -42,7 +42,7 @@ class LibraryActivity : AppCompatActivity() {
         binding.recyclerView.setHasFixedSize(true)
     }
 
-    private fun onItemTouch(movie:Movie){
+    private fun onItemTouch(movie: Movie){
 
     }
 }

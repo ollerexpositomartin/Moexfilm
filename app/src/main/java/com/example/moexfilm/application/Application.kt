@@ -9,13 +9,12 @@ class Application : Application() {
         lateinit var CLIENT_ID: String
         lateinit var CLIENT_SECRET: String
         lateinit var ACCESS_TOKEN: String
-        val GOOGLE_DRIVE_PLAY_URL:String = "https://www.googleapis.com/drive/v3/files/%s?alt=media"
+        const val GOOGLE_DRIVE_PLAY_URL:String = "https://www.googleapis.com/drive/v3/files/%s?alt=media"
         lateinit var prefs: Prefs
     }
     override fun onCreate() {
         super.onCreate()
         CLIENT_ID = getString(R.string.oauth_client)
         CLIENT_SECRET = getString(R.string.oauth_secret)
-        prefs = Prefs(this)
     }
 }

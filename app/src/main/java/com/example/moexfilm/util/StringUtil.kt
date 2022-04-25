@@ -1,12 +1,8 @@
 package com.example.moexfilm.util
 
-import android.util.Log
-import com.example.moexfilm.models.data.FormatTitle
-import com.example.moexfilm.models.data.Library
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
+import com.example.moexfilm.models.data.utilObjects.FormatTitle
+import com.example.moexfilm.models.data.mediaObjects.Library
 import java.lang.StringBuilder
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object StringUtil {

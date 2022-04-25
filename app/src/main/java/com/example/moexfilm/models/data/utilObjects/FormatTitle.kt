@@ -1,4 +1,4 @@
-package com.example.moexfilm.models.data
+package com.example.moexfilm.models.data.utilObjects
 
 class FormatTitle{
     lateinit var name:String

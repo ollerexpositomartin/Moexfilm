@@ -4,7 +4,6 @@ import android.media.MediaMetadataRetriever
 import android.util.Log
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.application.Application.Access.GOOGLE_DRIVE_PLAY_URL
-import com.example.moexfilm.models.data.MetaDataItem
 
 
 object MediaMetaDataRepository {

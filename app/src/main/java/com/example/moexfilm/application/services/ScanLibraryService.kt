@@ -3,15 +3,14 @@ package com.example.moexfilm.application.services
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
-import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import com.example.moexfilm.R
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
-import com.example.moexfilm.models.data.GDriveItem
-import com.example.moexfilm.models.data.Library
-import com.example.moexfilm.models.data.Movie
+import com.example.moexfilm.models.data.mediaObjects.GDriveItem
+import com.example.moexfilm.models.data.mediaObjects.Library
+import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
 import com.example.moexfilm.models.interfaces.listeners.ServiceListener
@@ -55,17 +54,16 @@ class ScanLibraryService : Service() {
     fun startScan(library: Library) {
         try {
             CoroutineScope(Dispatchers.IO).launch {
-                val accessToken = ACCESS_TOKEN
                 currentLibrariesScanning.add(library)
                 currentLibrariesScanning = currentLibrariesScanning
 
-                GDriveRepository.getChildItems(
-                    String.format(queryFormatFolders, library.id),
-                    object : GDriveCallBack {
+                GDriveRepository.getChildItems(String.format(queryFormatFolders, library.id), object : GDriveCallBack {
                         override fun onSuccess(response: ArrayList<GDriveItem>?) {
                             CoroutineScope(Dispatchers.IO).launch {
-                                if (library.type == "Peliculas")
+                                if (library.type == this@ScanLibraryService.getString(R.string.movies_text))
                                     scanMovies(library, response)
+                                if(library.type == this@ScanLibraryService.getString(R.string.tvShows_text))
+                                    scanTvShows(library,response)
                             }
                         }
                         override fun onFailure() {
@@ -77,6 +75,10 @@ class ScanLibraryService : Service() {
         }catch (e:Exception){
             Log.d("ERROR------>",e.toString())
         }
+    }
+
+    private fun scanTvShows(library: Library, tvShows: ArrayList<GDriveItem>?) {
+
     }
 
     suspend fun scanMovies(library: Library, response: ArrayList<GDriveItem>?) {
