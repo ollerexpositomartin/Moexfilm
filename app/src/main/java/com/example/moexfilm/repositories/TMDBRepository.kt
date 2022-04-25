@@ -57,7 +57,7 @@ object TMDBRepository {
                 if(result!!.results.isNotEmpty()) {
                     val tvShow = result.results[0]
                     tvShow.idDrive = folder.id
-                    tvShow.name = folder.name
+                    tvShow.fileName = folder.name
                     callback.onSearchItemCompleted(tvShow)
                 }
             }
