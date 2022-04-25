@@ -3,12 +3,12 @@ package com.example.moexfilm.models.data.mediaObjects
 import java.io.Serializable
 
 class Library:Serializable {
-    lateinit var owner: String
-    lateinit var id: String
-    lateinit var name: String
-    lateinit var content:Map<String,Any>
-    lateinit var type: String
-    lateinit var language: String
+     var owner: String = ""
+     var id: String = ""
+     var name: String = ""
+     var content:Map<String,Any> = emptyMap()
+     var type: String = ""
+     var language: String = ""
 
     constructor()
 

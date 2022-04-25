@@ -7,9 +7,9 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import com.example.moexfilm.R
-import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.models.data.mediaObjects.GDriveItem
 import com.example.moexfilm.models.data.mediaObjects.Library
+import com.example.moexfilm.models.data.mediaObjects.MediaItem
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
@@ -77,7 +77,19 @@ class ScanLibraryService : Service() {
         }
     }
 
-    private fun scanTvShows(library: Library, tvShows: ArrayList<GDriveItem>?) {
+    suspend fun scanTvShows(library: Library, tvShows: ArrayList<GDriveItem>?) {
+        tvShows?.forEach {
+                    TMDBRepository.searchTvShows(tvShows,library.language, object : TMDBCallBack {
+                        override fun onSearchItemCompleted(itemTMDB: MediaItem) {
+                            val item = itemTMDB
+                            item.parent = library.id
+                            FirebaseDBRepository.saveMovieAndTvShowInLibrary(item)
+                        }
+
+                        override fun onAllSearchsFinish() {
+                        }
+                    })
+        }
 
     }
 
@@ -101,9 +113,10 @@ class ScanLibraryService : Service() {
         GDriveRepository.getChildItems(query.toString(), object : GDriveCallBack { override fun onSuccess(response: ArrayList<GDriveItem>?) {
                     CoroutineScope(Dispatchers.IO).launch {
                         TMDBRepository.searchMovies(response?:mutableListOf(), library.language, object : TMDBCallBack {
-                                override fun onSearchItemCompleted(movie: Movie) {
-                                    movie.parent = library.id
-                                    FirebaseDBRepository.saveMovieInLibrary(movie)
+                                override fun onSearchItemCompleted(itemTMDB: MediaItem) {
+                                    val item = itemTMDB
+                                    item.parent = library.id
+                                    FirebaseDBRepository.saveMovieAndTvShowInLibrary(item)
                                 }
                                 override fun onAllSearchsFinish() {
                                     removeLibrary(library)

@@ -16,8 +16,8 @@ class CreateLibraryViewModel: ViewModel() {
         viewModelScope.launch {
             val library: Library = Library(accountId, id,name,content,type, language)
             FirebaseDBRepository.createLibrary(library, object : FirebaseDBCallBack {
-                override fun onSuccess(library: Library) {
-                    libraryCreatedLiveData.postValue(library)
+                override fun onSuccess(item: Any) {
+                    libraryCreatedLiveData.postValue(item as Library)
                 }
 
                 override fun onFailure() {

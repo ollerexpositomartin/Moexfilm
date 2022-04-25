@@ -2,12 +2,10 @@ package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
 
-class Movie : MediaItem {
-    var duration: Long = 0
-    var timePlayed: Long = 0
-    var quality: Long = 0
+class TvShow : MediaItem {
 
-    constructor()
+
+    constructor() : super()
 
     constructor(
         idDrive: String,
