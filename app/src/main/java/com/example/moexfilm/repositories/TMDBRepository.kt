@@ -93,6 +93,7 @@ object TMDBRepository {
     suspend fun searchTvEpisode(tvShow: TvShow, season: Season, episodes: MutableList<GDriveItem>, language: String, callback: TMDBCallBack) {
         if (episodes.size > 0)
             for (episode in episodes) {
+                //POR AQUI EL ERROR
                 val episodeNumber = StringUtil.getEpisodeNumber(episode.name)
                 val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
                     .searchTvEpisode(
@@ -102,8 +103,6 @@ object TMDBRepository {
                         API_KEY,
                         language
                     )
-
-                Log.d("RESPONSE---------->",response.raw().toString())
 
                 if (response.isSuccessful) {
                     val episodeTMDB = response.body()!!

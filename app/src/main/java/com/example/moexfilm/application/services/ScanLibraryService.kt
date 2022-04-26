@@ -81,7 +81,10 @@ class ScanLibraryService : Service() {
                         val tvShow = item as TvShow
                         getSeasons(library,tvShow,object :FirebaseDBCallBack{
                             override fun onSuccess(item: Any) {
-                                
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    val season = item as Season
+                                    getEpisodes(library, tvShow, season)
+                                }
                             }
 
                             override fun onFailure() {

@@ -1,5 +1,6 @@
 package com.example.moexfilm.repositories
 
+import android.util.Log
 import com.example.moexfilm.models.data.mediaObjects.GDriveItem
 import com.example.moexfilm.models.data.responseObjects.GDriveResponse
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
@@ -11,11 +12,12 @@ object GDriveRepository {
     private const val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"
 
     suspend fun getChildItems(query:String, gDriveCallBack: GDriveCallBack) {
-        var nextPageToken: String = ""
-        var success: Boolean = true
-        val folders: ArrayList<GDriveItem> = ArrayList()
-        do {
-            val response = RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL).create(GDriveService::class.java)
+            var nextPageToken: String = ""
+            var success: Boolean = true
+            val folders: ArrayList<GDriveItem> = ArrayList()
+            do {
+                val response = RetrofitHelper.getRetrofit(GOOGLE_DRIVE_API_URL)
+                    .create(GDriveService::class.java)
                     .getChildItems(
                         "allDrives",
                         query,
@@ -27,21 +29,21 @@ object GDriveRepository {
                         "files(id,name),nextPageToken",
                         "Bearer $ACCESS_TOKEN"
                     )
-            if (response.isSuccessful) {
+                if (response.isSuccessful) {
                     val listDriveResponse: GDriveResponse = response.body()!!
                     folders.addAll(listDriveResponse.listGDriveItems)
                     nextPageToken = listDriveResponse.nextPageToken ?: ""
-            } else {
-                nextPageToken = ""
-                success = false
-            }
-        } while (nextPageToken.isNotEmpty() && success)
+                } else {
+                    nextPageToken = ""
+                    success = false
+                }
+            } while (nextPageToken.isNotEmpty() && success)
 
-        if (success) {
-            gDriveCallBack.onSuccess(folders)
-            return
-        }
-        gDriveCallBack.onFailure()
+            if (success) {
+                gDriveCallBack.onSuccess(folders)
+                return
+            }
+            gDriveCallBack.onFailure()
     }
 
 
