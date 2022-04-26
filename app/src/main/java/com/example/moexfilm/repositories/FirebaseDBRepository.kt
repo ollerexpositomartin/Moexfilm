@@ -3,10 +3,7 @@ package com.example.moexfilm.repositories
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
-import com.example.moexfilm.models.data.mediaObjects.Library
-import com.example.moexfilm.models.data.mediaObjects.TMDBItem
-import com.example.moexfilm.models.data.mediaObjects.Movie
-import com.example.moexfilm.models.data.mediaObjects.Season
+import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
 
@@ -32,7 +29,7 @@ object FirebaseDBRepository {
             }
     }
 
-    fun saveMovieAndTvShowInLibrary(item: TMDBItem, callback:FirebaseDBCallBack? = null) {
+    fun saveMovieAndTvShowInLibrary(item: TMDBItem, callback: FirebaseDBCallBack? = null) {
         database.child("users").child(prefs.readUid()).child("libraries").child(item.parentFolder)
             .child("content").child(item.idDrive).setValue(item).addOnSuccessListener {
                 callback?.onSuccess(item)
@@ -42,15 +39,25 @@ object FirebaseDBRepository {
             }
     }
 
-    fun saveSeason(season: Season, callback:FirebaseDBCallBack? = null) {
-        database.child("users").child(prefs.readUid()).child("libraries").child(season.parentLibrary)
-            .child("content").child(season.parentFolder).child("seasons").child(season.idDrive).setValue(season).addOnSuccessListener {
+    fun saveSeason(season: Season, callback: FirebaseDBCallBack? = null) {
+        database.child("users").child(prefs.readUid()).child("libraries")
+            .child(season.parentLibrary)
+            .child("content").child(season.parentFolder).child("seasons").child(season.idDrive)
+            .setValue(season).addOnSuccessListener {
                 callback?.onSuccess(season)
             }
             .addOnFailureListener {
                 callback?.onFailure()
             }
     }
+
+    fun saveEpisode(episode: Episode, callback: FirebaseDBCallBack? = null) {
+        database.child("users").child(prefs.readUid()).child("libraries")
+            .child(episode.parentLibrary)
+            .child("content").child(episode.parentTvShow).child("seasons")
+            .child(episode.parentFolder).child("episodes").child(episode.idDrive).setValue(episode)
+    }
+
 
     fun saveAccountRefreshToken(account: Account) {
         database.child("users").child(prefs.readUid()).child("accounts")

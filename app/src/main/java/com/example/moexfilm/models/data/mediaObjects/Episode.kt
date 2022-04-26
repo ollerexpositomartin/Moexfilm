@@ -2,24 +2,44 @@ package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
 
-class Episode {
-    var idDrive: String = ""
-    @SerializedName("name")
-    var name:String = ""
-    @SerializedName("overview")
-    var overview:String = ""
+class Episode : TMDBItem {
+
     @SerializedName("still_path")
-    var stillPath:String = ""
-    @SerializedName("vote_average")
-    var voteAverage:Double = 0.0
+    var stillPath: String = ""
+
+    var parentTvShow: String = ""
 
     constructor()
 
-    constructor(idDrive: String, name: String, overview: String, stillPath: String, voteAverage: Double) {
-        this.idDrive = idDrive
-        this.name = name
-        this.overview = overview
+    constructor(
+        idDrive: String,
+        name: String,
+        fileName: String,
+        parentFolder: String,
+        parentLibrary: String,
+        id: Int,
+        poster_path: String,
+        stillPath:String,
+        backdrop_path: String,
+        genre_ids: List<Int>,
+        popularity: Double,
+        vote_average: Double,
+        overview: String
+    ) : super(
+        idDrive,
+        name,
+        fileName,
+        parentFolder,
+        parentLibrary,
+        id,
+        poster_path,
+        backdrop_path,
+        genre_ids,
+        popularity,
+        vote_average,
+        overview
+    ){
         this.stillPath = stillPath
-        this.voteAverage = voteAverage
     }
+
 }

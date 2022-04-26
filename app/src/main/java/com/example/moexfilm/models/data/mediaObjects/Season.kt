@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 class Season : TMDBItem {
 
-    @SerializedName("")
-    private var episodes: Map<String, Episode> = emptyMap()
-
     constructor():super()
+    @SerializedName("season_number")
+    var season_number: Int = 0
 
     constructor(
         idDrive: String,
         name: String,
+        season_number: Int,
         fileName: String,
         parentFolder: String,
         parentLibrary: String,
@@ -35,7 +35,9 @@ class Season : TMDBItem {
         popularity,
         vote_average,
         overview
-    )
+    ){
+        this.season_number = season_number
+    }
 
 
 }

@@ -15,22 +15,22 @@ open class TMDBItem {
     var id: Int = 0
 
     @SerializedName("poster_path")
-    var poster_path: String = ""
+    var poster_path: String? = null
 
     @SerializedName("backdrop_path")
-    var backdrop_path: String = ""
+    var backdrop_path: String? = null
 
     @SerializedName("genre_ids")
     var genre_ids: List<Int> = emptyList()
 
     @SerializedName("popularity")
-    var popularity: Double = 0.0
+    var popularity: Double? = null
 
     @SerializedName("vote_average")
-    var vote_average: Double = 0.0
+    var vote_average: Double? = null
 
     @SerializedName("overview")
-    var overview: String = ""
+    var overview: String? = null
 
     constructor():super()
 
