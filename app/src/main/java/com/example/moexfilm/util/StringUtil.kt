@@ -1,5 +1,6 @@
 package com.example.moexfilm.util
 
+import android.util.Log
 import com.example.moexfilm.models.data.utilObjects.FormatTitle
 import com.example.moexfilm.models.data.mediaObjects.Library
 import java.lang.StringBuilder
@@ -42,6 +43,26 @@ object StringUtil {
                 text.append(libraryItemList[i].name)
         }
         return text.toString()
+    }
+
+    fun getSeasonNumber(name:String):Int{
+        val p = Pattern.compile("[0-9]+")
+        val matcher = p.matcher(name)
+
+        if(matcher.find()){
+            return matcher.group(0)?.toInt()!!
+        }
+        return -1
+    }
+
+    fun getEpisodeNumber(name:String):Int{
+        val p = Pattern.compile("([xXeE])([0-9]+)")
+        val matcher = p.matcher(name)
+
+        if(matcher.find()){
+            return matcher.group(1)?.toInt()!!
+        }
+        return -1
     }
 
 }

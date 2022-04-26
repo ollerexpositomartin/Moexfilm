@@ -2,10 +2,11 @@ package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
 
-open class MediaItem {
+open class TMDBItem {
     var idDrive: String = ""
     var fileName: String = ""
-    var parent: String = ""
+    var parentFolder: String = ""
+    var parentLibrary:String = ""
 
     @SerializedName("title", alternate = ["name"])
     var name:String = ""
@@ -31,25 +32,27 @@ open class MediaItem {
     @SerializedName("overview")
     var overview: String = ""
 
-    constructor()
+    constructor():super()
 
    constructor(
-        idDrive: String,
-        name:String,
-        fileName: String,
-        parent: String,
-        id: Int,
-        poster_path: String,
-        backdrop_path: String,
-        genre_ids: List<Int>,
-        popularity: Double,
-        vote_average: Double,
-        overview: String
+       idDrive: String,
+       name:String,
+       fileName: String,
+       parentFolder: String,
+       parentLibrary:String,
+       id: Int,
+       poster_path: String,
+       backdrop_path: String,
+       genre_ids: List<Int>,
+       popularity: Double,
+       vote_average: Double,
+       overview: String
     ){
         this.idDrive = idDrive
         this.name = name
         this.fileName = fileName
-        this.parent = parent
+        this.parentFolder = parentFolder
+        this.parentLibrary = parentLibrary
         this.id = id
         this.poster_path = poster_path
         this.backdrop_path = backdrop_path

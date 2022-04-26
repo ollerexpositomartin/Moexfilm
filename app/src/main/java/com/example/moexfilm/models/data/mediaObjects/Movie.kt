@@ -1,19 +1,18 @@
 package com.example.moexfilm.models.data.mediaObjects
 
-import com.google.gson.annotations.SerializedName
-
-class Movie : MediaItem {
+class Movie : TMDBItem {
     var duration: Long = 0
     var timePlayed: Long = 0
     var quality: Long = 0
 
-    constructor()
+    constructor():super()
 
     constructor(
         idDrive: String,
-        name:String,
+        name: String,
         fileName: String,
-        parent: String,
+        parentFolder: String,
+        parentLibrary: String,
         id: Int,
         poster_path: String,
         backdrop_path: String,
@@ -25,7 +24,8 @@ class Movie : MediaItem {
         idDrive,
         name,
         fileName,
-        parent,
+        parentFolder,
+        parentLibrary,
         id,
         poster_path,
         backdrop_path,

@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
 import com.example.moexfilm.models.data.mediaObjects.Library
-import com.example.moexfilm.models.data.mediaObjects.MediaItem
+import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.models.data.mediaObjects.Season
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
 
@@ -31,10 +32,24 @@ object FirebaseDBRepository {
             }
     }
 
-    //CAMBIAR ESTOS 2 METODOS A 1 SOLO
-    fun saveMovieAndTvShowInLibrary(item: MediaItem) {
-        database.child("users").child(prefs.readUid()).child("libraries").child(item.parent)
-            .child("content").child(item.idDrive).setValue(item)
+    fun saveMovieAndTvShowInLibrary(item: TMDBItem, callback:FirebaseDBCallBack? = null) {
+        database.child("users").child(prefs.readUid()).child("libraries").child(item.parentFolder)
+            .child("content").child(item.idDrive).setValue(item).addOnSuccessListener {
+                callback?.onSuccess(item)
+            }
+            .addOnFailureListener {
+                callback?.onFailure()
+            }
+    }
+
+    fun saveSeason(season: Season, callback:FirebaseDBCallBack? = null) {
+        database.child("users").child(prefs.readUid()).child("libraries").child(season.parentLibrary)
+            .child("content").child(season.parentFolder).child("seasons").child(season.idDrive).setValue(season).addOnSuccessListener {
+                callback?.onSuccess(season)
+            }
+            .addOnFailureListener {
+                callback?.onFailure()
+            }
     }
 
     fun saveAccountRefreshToken(account: Account) {

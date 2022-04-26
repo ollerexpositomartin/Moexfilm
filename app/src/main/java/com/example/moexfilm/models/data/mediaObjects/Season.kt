@@ -2,23 +2,40 @@ package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
 
-class Season {
-    var idDrive:String = ""
-    @SerializedName("name")
-    var name: String = ""
-    @SerializedName("poster_path")
-    var poster: String = ""
-    @SerializedName("episodes")
-    var episodes: List<Episode> = emptyList()
+class Season : TMDBItem {
 
-    constructor()
+    @SerializedName("")
+    private var episodes: Map<String, Episode> = emptyMap()
 
-    constructor(idDrive: String, name: String, poster: String, episodes: List<Episode>) {
-        this.idDrive = idDrive
-        this.name = name
-        this.poster = poster
-        this.episodes = episodes
-    }
+    constructor():super()
+
+    constructor(
+        idDrive: String,
+        name: String,
+        fileName: String,
+        parentFolder: String,
+        parentLibrary: String,
+        id: Int,
+        poster_path: String,
+        backdrop_path: String,
+        genre_ids: List<Int>,
+        popularity: Double,
+        vote_average: Double,
+        overview: String
+    ) : super(
+        idDrive,
+        name,
+        fileName,
+        parentFolder,
+        parentLibrary,
+        id,
+        poster_path,
+        backdrop_path,
+        genre_ids,
+        popularity,
+        vote_average,
+        overview
+    )
 
 
 }

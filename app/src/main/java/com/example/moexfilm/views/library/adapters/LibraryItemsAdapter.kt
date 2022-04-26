@@ -57,7 +57,7 @@ private object DiffUtilCallBack: DiffUtil.ItemCallback<Movie>(){
             isSame = false
         if(oldItem.overview != newItem.overview)
             isSame = false
-        if(oldItem.parent != newItem.parent)
+        if(oldItem.parentFolder != newItem.parentFolder)
             isSame = false
         if(oldItem.popularity != newItem.popularity)
             isSame = false
