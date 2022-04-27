@@ -16,16 +16,19 @@ object StringUtil {
     }
 
     fun extractTitleAndDate(title: String): FormatTitle {
-        val p = Pattern.compile("(^[A-z0-9 ]+)(\\([0-9]{4}\\))?")
+        val p = Pattern.compile("(^[A-zÀ-ÿñ:\\-0-9 ]+)(\\([0-9]{4}\\))?")
         val match = p.matcher(title)
         val formatTitle = FormatTitle("","")
         if (match.find()) {
             val titleMovie = match.group(1) ?: ""
-            val year = match.group(2)?.replace(Regex("[\\\\(-\\\\)]"), "") ?: ""
+            val year = match.group(2)?.replace(Regex("[\\(-\\)]"), "") ?: ""
             if (titleMovie.isNotEmpty()) {
                 formatTitle.name = titleMovie
                 if (year.isNotEmpty())
                     formatTitle.year = year
+
+
+                Log.d("NOMBRE Y FECHA", "$titleMovie $year")
 
                 return formatTitle
             }

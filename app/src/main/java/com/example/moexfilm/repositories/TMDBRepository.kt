@@ -21,7 +21,7 @@ object TMDBRepository {
     ) {
         if (files.size > 0)
             for (file in files) {
-                val formatTitle = StringUtil.extractTitleAndDate(file.name)
+                val formatTitle = StringUtil.extractTitleAndDate(file.fileName)
                 val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
                     .searchMovie(
                         API_KEY,
@@ -30,12 +30,13 @@ object TMDBRepository {
                         language
                     )
 
+                Log.d("RESPONSE----->",response.raw().toString())
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result!!.results.isNotEmpty()) {
                         val movie = result.results[0]
-                        movie.idDrive = file.id
-                        movie.fileName = file.name
+                        movie.idDrive = file.idDrive
+                        movie.fileName = file.fileName
                         callback.onSearchItemCompleted(movie)
                     }
                 }
@@ -48,7 +49,7 @@ object TMDBRepository {
         if (folders != null) {
             if (folders.size > 0)
                 for (folder in folders) {
-                    val formatTitle = StringUtil.extractTitleAndDate(folder.name)
+                    val formatTitle = StringUtil.extractTitleAndDate(folder.fileName)
                     val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
                         .searchTvShow(API_KEY, formatTitle.name, formatTitle.year, language)
 
@@ -56,8 +57,8 @@ object TMDBRepository {
                         val result = response.body()
                         if (result!!.results.isNotEmpty()) {
                             val tvShow = result.results[0]
-                            tvShow.idDrive = folder.id
-                            tvShow.fileName = folder.name
+                            tvShow.idDrive = folder.idDrive
+                            tvShow.fileName = folder.fileName
                             callback.onSearchItemCompleted(tvShow)
                         }
                     }
@@ -66,52 +67,32 @@ object TMDBRepository {
         callback.onAllSearchsFinish()
     }
 
-    suspend fun searchTvSeason(tvShow: TvShow, seasons: MutableList<GDriveItem>, language: String, callback: TMDBCallBack) {
-        if (seasons.size > 0)
-            for (season in seasons) {
-                val numberSeason = StringUtil.getSeasonNumber(season.name)
+    suspend fun searchTvSeason(tvShows:MutableList<TvShow>, language: String, callback: TMDBCallBack) {
+        tvShows.forEach { tvShow ->
+            val seasons = tvShow.seasons as HashMap<String,GDriveItem>
+            for(season in seasons){
+                val seasonNumber = StringUtil.getSeasonNumber(season.value.fileName)
                 val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
-                    .searchTvSeason(
-                        tvShow.id,
-                        numberSeason,
-                        API_KEY,
-                        language
-                    )
+                    .searchTvSeason(tvShow.id,seasonNumber,API_KEY,language)
 
+                Log.d("RESPONSE----->",response.raw().toString())
                 if (response.isSuccessful) {
                     val seasonTMDB = response.body()!!
-                    seasonTMDB.idDrive = season.id
-                    seasonTMDB.fileName = season.name
+                    seasonTMDB.idDrive = season.value.idDrive
+                    seasonTMDB.fileName = season.value.fileName
+                    seasonTMDB.parentLibrary  = tvShow.parentLibrary
+                    seasonTMDB.parentFolder = tvShow.idDrive
                     callback.onSearchItemCompleted(seasonTMDB)
+                    }
                 }
             }
         callback.onAllSearchsFinish()
-    }
+        }
 
     suspend fun searchTvEpisode(tvShow: TvShow, season: Season, episodes: MutableList<GDriveItem>, language: String, callback: TMDBCallBack) {
-        if (episodes.size > 0)
-            for (episode in episodes) {
-                //POR AQUI EL ERROR
-                val episodeNumber = StringUtil.getEpisodeNumber(episode.name)
-                val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
-                    .searchTvEpisode(
-                        tvShow.id,
-                        season.season_number,
-                        episodeNumber,
-                        API_KEY,
-                        language
-                    )
-
-                if (response.isSuccessful) {
-                    val episodeTMDB = response.body()!!
-                    episodeTMDB.idDrive = episode.id
-                    episodeTMDB.fileName = episode.name
-                    callback.onSearchItemCompleted(episodeTMDB)
-                }
-
-            }
-        callback.onAllSearchsFinish()
     }
 
-
 }
+
+
+

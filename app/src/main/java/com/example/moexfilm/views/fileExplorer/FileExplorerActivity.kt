@@ -84,9 +84,9 @@ class FileExplorerActivity : AppCompatActivity() {
         val sb = StringBuilder()
        for ( i in route.indices){
            if(i == 0)
-               sb.append(route[i].name)
+               sb.append(route[i].fileName)
            else
-               sb.append("${route[i].name}/")
+               sb.append("${route[i].fileName}/")
        }
         return sb.toString()
     }

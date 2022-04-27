@@ -46,10 +46,10 @@ class FileExplorerViewModel:ViewModel() {
         viewModelScope.launch {
             val routeFolders = routeFoldersMutableLiveData.value!!
             when {
-                routeFolders.size > 2 && routeFolders[routeFolders.size-2].id != "drives" -> {
+                routeFolders.size > 2 && routeFolders[routeFolders.size-2].idDrive != "drives" -> {
                     routeFolders.removeAt(routeFolders.size - 1)
                     val item: GDriveItem = routeFolders[routeFolders.size - 1]
-                    GDriveRepository.getChildItems(queryChildFolders.format(item.id),object :GDriveCallBack{
+                    GDriveRepository.getChildItems(queryChildFolders.format(item.idDrive),object :GDriveCallBack{
                         override fun onSuccess(response: ArrayList<GDriveItem>?) {
                             foldersMutableLiveData.postValue(response)
                             routeFoldersMutableLiveData.postValue(routeFolders)
@@ -59,7 +59,7 @@ class FileExplorerViewModel:ViewModel() {
                         }
                     })
                 }
-                routeFolders.size > 2 && routeFolders[routeFolders.size-2].id == "drives" -> {
+                routeFolders.size > 2 && routeFolders[routeFolders.size-2].idDrive == "drives" -> {
                     routeFolders.removeAt(routeFolders.size - 1)
                     GDriveRepository.getTeamDrives(object :GDriveCallBack{
                         override fun onSuccess(response: ArrayList<GDriveItem>?) {
@@ -79,8 +79,8 @@ class FileExplorerViewModel:ViewModel() {
 
     fun getChildFolders(item: GDriveItem){
         viewModelScope.launch {
-            if(item.id != "drives")
-                GDriveRepository.getChildItems(queryChildFolders.format(item.id), object : GDriveCallBack {
+            if(item.idDrive != "drives")
+                GDriveRepository.getChildItems(queryChildFolders.format(item.idDrive), object : GDriveCallBack {
                     override fun onSuccess(response: ArrayList<GDriveItem>?) {
                         routeFoldersMutableLiveData.value!!.add(item)
                         routeFoldersMutableLiveData.postValue(routeFoldersMutableLiveData.value)

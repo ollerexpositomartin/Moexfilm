@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-data class GDriveItem(
-    @SerializedName("name") var name:String,
-    @SerializedName("id") val id:String
+ data class GDriveItem(
+    @SerializedName("name") var fileName:String,
+    @SerializedName("id") val idDrive:String
 ):Serializable
 

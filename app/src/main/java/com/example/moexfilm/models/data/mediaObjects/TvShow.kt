@@ -2,6 +2,7 @@ package com.example.moexfilm.models.data.mediaObjects
 
 class TvShow : TMDBItem {
 
+    var seasons:HashMap<String,Any> = hashMapOf()
 
     constructor() : super()
 
@@ -32,5 +33,9 @@ class TvShow : TMDBItem {
         vote_average,
         overview
     )
+
+    override fun toString(): String {
+        return "TvShow(seasons=$seasons)"
+    }
 
 }

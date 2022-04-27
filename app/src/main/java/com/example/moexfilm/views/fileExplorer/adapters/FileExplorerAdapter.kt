@@ -28,12 +28,12 @@ class FileExplorerAdapter(val onFolderTouchListener:(GDriveItem)->Unit):ListAdap
 
     override fun onBindViewHolder(holder: FileExplorerAdapter.ViewHolder, position: Int) {
         val gDriveElement = getItem(position)
-        holder.binding.tvName.text = gDriveElement.name
+        holder.binding.tvName.text = gDriveElement.fileName
     }
 }
 
 private object DiffUtilCallBack: DiffUtil.ItemCallback<GDriveItem>(){
-    override fun areItemsTheSame(oldItem: GDriveItem, newItem: GDriveItem): Boolean = oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: GDriveItem, newItem: GDriveItem): Boolean = oldItem.idDrive == newItem.idDrive
 
     override fun areContentsTheSame(oldItem: GDriveItem, newItem: GDriveItem): Boolean = oldItem == newItem
 }
