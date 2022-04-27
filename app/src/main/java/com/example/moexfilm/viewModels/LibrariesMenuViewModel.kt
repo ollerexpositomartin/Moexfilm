@@ -13,7 +13,7 @@ class LibrariesMenuViewModel: ViewModel() {
     val librariesMutableLiveData = MutableLiveData<List<Library>>()
 
     init {
-       // viewModelScope.launch(Dispatchers.IO) {FirebaseDBRepository.setListenerLibraries(librariesMutableLiveData)}
+        viewModelScope.launch(Dispatchers.IO) {FirebaseDBRepository.setListenerLibraries(librariesMutableLiveData)}
     }
 
 

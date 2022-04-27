@@ -44,27 +44,25 @@ object TMDBRepository {
     }
 
 
-    suspend fun searchTvShows(
-        folders: MutableList<GDriveItem>,
-        language: String,
-        callback: TMDBCallBack
-    ) {
-        if (folders.size > 0)
-            for (folder in folders) {
-                val formatTitle = StringUtil.extractTitleAndDate(folder.name)
-                val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
-                    .searchTvShow(API_KEY, formatTitle.name, formatTitle.year, language)
+    suspend fun searchTvShows(folders: MutableList<GDriveItem>?, language: String, callback: TMDBCallBack) {
+        if (folders != null) {
+            if (folders.size > 0)
+                for (folder in folders) {
+                    val formatTitle = StringUtil.extractTitleAndDate(folder.name)
+                    val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
+                        .searchTvShow(API_KEY, formatTitle.name, formatTitle.year, language)
 
-                if (response.isSuccessful) {
-                    val result = response.body()
-                    if (result!!.results.isNotEmpty()) {
-                        val tvShow = result.results[0]
-                        tvShow.idDrive = folder.id
-                        tvShow.fileName = folder.name
-                        callback.onSearchItemCompleted(tvShow)
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        if (result!!.results.isNotEmpty()) {
+                            val tvShow = result.results[0]
+                            tvShow.idDrive = folder.id
+                            tvShow.fileName = folder.name
+                            callback.onSearchItemCompleted(tvShow)
+                        }
                     }
                 }
-            }
+        }
         callback.onAllSearchsFinish()
     }
 
