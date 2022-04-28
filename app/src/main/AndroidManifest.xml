@@ -23,6 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".views.library.LibraryActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".views.CreateLibraryActivity"

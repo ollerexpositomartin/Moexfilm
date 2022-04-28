@@ -17,15 +17,13 @@ import com.example.moexfilm.databinding.ActivityMainBinding
 import com.example.moexfilm.models.data.mediaObjects.Library
 import com.example.moexfilm.models.interfaces.listeners.ServiceListener
 import com.example.moexfilm.util.StringUtil
+import com.example.moexfilm.views.ScanActivity
 import com.example.moexfilm.views.main.fragments.HomeFragment
 import com.example.moexfilm.views.main.fragments.librariesMenu.LibrariesMenuFragment
 
 
-class MainActivity : AppCompatActivity(),ServiceListener {
+class MainActivity :ScanActivity() {
     private lateinit var binding:ActivityMainBinding
-    private lateinit var connection:ServiceConnection
-    var service: ScanLibraryService? = null
-    lateinit var library: Library
 
     val responseLibraryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ response ->
         if(response.resultCode == RESULT_OK){
@@ -35,32 +33,11 @@ class MainActivity : AppCompatActivity(),ServiceListener {
         }
     }
 
-    private fun initService() {
-        if(service == null){
-            val service = Intent(this, ScanLibraryService::class.java).also { service ->
-                startService(service)
-                bindService(service, connection, BIND_AUTO_CREATE)
-            }
-        }else {
-            service!!.startScan(library)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         prefs = Prefs(this)
-
-        connection = object:ServiceConnection {
-            override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-                service = (p1 as ScanLibraryService.LocalBinder).getService()
-                service!!.setScanServiceListener(this@MainActivity)
-                service!!.startScan(library)
-            }
-            override fun onServiceDisconnected(p0: ComponentName?) {
-            }
-        }
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){

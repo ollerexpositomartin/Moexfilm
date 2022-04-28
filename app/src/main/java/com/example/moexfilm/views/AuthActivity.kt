@@ -21,7 +21,6 @@ abstract class AuthActivity : AppCompatActivity() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val authViewModel: AuthViewModel by viewModels()
 
-
     private var responseGoogleSignIn = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { response ->
             if (response.resultCode == RESULT_OK) {
                 val data = response.data

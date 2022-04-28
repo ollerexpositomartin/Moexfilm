@@ -107,7 +107,6 @@ class ScanLibraryService : Service() {
                 CoroutineScope(Dispatchers.IO).launch { scanTvEpisodes(library, tvShows) }
             }
         })
-
     }
 
     private suspend fun scanTvEpisodes(library: Library, tvShows:MutableList<TvShow>) {
@@ -135,6 +134,7 @@ class ScanLibraryService : Service() {
 
     suspend fun scanMovies(library: Library, response: ArrayList<GDriveItem>?) {
         val foldersToScan: MutableList<GDriveItem> = response ?: mutableListOf()
+        foldersToScan.add(GDriveItem(library.name, library.id))
         val query: String = foldersToScan.stream().map { item -> queryFormatFiles.format(item.idDrive) }
             .collect(Collectors.joining(" or ")).plus(" and mimeType = 'video/x-matroska'")
 
@@ -154,7 +154,8 @@ class ScanLibraryService : Service() {
                 }
             }
             override fun onFailure() {
-                Toast.makeText(this@ScanLibraryService, String.format(getString(R.string.scanningLibraries_error), library.name), Toast.LENGTH_LONG).show()
+                runBlocking(Dispatchers.Main){ Toast.makeText(this@ScanLibraryService, String.format(getString(R.string.scanningLibraries_error), library.name), Toast.LENGTH_LONG).show()}
+
                 removeLibrary(library)
             }
         })

@@ -1,6 +1,8 @@
 package com.example.moexfilm.models.data.mediaObjects
 
-class Movie : TMDBItem {
+import java.io.Serializable
+
+class Movie : TMDBItem,Serializable {
     private var duration: Long = 0
     private var timePlayed: Long = 0
     private var quality: Long = 0

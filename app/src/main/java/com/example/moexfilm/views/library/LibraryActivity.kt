@@ -1,22 +1,28 @@
 package com.example.moexfilm.views.library
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityLibraryBinding
 import com.example.moexfilm.models.data.mediaObjects.Library
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 import com.example.moexfilm.models.data.mediaObjects.TvShow
 import com.example.moexfilm.viewModels.LibraryViewModel
+import com.example.moexfilm.views.DetailsMovieActivity
+import com.example.moexfilm.views.ScanActivity
 import com.example.moexfilm.views.library.adapters.LibraryItemsAdapter
 
-class LibraryActivity : AppCompatActivity() {
+class LibraryActivity :ScanActivity() {
     private lateinit var binding:ActivityLibraryBinding
     lateinit var adapter: LibraryItemsAdapter
     lateinit var libraryViewModel: LibraryViewModel
-    lateinit var library:Library
+
+    //AÑADIR ACCESSTOKEN ADQUISICION POR LO DEMAS FUNCIONATODO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +31,23 @@ class LibraryActivity : AppCompatActivity() {
         getData()
         libraryViewModel = LibraryViewModel(library)
         setRecycler()
+        setListeners()
         initObserverItems()
+    }
+
+    private fun setListeners() {
+        binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getColor(R.color.background_moexfilm))
+        binding.swipeRefreshLayout.setColorSchemeColors(getColor(R.color.accent_moexfilm))
+        binding.swipeRefreshLayout.setOnRefreshListener(object:SwipeRefreshLayout.OnRefreshListener{
+            override fun onRefresh() {
+                initService()
+            }
+        })
+    }
+
+    override fun isRunning(libraryItemList: MutableList<Library>) {
+        if(libraryItemList.isEmpty())
+            binding.swipeRefreshLayout.isRefreshing = false
     }
 
     private fun initObserverItems() {
@@ -49,7 +71,10 @@ class LibraryActivity : AppCompatActivity() {
     private fun onItemTouch(tmdbItem: TMDBItem){
 
         if(tmdbItem is Movie){
-            Log.d("MOVIE","MOVIE")
+            startActivity(Intent(this,DetailsMovieActivity::class.java).apply {
+                putExtra("MOVIE",tmdbItem)
+            })
+
         }
         if(tmdbItem is TvShow){
             Log.d("TVSHOW","TVSHOW")
