@@ -41,5 +41,6 @@
     <string name="loadingFolders_url">https://assets3.lottiefiles.com/packages/lf20_qcdpfl7i.json</string>
     <string name="wait_text">Espera mientras obtenemos\n las carpetas</string>
     <string name="noFolderSelected_error">No has seleccionado ninguna carpeta</string>
+    <string name="play_text">Reproducir</string>
     <string name="scanningLibrary_text">Escaneando %s</string>
 </resources>

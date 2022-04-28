@@ -16,6 +16,7 @@ import com.example.moexfilm.viewModels.LibraryViewModel
 import com.example.moexfilm.views.DetailsMovieActivity
 import com.example.moexfilm.views.ScanActivity
 import com.example.moexfilm.views.library.adapters.LibraryItemsAdapter
+import java.io.Serializable
 
 class LibraryActivity :ScanActivity() {
     private lateinit var binding:ActivityLibraryBinding
@@ -72,7 +73,7 @@ class LibraryActivity :ScanActivity() {
 
         if(tmdbItem is Movie){
             startActivity(Intent(this,DetailsMovieActivity::class.java).apply {
-                putExtra("MOVIE",tmdbItem)
+                putExtra("MOVIE", tmdbItem)
             })
 
         }

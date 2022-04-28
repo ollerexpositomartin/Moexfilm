@@ -44,4 +44,6 @@ class Movie : TMDBItem,Serializable {
         this.quality = quality
     }
 
+
+
 }

@@ -8,15 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moexfilm.R
+import com.example.moexfilm.application.Application.Access.TMDB_IMAGE_URL
 import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.databinding.ItemMediaLayoutBinding
-import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 
 
 class LibraryItemsAdapter(val onItemTouchListener:(TMDBItem)->Unit): ListAdapter<TMDBItem, LibraryItemsAdapter.ViewHolder>(DiffUtilCallBack) {
-
-    private val TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w342/%s"
     lateinit var context: Context
 
     inner class ViewHolder(v: View): RecyclerView.ViewHolder(v){

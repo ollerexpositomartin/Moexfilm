@@ -23,6 +23,7 @@
             app:rippleColor="@color/accent_moexfilm">
 
             <ImageView
+                android:scaleType="centerCrop"
                 android:id="@+id/imvMedia"
                 android:layout_width="110dp"
                 android:layout_height="150dp"

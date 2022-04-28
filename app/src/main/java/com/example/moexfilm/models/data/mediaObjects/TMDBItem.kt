@@ -1,8 +1,9 @@
 package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-open class TMDBItem{
+open class TMDBItem: Serializable {
     var idDrive: String = ""
     var fileName: String = ""
     var parentFolder: String = ""
