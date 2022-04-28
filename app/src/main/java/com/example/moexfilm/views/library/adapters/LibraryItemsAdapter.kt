@@ -11,9 +11,10 @@ import com.example.moexfilm.R
 import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.databinding.ItemMediaLayoutBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 
 
-class LibraryItemsAdapter(val onItemTouchListener:(Movie)->Unit): ListAdapter<Movie, LibraryItemsAdapter.ViewHolder>(DiffUtilCallBack) {
+class LibraryItemsAdapter(val onItemTouchListener:(TMDBItem)->Unit): ListAdapter<TMDBItem, LibraryItemsAdapter.ViewHolder>(DiffUtilCallBack) {
 
     private val TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w342/%s"
     lateinit var context: Context
@@ -39,15 +40,13 @@ class LibraryItemsAdapter(val onItemTouchListener:(Movie)->Unit): ListAdapter<Mo
     }
 }
 
-private object DiffUtilCallBack: DiffUtil.ItemCallback<Movie>(){
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean = oldItem.idDrive == newItem.idDrive
+private object DiffUtilCallBack: DiffUtil.ItemCallback<TMDBItem>(){
+    override fun areItemsTheSame(oldItem: TMDBItem, newItem: TMDBItem): Boolean = oldItem.idDrive == newItem.idDrive
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+    override fun areContentsTheSame(oldItem: TMDBItem, newItem: TMDBItem): Boolean {
         var isSame = true
 
         if(oldItem.backdrop_path != newItem.backdrop_path)
-            isSame = false
-        if(oldItem.duration != newItem.duration)
             isSame = false
         if(oldItem.fileName != newItem.fileName)
             isSame = false
@@ -62,10 +61,6 @@ private object DiffUtilCallBack: DiffUtil.ItemCallback<Movie>(){
         if(oldItem.popularity != newItem.popularity)
             isSame = false
         if(oldItem.poster_path != newItem.poster_path)
-            isSame = false
-        if(oldItem.timePlayed != newItem.timePlayed)
-            isSame = false
-        if(oldItem.quality != newItem.quality)
             isSame = false
         if(oldItem.vote_average != newItem.vote_average)
             isSame = false

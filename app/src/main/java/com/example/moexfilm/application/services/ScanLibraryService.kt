@@ -4,11 +4,9 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
 import android.widget.Toast
 import com.example.moexfilm.R
 import com.example.moexfilm.models.data.mediaObjects.*
-import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
 import com.example.moexfilm.models.interfaces.listeners.ServiceListener
@@ -69,7 +67,7 @@ class ScanLibraryService : Service() {
     }
 
     suspend fun scanTvShows(library: Library, tvShows: ArrayList<GDriveItem>?) {
-        val tvShowsTMDB:MutableList<TvShow> = mutableListOf<TvShow>()
+        val tvShowsTMDB:MutableList<TvShow> = mutableListOf()
 
         TMDBRepository.searchTvShows(tvShows, library.language, object : TMDBCallBack {
             override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
@@ -94,8 +92,7 @@ class ScanLibraryService : Service() {
                            tvShow.seasons[it.idDrive] = it
                        }
                     }
-                    override fun onFailure() {}
-                })
+                    override fun onFailure() {} })
         }
         TMDBRepository.searchTvSeason(tvShows, library.language, object : TMDBCallBack {
             override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
@@ -107,40 +104,33 @@ class ScanLibraryService : Service() {
               FirebaseDBRepository.saveSeason(season)
             }
             override fun onAllSearchsFinish() {
-                //Implementar
-                //scanTvEpisodes()
+                CoroutineScope(Dispatchers.IO).launch { scanTvEpisodes(library, tvShows) }
             }
         })
 
     }
 
-
-    private suspend fun scanTvEpisodes(library: Library, tvShow: TvShow, season: Season) {
-        try {
-            GDriveRepository.getChildItems(queryFormatFiles.format(season.idDrive),
-                object : GDriveCallBack {
-                    override fun onSuccess(response: ArrayList<GDriveItem>?) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            val episodes = response as MutableList<GDriveItem>
-                            TMDBRepository.searchTvEpisode(tvShow, season, episodes, library.language, object : TMDBCallBack {
-                                    override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
-                                        val episode = itemTMDB as Episode
-                                        episode.parentFolder = season.idDrive
-                                        episode.parentLibrary = library.id
-                                        episode.parentTvShow = tvShow.idDrive
-                                        FirebaseDBRepository.saveEpisode(episode)
-                                    }
-                                    override fun onAllSearchsFinish() {
-                                    }
-                                })
-                        }
-                    }
-                    override fun onFailure() {
-                    }
-                })
-        } catch (e: Exception) {
-            Log.d("Error", e.printStackTrace().toString())
-        }
+    private suspend fun scanTvEpisodes(library: Library, tvShows:MutableList<TvShow>) {
+            tvShows.forEach { tvShow ->
+                tvShow.seasons.map { (_,t) -> t as Season }.forEach { season ->
+                    GDriveRepository.getChildItems(queryFormatFiles.format(season.idDrive), object : GDriveCallBack {
+                            override fun onSuccess(response: ArrayList<GDriveItem>?) {
+                                response?.forEach {
+                                    (tvShow.seasons[season.idDrive] as Season).episodes[it.idDrive] = it
+                                }
+                            }
+                            override fun onFailure() {} })
+                }
+            }
+        TMDBRepository.searchTvEpisode(tvShows,library.language,object:TMDBCallBack{
+            override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
+                val episode = itemTMDB as Episode
+                FirebaseDBRepository.saveEpisode(episode)
+            }
+            override fun onAllSearchsFinish() {
+                removeLibrary(library)
+            }
+        })
     }
 
     suspend fun scanMovies(library: Library, response: ArrayList<GDriveItem>?) {
@@ -148,7 +138,7 @@ class ScanLibraryService : Service() {
         val query: String = foldersToScan.stream().map { item -> queryFormatFiles.format(item.idDrive) }
             .collect(Collectors.joining(" or ")).plus(" and mimeType = 'video/x-matroska'")
 
-        GDriveRepository.getChildItems(query.toString(), object : GDriveCallBack {
+        GDriveRepository.getChildItems(query, object : GDriveCallBack {
             override fun onSuccess(response: ArrayList<GDriveItem>?) {
                 CoroutineScope(Dispatchers.IO).launch {
                     TMDBRepository.searchMovies(response ?: mutableListOf(), library.language, object : TMDBCallBack {

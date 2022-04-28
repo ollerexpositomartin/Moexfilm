@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoexFilm">
         <activity
+            android:name=".views.ScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.DetailsTvShowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.DetailsMovieActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.library.LibraryActivity"
             android:exported="false" />
         <activity

@@ -45,7 +45,7 @@ class LibrariesMenuFragment : Fragment() {
 
     private fun onClickLibrary(library: Library) {
         startActivity(Intent(requireContext(),LibraryActivity::class.java).apply {
-            putExtra("LIBRARYID",library.id)
+            putExtra("LIBRARY",library)
         })
     }
 

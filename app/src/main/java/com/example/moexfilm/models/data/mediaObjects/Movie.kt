@@ -1,9 +1,9 @@
 package com.example.moexfilm.models.data.mediaObjects
 
 class Movie : TMDBItem {
-    var duration: Long = 0
-    var timePlayed: Long = 0
-    var quality: Long = 0
+    private var duration: Long = 0
+    private var timePlayed: Long = 0
+    private var quality: Long = 0
 
     constructor():super()
 
@@ -19,7 +19,10 @@ class Movie : TMDBItem {
         genre_ids: List<Int>,
         popularity: Double,
         vote_average: Double,
-        overview: String
+        overview: String,
+        duration:Long,
+        timePlayed:Long,
+        quality:Long
     ) : super(
         idDrive,
         name,
@@ -33,6 +36,10 @@ class Movie : TMDBItem {
         popularity,
         vote_average,
         overview
-    )
+    ){
+        this.duration = duration
+        this.timePlayed = timePlayed
+        this.quality = quality
+    }
 
 }

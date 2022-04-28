@@ -6,8 +6,10 @@ class Episode : TMDBItem {
 
     @SerializedName("still_path")
     var stillPath: String = ""
-
+    @SerializedName("episode_number")
+    var episode_number:Int = 0
     var parentTvShow: String = ""
+
 
     constructor()
 
@@ -15,6 +17,7 @@ class Episode : TMDBItem {
         idDrive: String,
         name: String,
         fileName: String,
+        episode_number:Int,
         parentFolder: String,
         parentLibrary: String,
         id: Int,
@@ -40,6 +43,7 @@ class Episode : TMDBItem {
         overview
     ){
         this.stillPath = stillPath
+        this.episode_number = episode_number
     }
 
 }

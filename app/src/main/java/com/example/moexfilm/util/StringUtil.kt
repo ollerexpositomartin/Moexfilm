@@ -26,10 +26,6 @@ object StringUtil {
                 formatTitle.name = titleMovie
                 if (year.isNotEmpty())
                     formatTitle.year = year
-
-
-                Log.d("NOMBRE Y FECHA", "$titleMovie $year")
-
                 return formatTitle
             }
         }
@@ -63,7 +59,7 @@ object StringUtil {
         val matcher = p.matcher(name)
 
         if(matcher.find()){
-            return matcher.group(1)?.toInt()!!
+            return matcher.group(2)?.toInt()!!
         }
         return -1
     }

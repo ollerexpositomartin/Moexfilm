@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 class Season : TMDBItem {
 
     constructor():super()
+    @SerializedName("")
+    var episodes:HashMap<String,Any> = hashMapOf()
     @SerializedName("season_number")
     var season_number: Int = 0
 
@@ -13,6 +15,7 @@ class Season : TMDBItem {
         name: String,
         season_number: Int,
         fileName: String,
+        episodes:HashMap<String,Any>,
         parentFolder: String,
         parentLibrary: String,
         id: Int,
@@ -36,6 +39,7 @@ class Season : TMDBItem {
         vote_average,
         overview
     ){
+        this.episodes = episodes
         this.season_number = season_number
     }
 
