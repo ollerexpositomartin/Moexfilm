@@ -2,7 +2,7 @@ package com.example.moexfilm.models.data.mediaObjects
 
 import java.io.Serializable
 
-class Library:Serializable {
+class Library:Serializable{
      var owner: String = ""
      var id: String = ""
      var name: String = ""
