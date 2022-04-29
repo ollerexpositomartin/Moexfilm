@@ -3,9 +3,9 @@ package com.example.moexfilm.models.data.mediaObjects
 import java.io.Serializable
 
 class Movie : TMDBItem,Serializable {
-    private var duration: Long = 0
-    private var timePlayed: Long = 0
-    private var quality: Long = 0
+     var duration: Long = 0
+     var timePlayed: Long = 0
+     var quality: Long = 0
 
     constructor():super()
 

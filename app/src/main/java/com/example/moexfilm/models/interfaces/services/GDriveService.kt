@@ -1,9 +1,11 @@
 package com.example.moexfilm.models.interfaces.services
 
 import com.example.moexfilm.models.data.responseObjects.GDriveResponse
+import com.example.moexfilm.models.data.responseObjects.VideoMetadataResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GDriveService {
@@ -27,4 +29,16 @@ interface GDriveService {
         @Query("pageSize") pageSize: Int,
         @Header("Authorization") accessToken:String
     ): Response<GDriveResponse>
+
+    @GET("/drive/v3/files/{fileId}")
+    suspend fun getVideoMetadata(
+        @Path("fileId") fileId:String,
+        @Query("supportsAllDrives") supportsAllDrives:Boolean,
+        @Query("fields") fields:String,
+        @Header("Authorization") accessToken: String
+    ):Response<VideoMetadataResponse>
+
+
+
+
 }

@@ -4,11 +4,13 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.util.Log
 import android.widget.Toast
 import com.example.moexfilm.R
 import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
+import com.example.moexfilm.models.interfaces.callBacks.VideoMetadataCallBack
 import com.example.moexfilm.models.interfaces.listeners.ServiceListener
 import com.example.moexfilm.repositories.FirebaseDBRepository
 import com.example.moexfilm.repositories.GDriveRepository
@@ -145,7 +147,19 @@ class ScanLibraryService : Service() {
                             override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
                                 itemTMDB.parentFolder = library.id
                                 itemTMDB.parentLibrary = library.id
-                                FirebaseDBRepository.saveMovieAndTvShowInLibrary(itemTMDB)
+
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    GDriveRepository.getVideoMetadata(itemTMDB.idDrive,object :VideoMetadataCallBack{
+                                        override fun onSucess(videoMetadata: VideoMetaData) {
+                                            val movie:Movie = itemTMDB as Movie
+                                            movie.duration = videoMetadata.duration
+                                            movie.quality = videoMetadata.quality
+                                            FirebaseDBRepository.saveMovieAndTvShowInLibrary(itemTMDB)
+                                        }
+                                        override fun onFailure() {
+                                            FirebaseDBRepository.saveMovieAndTvShowInLibrary(itemTMDB)
+                                        } })
+                                }
                             }
                             override fun onAllSearchsFinish() {
                                 removeLibrary(library)
