@@ -11,6 +11,8 @@ import com.example.moexfilm.application.expandCollapseTextView
 import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.databinding.ActivityDetailsMovieBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.util.GenreUtil
+import com.example.moexfilm.util.StringUtil
 
 
 class DetailsMovieActivity : AppCompatActivity() {
@@ -22,19 +24,20 @@ class DetailsMovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.btnEspandCollapse.setOnClickListener{
-            binding.tvOverview.expandCollapseTextView()
-            expandOrCollapse = if(expandOrCollapse) {
-                binding.btnEspandCollapse.setImageResource(R.drawable.ic_arrow_up)
-                false
-            } else{
-                binding.btnEspandCollapse.setImageResource(R.drawable.ic_arrow_down)
-                true
-            }
-        }
+        binding.btnEspandCollapse.setOnClickListener{ expandCollapse() }
         getData()
     }
 
+    private fun expandCollapse() {
+        binding.tvOverview.expandCollapseTextView()
+        expandOrCollapse = if(expandOrCollapse) {
+            binding.btnEspandCollapse.setImageResource(R.drawable.ic_arrow_up)
+            false
+        } else{
+            binding.btnEspandCollapse.setImageResource(R.drawable.ic_arrow_down)
+            true
+        }
+    }
 
     private fun getData() {
         val data = intent.extras
@@ -45,5 +48,9 @@ class DetailsMovieActivity : AppCompatActivity() {
         binding.tvNameMovie.text = movie.name
         binding.tvAverage.text = movie.vote_average.toString()
         binding.tvOverview.text = movie.overview
+        binding.tvFileName.text = movie.fileName
+        binding.tvDate.text = movie.release_date
+        binding.tvDuration.text = StringUtil.minToHoursAndMinutes(movie.duration)
+        binding.tvGenres.text = GenreUtil.genresToString(movie.genres)
     }
 }

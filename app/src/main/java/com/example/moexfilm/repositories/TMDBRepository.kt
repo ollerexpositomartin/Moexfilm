@@ -1,9 +1,7 @@
 package com.example.moexfilm.repositories
 
 import android.util.Log
-import com.example.moexfilm.models.data.mediaObjects.GDriveItem
-import com.example.moexfilm.models.data.mediaObjects.Season
-import com.example.moexfilm.models.data.mediaObjects.TvShow
+import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.helpers.RetrofitHelper
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
 import com.example.moexfilm.models.interfaces.services.TMDBService
@@ -29,10 +27,17 @@ object TMDBRepository {
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result!!.results.isNotEmpty()) {
-                        val movie = result.results[0]
-                        movie.idDrive = file.idDrive
-                        movie.fileName = file.fileName
-                        callback.onSearchItemCompleted(movie)
+                        val tempMovie = result.results[0]
+                        searchMovieDetails(tempMovie, language, object : TMDBCallBack {
+                            override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
+                                val movie = itemTMDB as Movie
+                                movie.idDrive = file.idDrive
+                                movie.fileName = file.fileName
+                                movie.release_date = StringUtil.dateToYear(movie.release_date?:"")
+
+                                callback.onSearchItemCompleted(movie)
+                            }
+                            override fun onAllSearchsFinish() {} })
                     }
                 }
             }
@@ -111,7 +116,19 @@ object TMDBRepository {
         callback.onAllSearchsFinish()
     }
 
-}
+    private suspend fun searchMovieDetails(movie: Movie, language: String, callback: TMDBCallBack) {
+        val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
+            .searchMovieDetails(movie.id, API_KEY, language)
+        if (response.isSuccessful) {
+            val result = response.body()!!
+            movie.duration = result.duration
+            movie.genres = result.genres
+            callback.onSearchItemCompleted(movie)
+            }
+        }
+    }
+
+
 
 
 

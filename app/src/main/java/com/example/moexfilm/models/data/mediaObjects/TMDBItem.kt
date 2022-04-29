@@ -21,11 +21,14 @@ open class TMDBItem: Serializable {
     @SerializedName("backdrop_path")
     var backdrop_path: String? = null
 
-    @SerializedName("genre_ids")
-    var genre_ids: List<Int> = emptyList()
+    @SerializedName("genres")
+    var genres: List<Genre> = emptyList()
 
     @SerializedName("popularity")
     var popularity: Double? = null
+
+    @SerializedName("release_date")
+    var release_date: String? = null
 
     @SerializedName("vote_average")
     var vote_average: Double? = null
@@ -37,18 +40,19 @@ open class TMDBItem: Serializable {
 
    constructor(
        idDrive: String,
-       name:String,
+       name: String,
        fileName: String,
        parentFolder: String,
-       parentLibrary:String,
+       parentLibrary: String,
        id: Int,
        poster_path: String,
        backdrop_path: String,
-       genre_ids: List<Int>,
+       genres: List<Genre>,
        popularity: Double,
        vote_average: Double,
-       overview: String
-    ){
+       overview: String,
+       release_date: String?
+   ){
         this.idDrive = idDrive
         this.name = name
         this.fileName = fileName
@@ -57,8 +61,9 @@ open class TMDBItem: Serializable {
         this.id = id
         this.poster_path = poster_path
         this.backdrop_path = backdrop_path
-        this.genre_ids = genre_ids
+        this.genres = genres
         this.popularity = popularity
+        this.release_date = release_date
         this.vote_average = vote_average
         this.overview = overview
     }

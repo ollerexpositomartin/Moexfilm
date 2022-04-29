@@ -48,8 +48,6 @@ private object DiffUtilCallBack: DiffUtil.ItemCallback<TMDBItem>(){
             isSame = false
         if(oldItem.fileName != newItem.fileName)
             isSame = false
-        if(oldItem.genre_ids != newItem.genre_ids)
-            isSame = false
         if(oldItem.name != newItem.name)
             isSame = false
         if(oldItem.overview != newItem.overview)

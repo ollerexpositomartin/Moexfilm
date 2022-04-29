@@ -64,4 +64,20 @@ object StringUtil {
         return -1
     }
 
+    fun dateToYear(date:String):String{
+        val p = Pattern.compile("[0-9]{4}")
+        val matcher = p.matcher(date)
+
+        if(matcher.find()){
+            return matcher.group(0)!!
+        }
+        return ""
+    }
+
+    fun minToHoursAndMinutes(min:Long):String{
+        val hours = min/60
+        val minutes = min%60
+        return "${hours}h ${minutes}m"
+    }
+
 }

@@ -1,8 +1,11 @@
 package com.example.moexfilm.models.data.mediaObjects
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.*
 
 class Movie : TMDBItem,Serializable {
+     @SerializedName("runtime")
      var duration: Long = 0
      var timePlayed: Long = 0
      var quality: Long = 0
@@ -15,10 +18,11 @@ class Movie : TMDBItem,Serializable {
         fileName: String,
         parentFolder: String,
         parentLibrary: String,
+        released_date: String?,
         id: Int,
         poster_path: String,
         backdrop_path: String,
-        genre_ids: List<Int>,
+        genres: List<Genre>,
         popularity: Double,
         vote_average: Double,
         overview: String,
@@ -34,10 +38,11 @@ class Movie : TMDBItem,Serializable {
         id,
         poster_path,
         backdrop_path,
-        genre_ids,
+        genres,
         popularity,
         vote_average,
-        overview
+        overview,
+        released_date
     ){
         this.duration = duration
         this.timePlayed = timePlayed

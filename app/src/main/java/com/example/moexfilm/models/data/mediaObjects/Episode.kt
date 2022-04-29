@@ -1,6 +1,7 @@
 package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 class Episode : TMDBItem {
 
@@ -20,11 +21,12 @@ class Episode : TMDBItem {
         episode_number:Int,
         parentFolder: String,
         parentLibrary: String,
+        released_date: String?,
         id: Int,
         poster_path: String,
         stillPath:String,
         backdrop_path: String,
-        genre_ids: List<Int>,
+        genres: List<Genre>,
         popularity: Double,
         vote_average: Double,
         overview: String
@@ -37,10 +39,11 @@ class Episode : TMDBItem {
         id,
         poster_path,
         backdrop_path,
-        genre_ids,
+        genres,
         popularity,
         vote_average,
-        overview
+        overview,
+        released_date
     ){
         this.stillPath = stillPath
         this.episode_number = episode_number

@@ -14,6 +14,7 @@ import com.example.moexfilm.models.interfaces.callBacks.VideoMetadataCallBack
 import com.example.moexfilm.models.interfaces.listeners.ServiceListener
 import com.example.moexfilm.repositories.FirebaseDBRepository
 import com.example.moexfilm.repositories.GDriveRepository
+import com.example.moexfilm.repositories.MediaMetadataRepository
 import com.example.moexfilm.repositories.TMDBRepository
 import kotlinx.coroutines.*
 import java.util.stream.Collectors
@@ -145,21 +146,15 @@ class ScanLibraryService : Service() {
                 CoroutineScope(Dispatchers.IO).launch {
                     TMDBRepository.searchMovies(response ?: mutableListOf(), library.language, object : TMDBCallBack {
                             override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
-                                itemTMDB.parentFolder = library.id
-                                itemTMDB.parentLibrary = library.id
-
                                 CoroutineScope(Dispatchers.IO).launch {
-                                    GDriveRepository.getVideoMetadata(itemTMDB.idDrive,object :VideoMetadataCallBack{
-                                        override fun onSucess(videoMetadata: VideoMetaData) {
-                                            val movie:Movie = itemTMDB as Movie
-                                            movie.duration = videoMetadata.duration
-                                            movie.quality = videoMetadata.quality
-                                            FirebaseDBRepository.saveMovieAndTvShowInLibrary(itemTMDB)
-                                        }
-                                        override fun onFailure() {
-                                            FirebaseDBRepository.saveMovieAndTvShowInLibrary(itemTMDB)
-                                        } })
+                                    val movie = itemTMDB as Movie
+
+                                    movie.parentFolder = library.id
+                                    movie.parentLibrary = library.id
+                                    FirebaseDBRepository.saveMovieAndTvShowInLibrary(movie)
+
                                 }
+
                             }
                             override fun onAllSearchsFinish() {
                                 removeLibrary(library)

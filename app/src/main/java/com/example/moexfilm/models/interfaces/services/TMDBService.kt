@@ -1,6 +1,7 @@
 package com.example.moexfilm.models.interfaces.services
 
 import com.example.moexfilm.models.data.mediaObjects.Episode
+import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.data.mediaObjects.Season
 import com.example.moexfilm.models.data.responseObjects.TMDBResponseMovie
 import com.example.moexfilm.models.data.responseObjects.TMDBResponseTvShow
@@ -17,6 +18,13 @@ interface TMDBService {
         @Query("year") year: String,
         @Query("language") language:String
     ): Response<TMDBResponseMovie>
+
+    @GET("/3/movie/{movie_id}")
+    suspend fun searchMovieDetails(
+        @Path("movie_id") movie_id: Int,
+        @Query("api_key") api_key: String,
+        @Query("language") language:String
+    ): Response<Movie>
 
     @GET("/3/search/tv")
     suspend fun searchTvShow(

@@ -1,6 +1,8 @@
 package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
+import kotlin.collections.HashMap
 
 class Season : TMDBItem {
 
@@ -14,6 +16,7 @@ class Season : TMDBItem {
         idDrive: String,
         name: String,
         season_number: Int,
+        released_date: String?,
         fileName: String,
         episodes:HashMap<String,Any>,
         parentFolder: String,
@@ -21,7 +24,7 @@ class Season : TMDBItem {
         id: Int,
         poster_path: String,
         backdrop_path: String,
-        genre_ids: List<Int>,
+        genres: List<Genre>,
         popularity: Double,
         vote_average: Double,
         overview: String
@@ -34,10 +37,11 @@ class Season : TMDBItem {
         id,
         poster_path,
         backdrop_path,
-        genre_ids,
+        genres,
         popularity,
         vote_average,
-        overview
+        overview,
+        released_date
     ){
         this.episodes = episodes
         this.season_number = season_number

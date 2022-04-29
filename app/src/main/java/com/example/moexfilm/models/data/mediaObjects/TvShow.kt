@@ -1,6 +1,8 @@
 package com.example.moexfilm.models.data.mediaObjects
 
 import java.io.Serializable
+import java.util.*
+import kotlin.collections.HashMap
 
 class TvShow : TMDBItem,Serializable {
     var seasons:HashMap<String,Any> = hashMapOf()
@@ -13,10 +15,11 @@ class TvShow : TMDBItem,Serializable {
         fileName: String,
         parentFolder: String,
         parentLibrary: String,
+        released_date: String?,
         id: Int,
         poster_path: String,
         backdrop_path: String,
-        genre_ids: List<Int>,
+        genres: List<Genre>,
         popularity: Double,
         vote_average: Double,
         overview: String
@@ -29,10 +32,11 @@ class TvShow : TMDBItem,Serializable {
         id,
         poster_path,
         backdrop_path,
-        genre_ids,
+        genres,
         popularity,
         vote_average,
-        overview
+        overview,
+        released_date
     )
 
 }
