@@ -72,12 +72,13 @@
 
     <Button
         android:id="@+id/btnSelectFolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="6dp"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
         android:text="@string/selectFolderBtn_text"
         android:theme="@style/buttonMoexfilm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
@@ -85,23 +86,26 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/red_hat_display_bold"
         android:text="Selecciona una Carpeta"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerLanguages" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="250dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="18dp"
         app:cardBackgroundColor="@color/background2_moexfilm"
+        app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9">
 
@@ -121,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/red_hat_display_bold"
                     android:text="@string/noFolderSelected_text"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="@+id/btnSelectFolder"
                     app:layout_constraintTop_toBottomOf="@+id/spinnerLanguages" />
 
@@ -149,8 +153,8 @@
         android:id="@+id/btnFinish"
         android:layout_width="130dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
         android:text="@string/finish_text"
         android:theme="@style/buttonMoexfilm"
         app:layout_constraintBottom_toBottomOf="parent"

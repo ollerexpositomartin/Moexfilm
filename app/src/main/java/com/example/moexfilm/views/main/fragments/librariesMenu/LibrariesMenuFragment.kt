@@ -21,7 +21,6 @@ class LibrariesMenuFragment : Fragment() {
     private lateinit var binding: FragmentLibrariesMenuBinding
     private lateinit var adapter: LibrariesMenuAdapter
     private val libraryMenuViewModel:LibrariesMenuViewModel by viewModels()
-    private val lastSizeLibraries:Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLibrariesMenuBinding.inflate(layoutInflater, container, false)

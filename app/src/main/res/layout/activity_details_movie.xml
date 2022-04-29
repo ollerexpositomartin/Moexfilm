@@ -7,6 +7,26 @@
     android:background="@color/background_moexfilm"
     tools:context=".views.DetailsMovieActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnEspandCollapse"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_arrow_down"
+        app:backgroundTint="@color/background_moexfilm"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:fabCustomSize="50dp"
+        android:scaleType="fitXY"
+        app:maxImageSize="35dp"
+        app:fabSize="auto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOverview"
+        app:rippleColor="@color/accent_moexfilm"
+        app:tint="@color/accent_moexfilm" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="130dp"
@@ -27,8 +47,8 @@
 
     <View
         android:id="@+id/view4"
-        android:layout_width="13dp"
-        android:layout_height="13dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/ic_star"
@@ -41,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginTop="7dp"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/materialCardView"
         app:layout_constraintTop_toBottomOf="@+id/tvNameMovie"
         tools:text="6,5" />
@@ -53,6 +73,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="1dp"
         android:fontFamily="@font/red_hat_display_bold"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/materialCardView"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
@@ -110,7 +131,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
-        android:textSize="12sp"
+        android:maxLines="3"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,17 +155,5 @@ Celestiales comenzaron a experimentar genéticamente con
         app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="@color/accent_moexfilm"
         app:tint="@color/accent_moexfilm" />
-
-    <View
-        android:id="@+id/view5"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ic_arrow_down"
-        android:backgroundTint="@color/accent_moexfilm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

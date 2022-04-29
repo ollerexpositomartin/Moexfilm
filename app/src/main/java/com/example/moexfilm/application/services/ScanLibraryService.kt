@@ -155,7 +155,6 @@ class ScanLibraryService : Service() {
             }
             override fun onFailure() {
                 runBlocking(Dispatchers.Main){ Toast.makeText(this@ScanLibraryService, String.format(getString(R.string.scanningLibraries_error), library.name), Toast.LENGTH_LONG).show()}
-
                 removeLibrary(library)
             }
         })

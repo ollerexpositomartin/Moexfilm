@@ -11,7 +11,7 @@ class Episode : TMDBItem {
     var parentTvShow: String = ""
 
 
-    constructor()
+    constructor():super()
 
     constructor(
         idDrive: String,
