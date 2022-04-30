@@ -1,4 +1,4 @@
-package com.example.moexfilm.models.data.mediaObjects
+package com.example.moexfilm.models.data
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

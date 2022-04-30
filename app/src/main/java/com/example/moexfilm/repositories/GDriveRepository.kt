@@ -1,14 +1,11 @@
 package com.example.moexfilm.repositories
 
-import android.util.Log
-import com.example.moexfilm.models.data.mediaObjects.GDriveItem
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.responseObjects.GDriveResponse
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.services.GDriveService
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.models.helpers.RetrofitHelper
-import com.example.moexfilm.models.interfaces.callBacks.VideoMetadataCallBack
-import java.lang.Exception
 
 object GDriveRepository {
     private const val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"

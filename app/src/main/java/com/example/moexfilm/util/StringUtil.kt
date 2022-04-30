@@ -5,6 +5,7 @@ import com.example.moexfilm.models.data.utilObjects.FormatTitle
 import com.example.moexfilm.models.data.mediaObjects.Library
 import java.lang.StringBuilder
 import java.util.regex.Pattern
+import java.util.stream.Collectors
 
 object StringUtil {
     fun validateEmailFormat(email: String): Boolean {
@@ -34,14 +35,7 @@ object StringUtil {
     }
 
      fun scanItemListToText(libraryItemList:MutableList<Library>):String{
-        val text: StringBuilder = StringBuilder()
-        for(i in libraryItemList.indices){
-            if(i != libraryItemList.size-1)
-                text.append(libraryItemList[i].name).append(", ")
-            else
-                text.append(libraryItemList[i].name)
-        }
-        return text.toString()
+        return libraryItemList.stream().map { library -> library.name }.collect(Collectors.joining(", "))
     }
 
     fun getSeasonNumber(name:String):Int{

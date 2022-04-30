@@ -1,6 +1,6 @@
 package com.example.moexfilm.repositories
 
-import android.util.Log
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.helpers.RetrofitHelper
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
@@ -126,7 +126,20 @@ object TMDBRepository {
             callback.onSearchItemCompleted(movie)
             }
         }
+
+
+    suspend fun getMovieCast(movie: Movie, language: String,onSuccess:((List<Cast>) -> Unit)) {
+        val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java).getMovieCast(movie.id, API_KEY, language)
+        if (response.isSuccessful) {
+            val result = response.body()!!
+            onSuccess(result.cast)
+            }
+        }
     }
+
+
+
+
 
 
 

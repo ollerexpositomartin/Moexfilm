@@ -3,7 +3,7 @@ package com.example.moexfilm.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moexfilm.models.data.mediaObjects.GDriveItem
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
 import com.example.moexfilm.repositories.GDriveRepository

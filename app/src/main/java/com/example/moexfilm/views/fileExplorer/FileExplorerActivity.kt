@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.application.changeVisibility
 import com.example.moexfilm.databinding.ActivityFileExplorerBinding
-import com.example.moexfilm.models.data.mediaObjects.GDriveItem
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.viewModels.FileExplorerViewModel
 import com.example.moexfilm.views.fileExplorer.adapters.FileExplorerAdapter
 import java.lang.StringBuilder

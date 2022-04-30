@@ -1,239 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_moexfilm"
-    tools:context=".views.DetailsMovieActivity">
+    tools:context=".views.detailsMovie.DetailsMovieActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnEspandCollapse"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_arrow_down"
-        app:backgroundTint="@color/background_moexfilm"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:fabCustomSize="50dp"
-        app:fabSize="auto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOverview"
-        app:maxImageSize="35dp"
-        app:rippleColor="@color/accent_moexfilm"
-        app:tint="@color/accent_moexfilm" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:autoSizeTextType="none"
-        android:drawableEnd="@drawable/ic_play"
-        android:fontFamily="@font/red_hat_display_bold"
-        android:text="@string/play_text"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:theme="@style/buttonMoexfilm"
-        app:iconPadding="0dp"
-        app:layout_constraintStart_toStartOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="13dp"
-        android:layout_height="13dp"
-        android:layout_marginStart="5dp"
-        android:background="@drawable/ic_star"
-        app:layout_constraintBottom_toBottomOf="@+id/tvAverage"
-        app:layout_constraintStart_toEndOf="@+id/tvAverage"
-        app:layout_constraintTop_toTopOf="@+id/tvAverage" />
-
-    <TextView
-        android:id="@+id/tvAverage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tvDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        tools:text="6,5" />
-
-    <TextView
-        android:id="@+id/tvNameMovie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="1dp"
-        android:fontFamily="@font/red_hat_display_bold"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        tools:text="Eternals" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="199dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
 
-        <ImageView
-            android:id="@+id/imvBackground"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/image_background" />
-
-        <View
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_image_details" />
+            android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnEspandCollapse"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_arrow_down"
+                app:backgroundTint="@color/background_moexfilm"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:fabCustomSize="50dp"
+                app:fabSize="auto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvOverview"
+                app:maxImageSize="35dp"
+                app:rippleColor="@color/accent_moexfilm"
+                app:tint="@color/accent_moexfilm" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="120dp"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout">
+            <Button
+                android:id="@+id/button"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:autoSizeTextType="none"
+                android:drawableEnd="@drawable/ic_play"
+                android:fontFamily="@font/red_hat_display_bold"
+                android:text="@string/play_text"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:theme="@style/buttonMoexfilm"
+                app:iconPadding="0dp"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
-        <ImageView
-            android:id="@+id/imvPoster"
-            android:layout_width="130dp"
-            android:layout_height="170dp"
-            android:background="@drawable/background_media_item"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@drawable/movie_image" />
+            <View
+                android:id="@+id/view4"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAverage"
+                app:layout_constraintStart_toEndOf="@+id/tvAverage"
+                app:layout_constraintTop_toTopOf="@+id/tvAverage" />
 
-    </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tvAverage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tvDate"
+                app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                tools:text="6,5" />
 
-    <TextView
-        android:id="@+id/tvOverview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:maxLines="3"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:text="Hace millones de años, los seres cósmicos conocidos como los
+            <TextView
+                android:id="@+id/tvNameMovie"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/red_hat_display_bold"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                tools:text="Eternals" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="199dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imvBackground"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/image_background" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_image_details" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="130dp"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout">
+
+                <ImageView
+                    android:id="@+id/imvPoster"
+                    android:layout_width="130dp"
+                    android:layout_height="170dp"
+                    android:background="@drawable/background_media_item"
+                    android:scaleType="centerCrop"
+                    tools:srcCompat="@drawable/movie_image" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvOverview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="10dp"
+                android:maxLines="3"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.238"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button"
+                tools:text="Hace millones de años, los seres cósmicos conocidos como los
 Celestiales comenzaron a experimentar genéticamente con
  los humanos." />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_baseline_arrow_back"
-        app:backgroundTint="@android:color/transparent"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:rippleColor="@color/accent_moexfilm"
-        app:tint="@color/accent_moexfilm" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/ic_baseline_arrow_back"
+                app:backgroundTint="@android:color/transparent"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:rippleColor="@color/accent_moexfilm"
+                app:tint="@color/accent_moexfilm" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/genero_text"
-        android:textColor="@color/accent_moexfilm"
-        android:textSize="13sp"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/genero_text"
+                android:textColor="@color/accent_moexfilm"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/tvFileName" />
 
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:fontFamily="@font/red_hat_display_bold"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tvNameMovie"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameMovie"
-        tools:text="2021" />
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/red_hat_display_bold"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tvNameMovie"
+                app:layout_constraintTop_toBottomOf="@+id/tvNameMovie"
+                tools:text="2021" />
 
-    <View
-        android:id="@+id/view5"
-        android:layout_width="5dp"
-        android:layout_height="5dp"
-        android:layout_marginStart="5dp"
-        android:background="@drawable/ic_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDate"
-        app:layout_constraintStart_toEndOf="@+id/tvDate"
-        app:layout_constraintTop_toTopOf="@+id/tvDate" />
+            <View
+                android:id="@+id/view5"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/ic_circle"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDate"
+                app:layout_constraintStart_toEndOf="@+id/tvDate"
+                app:layout_constraintTop_toTopOf="@+id/tvDate" />
 
-    <TextView
-        android:id="@+id/tvDuration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:fontFamily="@font/red_hat_display_bold"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/view5"
-        app:layout_constraintStart_toEndOf="@+id/view5"
-        app:layout_constraintTop_toTopOf="@+id/view5"
-        tools:text="2h30m" />
+            <TextView
+                android:id="@+id/tvDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/red_hat_display_bold"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view5"
+                app:layout_constraintStart_toEndOf="@+id/view5"
+                app:layout_constraintTop_toTopOf="@+id/view5"
+                tools:text="2h30m" />
 
-    <TextView
-        android:id="@+id/tvGenres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView7"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/textView7"
-        tools:text="Accion, Fantasia" />
+            <TextView
+                android:id="@+id/tvGenres"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toTopOf="@+id/textView7"
+                tools:text="Accion, Fantasia" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="100dp"
-        android:text="@string/fileName_text"
-        android:textColor="@color/accent_moexfilm"
-        android:textSize="13sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="120dp"
+                android:text="@string/fileName_text"
+                android:textColor="@color/accent_moexfilm"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
 
-    <TextView
-        android:id="@+id/tvFileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView12"
-        tools:text="Eternals (2021).mkv" />
+            <TextView
+                android:id="@+id/tvFileName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toTopOf="@+id/textView12"
+                tools:text="Eternals (2021).mkv" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/red_hat_display_bold"
+                android:text="@string/cast_text"
+                android:textColor="@color/accent_moexfilm"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>

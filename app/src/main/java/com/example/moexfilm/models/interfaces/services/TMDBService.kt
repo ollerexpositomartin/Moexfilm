@@ -3,6 +3,7 @@ package com.example.moexfilm.models.interfaces.services
 import com.example.moexfilm.models.data.mediaObjects.Episode
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.data.mediaObjects.Season
+import com.example.moexfilm.models.data.responseObjects.TMDBResponseCast
 import com.example.moexfilm.models.data.responseObjects.TMDBResponseMovie
 import com.example.moexfilm.models.data.responseObjects.TMDBResponseTvShow
 import retrofit2.Response
@@ -50,5 +51,12 @@ interface TMDBService {
         @Query("api_key") api_key: String,
         @Query("language") language:String
     ): Response<Episode>
+
+    @GET("3/movie/{movie_id}/credits")
+    suspend fun getMovieCast(
+        @Path("movie_id") movie_id: Int,
+        @Query("api_key") api_key: String,
+        @Query("language") language:String
+    ): Response<TMDBResponseCast>
 
 }

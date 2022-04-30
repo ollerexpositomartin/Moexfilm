@@ -1,6 +1,6 @@
 package com.example.moexfilm.models.data.responseObjects
 
-import com.example.moexfilm.models.data.mediaObjects.GDriveItem
+import com.example.moexfilm.models.data.GDriveItem
 import com.google.gson.annotations.SerializedName
 
 data class GDriveResponse(

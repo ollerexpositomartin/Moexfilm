@@ -44,6 +44,7 @@
     <string name="play_text">Reproducir</string>
     <string name="video_text">VIDEO</string>
     <string name="genero_text">GENERO</string>
+    <string name="cast_text">REPARTO</string>
     <string name="fileName_text">NOMBRE DEL ARCHIVO</string>
     <string name="scanningLibrary_text">Escaneando %s</string>
 </resources>

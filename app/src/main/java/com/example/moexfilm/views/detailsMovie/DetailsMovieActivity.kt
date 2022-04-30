@@ -1,10 +1,11 @@
-package com.example.moexfilm.views
+package com.example.moexfilm.views.detailsMovie
 
-import android.animation.ObjectAnimator
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.application.Application.Access.TMDB_IMAGE_URL
 import com.example.moexfilm.application.expandCollapseTextView
@@ -13,19 +14,50 @@ import com.example.moexfilm.databinding.ActivityDetailsMovieBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.util.GenreUtil
 import com.example.moexfilm.util.StringUtil
+import com.example.moexfilm.viewModels.DetailsMovieViewModel
+import com.example.moexfilm.views.detailsMovie.adapters.CastAdapter
 
 
 class DetailsMovieActivity : AppCompatActivity() {
     lateinit var binding: ActivityDetailsMovieBinding
     private lateinit var movie:Movie
+    private lateinit var language:String
     private var expandOrCollapse:Boolean = true
+    private lateinit var detailsMovieViewModel:DetailsMovieViewModel
+    private lateinit var adapter:CastAdapter
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.btnEspandCollapse.setOnClickListener{ expandCollapse() }
+        setTransparentStatusBar()
         getData()
+        detailsMovieViewModel = DetailsMovieViewModel(movie,language)
+        setRecycler()
+        initCastObserver()
+        binding.btnEspandCollapse.setOnClickListener{ expandCollapse() }
+    }
+
+    private fun setTransparentStatusBar() {
+        window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            statusBarColor = Color.TRANSPARENT
+        }
+    }
+
+    private fun setRecycler() {
+        adapter = CastAdapter()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        binding.recyclerView.setHasFixedSize(true)
+    }
+
+    private fun initCastObserver() {
+        detailsMovieViewModel.mutableListCast.observe(this){ actors ->
+                adapter.submitList(actors)
+        }
     }
 
     private fun expandCollapse() {
@@ -42,7 +74,7 @@ class DetailsMovieActivity : AppCompatActivity() {
     private fun getData() {
         val data = intent.extras
         movie = data!!.getSerializable("MOVIE") as Movie
-        Log.d("MOVIE", movie.backdrop_path.toString())
+        language = data.getString("LANGUAGE")!!
         binding.imvBackground.loadImage(TMDB_IMAGE_URL.format(movie.backdrop_path))
         binding.imvPoster.loadImage(TMDB_IMAGE_URL.format(movie.poster_path))
         binding.tvNameMovie.text = movie.name

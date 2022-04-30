@@ -4,17 +4,15 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
 import android.widget.Toast
 import com.example.moexfilm.R
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.interfaces.callBacks.GDriveCallBack
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
-import com.example.moexfilm.models.interfaces.callBacks.VideoMetadataCallBack
 import com.example.moexfilm.models.interfaces.listeners.ServiceListener
 import com.example.moexfilm.repositories.FirebaseDBRepository
 import com.example.moexfilm.repositories.GDriveRepository
-import com.example.moexfilm.repositories.MediaMetadataRepository
 import com.example.moexfilm.repositories.TMDBRepository
 import kotlinx.coroutines.*
 import java.util.stream.Collectors
@@ -152,9 +150,7 @@ class ScanLibraryService : Service() {
                                     movie.parentFolder = library.id
                                     movie.parentLibrary = library.id
                                     FirebaseDBRepository.saveMovieAndTvShowInLibrary(movie)
-
                                 }
-
                             }
                             override fun onAllSearchsFinish() {
                                 removeLibrary(library)
