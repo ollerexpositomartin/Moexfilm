@@ -20,11 +20,9 @@ class CreateLibraryViewModel: ViewModel() {
                 override fun onSuccess(item: Any) {
                     libraryCreatedLiveData.postValue(item as Library)
                 }
-
                 override fun onFailure() {
                     libraryCreatedLiveData.postValue(null)
                 }
-
             })
         }
     }

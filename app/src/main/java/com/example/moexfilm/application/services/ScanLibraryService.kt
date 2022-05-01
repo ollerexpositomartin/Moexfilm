@@ -78,7 +78,7 @@ class ScanLibraryService : Service() {
                 FirebaseDBRepository.saveMovieAndTvShowInLibrary(itemTMDB)
             }
             override fun onAllSearchsFinish() {
-                CoroutineScope(Dispatchers.IO).launch {
+               runBlocking(Dispatchers.IO){
                     scanTvSeasons(library, tvShowsTMDB)
                 }
             }
@@ -105,7 +105,7 @@ class ScanLibraryService : Service() {
               FirebaseDBRepository.saveSeason(season)
             }
             override fun onAllSearchsFinish() {
-                CoroutineScope(Dispatchers.IO).launch { scanTvEpisodes(library, tvShows) }
+                runBlocking(Dispatchers.IO){ scanTvEpisodes(library, tvShows) }
             }
         })
     }

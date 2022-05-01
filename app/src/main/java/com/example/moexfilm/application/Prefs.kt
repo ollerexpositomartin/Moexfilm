@@ -12,15 +12,15 @@ class Prefs(c: Context) {
 
     private val storage: SharedPreferences = c.getSharedPreferences(FILE,0)
 
-    public fun saveUid(uid:String){
+    fun saveUid(uid:String){
         storage.edit().putString(UID,uid).apply()
     }
 
-    public fun readUid():String{
+    fun readUid():String{
         return if (fbUser?.uid != null) fbUser.uid else storage.getString(UID,null)!!
     }
 
-    public fun cleanSession(){
+    fun cleanSession(){
         storage.edit().clear().apply()
     }
 

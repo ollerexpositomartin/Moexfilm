@@ -1,9 +1,8 @@
 package com.example.moexfilm.util
 
-import android.util.Log
-import com.example.moexfilm.models.data.utilObjects.FormatTitle
+import com.example.moexfilm.models.data.mediaObjects.Genre
+import com.example.moexfilm.models.data.utilObjects.FormatedTitle
 import com.example.moexfilm.models.data.mediaObjects.Library
-import java.lang.StringBuilder
 import java.util.regex.Pattern
 import java.util.stream.Collectors
 
@@ -16,10 +15,10 @@ object StringUtil {
         return false
     }
 
-    fun extractTitleAndDate(title: String): FormatTitle {
-        val p = Pattern.compile("(^[A-zÀ-ÿñ:\\-0-9 ]+)(\\([0-9]{4}\\))?")
+    fun extractTitleAndDate(title: String): FormatedTitle {
+        val p = Pattern.compile("(^[A-zÀ-ÿñ:,\\-0-9 ]+)(\\([0-9]{4}\\))?")
         val match = p.matcher(title)
-        val formatTitle = FormatTitle("","")
+        val formatTitle = FormatedTitle("","")
         if (match.find()) {
             val titleMovie = match.group(1) ?: ""
             val year = match.group(2)?.replace(Regex("[\\(-\\)]"), "") ?: ""
@@ -72,6 +71,10 @@ object StringUtil {
         val hours = min/60
         val minutes = min%60
         return "${hours}h ${minutes}m"
+    }
+
+    fun genresToString(genres: List<Genre>): String {
+        return genres.map {genre -> genre.name }.joinToString(separator = ", ")
     }
 
 }

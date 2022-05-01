@@ -1,6 +1,6 @@
 package com.example.moexfilm.models.data.utilObjects
 
-class FormatTitle{
+class FormatedTitle{
     lateinit var name:String
     lateinit var year:String
 

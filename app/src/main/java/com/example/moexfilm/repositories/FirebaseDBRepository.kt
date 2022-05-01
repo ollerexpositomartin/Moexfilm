@@ -1,6 +1,5 @@
 package com.example.moexfilm.repositories
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account

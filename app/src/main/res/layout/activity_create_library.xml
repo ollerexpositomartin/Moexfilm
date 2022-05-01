@@ -72,7 +72,7 @@
 
     <Button
         android:id="@+id/btnSelectFolder"
-        android:layout_width="250dp"
+        android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
         android:text="@string/selectFolderBtn_text"
@@ -89,7 +89,7 @@
         android:layout_marginTop="40dp"
         android:fontFamily="@font/red_hat_display_bold"
         android:text="Selecciona una Carpeta"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

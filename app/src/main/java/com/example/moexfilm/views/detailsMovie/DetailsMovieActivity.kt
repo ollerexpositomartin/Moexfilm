@@ -12,7 +12,6 @@ import com.example.moexfilm.application.expandCollapseTextView
 import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.databinding.ActivityDetailsMovieBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
-import com.example.moexfilm.util.GenreUtil
 import com.example.moexfilm.util.StringUtil
 import com.example.moexfilm.viewModels.DetailsMovieViewModel
 import com.example.moexfilm.views.detailsMovie.adapters.CastAdapter
@@ -83,6 +82,6 @@ class DetailsMovieActivity : AppCompatActivity() {
         binding.tvFileName.text = movie.fileName
         binding.tvDate.text = movie.release_date
         binding.tvDuration.text = StringUtil.minToHoursAndMinutes(movie.duration)
-        binding.tvGenres.text = GenreUtil.genresToString(movie.genres)
+        binding.tvGenres.text = StringUtil.genresToString(movie.genres)
     }
 }
