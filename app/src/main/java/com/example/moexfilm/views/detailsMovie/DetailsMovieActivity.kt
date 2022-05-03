@@ -1,5 +1,6 @@
 package com.example.moexfilm.views.detailsMovie
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.moexfilm.databinding.ActivityDetailsMovieBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.util.StringUtil
 import com.example.moexfilm.viewModels.DetailsMovieViewModel
+import com.example.moexfilm.views.VideoPlayerActivity
 import com.example.moexfilm.views.detailsMovie.adapters.CastAdapter
 
 
@@ -34,7 +36,15 @@ class DetailsMovieActivity : AppCompatActivity() {
         detailsMovieViewModel = DetailsMovieViewModel(movie,language)
         setRecycler()
         initCastObserver()
+        setListeners()
+
+    }
+
+    private fun setListeners() {
         binding.btnEspandCollapse.setOnClickListener{ expandCollapse() }
+        binding.btnPlay.setOnClickListener { startActivity(Intent(this,VideoPlayerActivity::class.java).apply {
+            putExtra("ID",movie.idDrive)
+        }) }
     }
 
     private fun setTransparentStatusBar() {
