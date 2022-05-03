@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoexFilm">
         <activity
+            android:name=".views.VideoPlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.ScanActivity"
             android:exported="false" />
         <activity

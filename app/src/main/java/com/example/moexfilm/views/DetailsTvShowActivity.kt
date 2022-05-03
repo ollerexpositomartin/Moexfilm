@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.example.moexfilm.R
 import com.example.moexfilm.application.Application.Access.TMDB_IMAGE_URL
+import com.example.moexfilm.application.expandCollapseTextView
 import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.application.round
 import com.example.moexfilm.databinding.ActivityDetailsTvShowBinding
@@ -23,6 +24,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
     lateinit var binding:ActivityDetailsTvShowBinding
     lateinit var tvShow:TvShow
     lateinit var seasons:List<Season>
+    private var expandOrCollapse:Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsTvShowBinding.inflate(layoutInflater)
@@ -42,11 +44,23 @@ class DetailsTvShowActivity : AppCompatActivity() {
         }
     }
 
+    private fun expandCollapse() {
+        binding.tvOverview.expandCollapseTextView()
+        expandOrCollapse = if(expandOrCollapse) {
+            binding.btnEspandCollapse.setImageResource(R.drawable.ic_arrow_up)
+            false
+        } else{
+            binding.btnEspandCollapse.setImageResource(R.drawable.ic_arrow_down)
+            true
+        }
+    }
+
     private fun setListener() {
         (binding.spinnerSeasons.editText as? AutoCompleteTextView)?.setOnItemClickListener { adapterView, view, i, l ->
             binding.lnLayoutEpisodes.removeAllViewsInLayout()
             loadEpisodes(i)
         }
+        binding.btnEspandCollapse.setOnClickListener { expandCollapse() }
     }
 
     private fun loadEpisodes(numberSeason: Int) {

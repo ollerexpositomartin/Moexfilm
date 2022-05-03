@@ -21,12 +21,12 @@ fun ImageView.loadImage(url:String){ Glide.with(context).load(url).centerCrop().
 fun TextView.expandCollapseTextView() {
     if(this.maxLines == this.lineCount)
         ObjectAnimator.ofInt(this, "maxLines",3).apply {
-            setDuration(150).start()
+            setDuration(100).start()
         }
 
     if(this.maxLines != this.lineCount)
         ObjectAnimator.ofInt(this, "maxLines",this.lineCount).apply {
-            setDuration(150).start()
+            setDuration(100).start()
         }
 }
 
