@@ -2,12 +2,14 @@ package com.example.moexfilm.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.application.Application.Access.GOOGLE_DRIVE_PLAY_URL
 import com.example.moexfilm.databinding.ActivityVideoPlayerBinding
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
+import com.google.android.exoplayer2.ext.ffmpeg.FfmpegAudioRenderer
+import com.google.android.exoplayer2.ext.ffmpeg.FfmpegLibrary
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 
@@ -52,7 +54,8 @@ class VideoPlayerActivity : AppCompatActivity() {
     }
 
     private fun startVideoPlayer() {
-        player = ExoPlayer.Builder(this).apply {
+        val defaultRenderersFactory = DefaultRenderersFactory(this).setExtensionRendererMode(EXTENSION_RENDERER_MODE_PREFER)
+        player = ExoPlayer.Builder(this,defaultRenderersFactory).apply {
             setMediaSourceFactory(DefaultMediaSourceFactory(mediaSourceFactory))
         }.build()
         player.setMediaItem(MediaItem.fromUri(videoUrl))
