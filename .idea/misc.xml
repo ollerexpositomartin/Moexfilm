@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/drawable/background_media_item.xml" value="0.2595" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/drawable/ic_add.xml" value="0.2595" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_create_library.xml" value="0.25416666666666665" />
-        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_details_movie.xml" value="0.536" />
-        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_details_tv_show.xml" value="0.25416666666666665" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_details_movie.xml" value="0.264" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_details_tv_show.xml" value="0.4" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_file_explorer.xml" value="0.264" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_library.xml" value="0.25416666666666665" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
@@ -14,6 +16,7 @@
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/fragment_libraries_menu.xml" value="0.25052083333333336" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_actor_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_episode_layout.xml" value="0.4742468415937804" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_folder_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_media_layout.xml" value="0.536" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_menu_library_layout.xml" value="0.25416666666666665" />

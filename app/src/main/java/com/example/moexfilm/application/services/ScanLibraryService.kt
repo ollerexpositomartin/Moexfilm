@@ -89,8 +89,12 @@ class ScanLibraryService : Service() {
         tvShows.forEach { tvShow ->
             GDriveRepository.getChildItems(queryFormatFolders.format(tvShow.idDrive), object : GDriveCallBack {
                     override fun onSuccess(response: ArrayList<GDriveItem>?) {
-                       response?.forEach {
-                           tvShow.seasons[it.idDrive] = it
+                       response?.forEach { gdriveItem ->
+                           val season:Season =  Season()
+                           season.idDrive = gdriveItem.idDrive
+                           season.fileName = gdriveItem.fileName
+
+                           tvShow.seasons[season.idDrive] = season
                        }
                     }
                     override fun onFailure() {} })
@@ -112,11 +116,14 @@ class ScanLibraryService : Service() {
 
     private suspend fun scanTvEpisodes(library: Library, tvShows:MutableList<TvShow>) {
             tvShows.forEach { tvShow ->
-                tvShow.seasons.map { (_,t) -> t as Season }.forEach { season ->
+                tvShow.seasons.values.forEach { season ->
                     GDriveRepository.getChildItems(queryFormatFiles.format(season.idDrive), object : GDriveCallBack {
                             override fun onSuccess(response: ArrayList<GDriveItem>?) {
-                                response?.forEach {
-                                    (tvShow.seasons[season.idDrive] as Season).episodes[it.idDrive] = it
+                                response?.forEach { gdriveItem ->
+                                    val episode = Episode()
+                                    episode.idDrive = gdriveItem.idDrive
+                                    episode.fileName = gdriveItem.fileName
+                                    tvShow.seasons[season.idDrive]!!.episodes[episode.idDrive] = episode
                                 }
                             }
                             override fun onFailure() {} })

@@ -69,7 +69,7 @@ object TMDBRepository {
 
     suspend fun searchTvSeason(tvShows:MutableList<TvShow>, language: String, callback: TMDBCallBack) {
         tvShows.forEach { tvShow ->
-            tvShow.seasons.map { (_,t) -> t as GDriveItem }.forEach { season ->
+            tvShow.seasons.values.forEach { season ->
                 val seasonNumber = StringUtil.getSeasonNumber(season.fileName)
                 val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
                     .searchTvSeason(tvShow.id,seasonNumber,API_KEY,language)
@@ -89,8 +89,8 @@ object TMDBRepository {
 
     suspend fun searchTvEpisode(tvShows:MutableList<TvShow>,language: String, callback: TMDBCallBack) {
         tvShows.forEach { tvShow ->
-            tvShow.seasons.map {(_,t) -> t as Season }.forEach { season ->
-                season.episodes.map { (_,t) -> t as GDriveItem }.forEach { episode ->
+            tvShow.seasons.values.forEach { season ->
+                season.episodes.values.forEach { episode ->
                     val episodeNumber = StringUtil.getEpisodeNumber(episode.fileName)
                     val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
                         .searchTvEpisode(

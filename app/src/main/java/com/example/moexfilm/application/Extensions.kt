@@ -30,4 +30,6 @@ fun TextView.expandCollapseTextView() {
         }
 }
 
+fun Double.round():Double = Math.round(this * 10.0) / 10.0
+
 

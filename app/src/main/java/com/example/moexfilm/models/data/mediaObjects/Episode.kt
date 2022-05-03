@@ -1,9 +1,10 @@
 package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
-class Episode : TMDBItem {
+class Episode : TMDBItem,Serializable {
 
     @SerializedName("still_path")
     var stillPath: String = ""

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/background_moexfilm"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imvEpisode"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/test_episode_image" />
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_play"
+                    android:backgroundTint="@color/accent_moexfilm"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvEpisodeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/red_hat_display_bold"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/materialCardView3"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="La brújula tenebrosa" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAverage"
+            app:layout_constraintStart_toEndOf="@+id/tvAverage"
+            app:layout_constraintTop_toTopOf="@+id/tvAverage" />
+
+
+        <TextView
+            android:id="@+id/tvEpisodeOverview"
+            android:layout_width="380dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/materialCardView3"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView3"
+            tools:text="Cuando Drácula aparece en una tierra nueva, donde retoma sus viejos hábitos, conoce a una hermosa joven y debe enfrentarse a un desafío aterrador." />
+
+        <TextView
+            android:id="@+id/tvAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/materialCardView3"
+            app:layout_constraintTop_toBottomOf="@+id/tvEpisodeName"
+            tools:text="6,5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

@@ -27,7 +27,7 @@ open class TMDBItem: Serializable {
     @SerializedName("popularity")
     var popularity: Double? = null
 
-    @SerializedName("release_date")
+    @SerializedName("release_date", alternate = ["first_air_date"])
     var release_date: String? = null
 
     @SerializedName("vote_average")
