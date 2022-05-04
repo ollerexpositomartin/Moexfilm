@@ -1,5 +1,6 @@
 package com.example.moexfilm.views
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,6 +25,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
     lateinit var binding:ActivityDetailsTvShowBinding
     lateinit var tvShow:TvShow
     lateinit var seasons:List<Season>
+    private var correlationViewEpisode:HashMap<View,Episode> = hashMapOf()
     private var expandOrCollapse:Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +77,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
 
     private fun createViews(episodes:List<Episode>):List<View> {
         val views = ArrayList<View>()
+        correlationViewEpisode = hashMapOf()
 
         for( episode in episodes) {
             val view:View = ItemEpisodeLayoutBinding.inflate(layoutInflater).apply {
@@ -82,7 +85,15 @@ class DetailsTvShowActivity : AppCompatActivity() {
                 tvEpisodeOverview.text = episode.overview
                 tvAverage.text = episode.vote_average!!.round().toString()
                 imvEpisode.loadImage(TMDB_IMAGE_URL.format(episode.stillPath))
+
             }.root
+            correlationViewEpisode[view] = episode
+            view.setOnClickListener{
+                startActivity(Intent(this,VideoPlayerActivity::class.java).apply {
+                    putExtra("ID",correlationViewEpisode[view]?.idDrive)
+                })
+            }
+
            views.add(view)
         }
         return views
