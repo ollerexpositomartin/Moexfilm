@@ -44,7 +44,6 @@ class LibrariesMenuFragment : Fragment() {
 
     private fun initObserverLibraries() {
         libraryMenuViewModel.librariesMutableLiveData.observe(viewLifecycleOwner){ libraries ->
-                binding.recyclerView.scheduleLayoutAnimation()
                 adapter.submitList(libraries)
         }
     }

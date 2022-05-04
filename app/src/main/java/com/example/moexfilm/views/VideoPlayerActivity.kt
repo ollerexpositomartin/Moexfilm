@@ -2,14 +2,14 @@ package com.example.moexfilm.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import android.webkit.CookieManager
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.application.Application.Access.GOOGLE_DRIVE_PLAY_URL
 import com.example.moexfilm.databinding.ActivityVideoPlayerBinding
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
-import com.google.android.exoplayer2.ext.ffmpeg.FfmpegAudioRenderer
-import com.google.android.exoplayer2.ext.ffmpeg.FfmpegLibrary
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 
@@ -25,10 +25,18 @@ class VideoPlayerActivity : AppCompatActivity() {
         binding = ActivityVideoPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //COMPROBAR TOKEN DE ACCESO Y SI NO ES VALIDO REFRESCARLO
+        //CookieManager.getInstance().removeAllCookies(null)
+        setFullScreen()
         getData()
         setHeaders()
         startVideoPlayer()
         setListeners()
+    }
+
+    private fun setFullScreen() {
+        window.apply {
+            setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
     }
 
     private fun getData() {
@@ -50,6 +58,17 @@ class VideoPlayerActivity : AppCompatActivity() {
                 //COMPROBAR TOKEN DE ACCESO Y SI NO ES VALIDO REFRESCARLO
                 super.onSeekBackIncrementChanged(seekBackIncrementMs)
             }
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                if(playbackState == Player.STATE_BUFFERING)
+                    binding.loadIndicator.visibility = View.VISIBLE
+                else if(playbackState == Player.STATE_READY) binding.loadIndicator.visibility = View.GONE
+            }
+
+            override fun onPlayerError(error: PlaybackException) {
+                super.onPlayerError(error)
+
+            }
+
         })
     }
 
@@ -59,7 +78,32 @@ class VideoPlayerActivity : AppCompatActivity() {
             setMediaSourceFactory(DefaultMediaSourceFactory(mediaSourceFactory))
         }.build()
         player.setMediaItem(MediaItem.fromUri(videoUrl))
-        player.playWhenReady = true
         binding.playerView.player = player
+        binding.playerView.keepScreenOn = true
+        player.prepare()
+        player.playWhenReady = true
+
+
+
+
     }
+
+
+    override fun onPause() {
+        super.onPause()
+        player.playWhenReady = false
+        player.playbackState
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        player.playWhenReady = true
+        player.playbackState
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player.stop()
+    }
+
 }

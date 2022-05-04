@@ -46,6 +46,7 @@ class LibraryActivity :ScanActivity() {
 
     private fun initObserverItems() {
         libraryViewModel.itemsMutableLiveData.observe(this){ items ->
+            binding.recyclerView.scheduleLayoutAnimation()
             adapter.submitList(items)
         }
     }
