@@ -25,7 +25,6 @@ class VideoPlayerActivity : AppCompatActivity() {
         binding = ActivityVideoPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //COMPROBAR TOKEN DE ACCESO Y SI NO ES VALIDO REFRESCARLO
-        //CookieManager.getInstance().removeAllCookies(null)
         setFullScreen()
         getData()
         setHeaders()
@@ -68,7 +67,6 @@ class VideoPlayerActivity : AppCompatActivity() {
                 super.onPlayerError(error)
 
             }
-
         })
     }
 
@@ -82,10 +80,6 @@ class VideoPlayerActivity : AppCompatActivity() {
         binding.playerView.keepScreenOn = true
         player.prepare()
         player.playWhenReady = true
-
-
-
-
     }
 
 

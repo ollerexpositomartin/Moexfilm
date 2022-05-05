@@ -23,8 +23,8 @@ import java.util.stream.Collectors
 
 class DetailsTvShowActivity : AppCompatActivity() {
     lateinit var binding:ActivityDetailsTvShowBinding
-    lateinit var tvShow:TvShow
-    lateinit var seasons:List<Season>
+    private lateinit var tvShow:TvShow
+    private lateinit var seasons:List<Season>
     private var correlationViewEpisode:HashMap<View,Episode> = hashMapOf()
     private var expandOrCollapse:Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +85,6 @@ class DetailsTvShowActivity : AppCompatActivity() {
                 tvEpisodeOverview.text = episode.overview
                 tvAverage.text = episode.vote_average!!.round().toString()
                 imvEpisode.loadImage(TMDB_IMAGE_URL.format(episode.stillPath))
-
             }.root
             correlationViewEpisode[view] = episode
             view.setOnClickListener{
@@ -113,10 +112,6 @@ class DetailsTvShowActivity : AppCompatActivity() {
         }else{
             binding.tvSeason.setText(getString(R.string.noSeasons_text),false)
         }
-    }
-
-    private fun onEpisodeTouchListener(episode:Episode){
-
     }
 
     private fun getData() {

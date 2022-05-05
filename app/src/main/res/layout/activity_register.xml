@@ -28,6 +28,7 @@
             android:id="@+id/tfConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:fontFamily="@font/red_hat_display_medium"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,6 +65,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tfEmail"
             android:layout_width="match_parent"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:fontFamily="@font/red_hat_display_medium" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +90,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tfPassword"
             android:layout_width="match_parent"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>

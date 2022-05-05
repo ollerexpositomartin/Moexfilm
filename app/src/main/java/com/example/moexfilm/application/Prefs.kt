@@ -17,7 +17,7 @@ class Prefs(c: Context) {
     }
 
     fun readUid():String{
-        return if (fbUser?.uid != null) fbUser.uid else storage.getString(UID,null)!!
+        return if (fbUser?.uid != null) fbUser.uid else storage.getString(UID,null)?:""
     }
 
     fun cleanSession(){

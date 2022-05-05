@@ -31,14 +31,22 @@ class LoginActivity : AuthActivity() {
         }
         binding.btnSignin.setOnClickListener {
             initEmailPassword()
-            setErrorFormatEmail(false)
-            if (validateNoEmptyFields() && StringUtil.validateEmailFormat(email)){ setErrorFormatEmail(true);signinWithEmailPassword(email, password)}
+
+            if(StringUtil.validateEmailFormat(email)&&validateNoEmptyFields()) {
+                setErrorFormatEmail(true)
+                signinWithEmailPassword(email, password)
+            }else {
+                setErrorFormatEmail(false)
+                validateNoEmptyFields()
+            }
         }
         binding.btnSigninGoogle.setOnClickListener { if(!isFinishing) signInGoogle()}
     }
 
     private fun validateNoEmptyFields():Boolean{
         var validate = true
+        binding.textInPassword.error = null
+
         if(binding.tfEmail.text.toString().isEmpty()){
             validate = false
             binding.textInEmail.error = getString(R.string.fieldEmpty_error)
