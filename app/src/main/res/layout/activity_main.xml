@@ -25,7 +25,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.moexfilm.views.main.fragments.HomeFragment"
+        android:name="com.example.moexfilm.views.main.fragments.homeFragment.HomeFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"

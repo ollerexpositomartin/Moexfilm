@@ -36,19 +36,21 @@
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_star.xml" value="0.29" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/splash_screen.xml" value="0.29" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_create_library.xml" value="0.25" />
-        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_details_movie.xml" value="0.4297924297924298" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_details_movie.xml" value="0.33" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_details_tv_show.xml" value="0.30085470085470084" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_file_explorer.xml" value="0.33" />
-        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_library.xml" value="0.15256410256410258" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_library.xml" value="0.25" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_login.xml" value="0.30085470085470084" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_register.xml" value="0.30085470085470084" />
-        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/fragment_home.xml" value="0.396011396011396" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_video_player.xml" value="0.29717180244829045" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/fragment_libraries_menu.xml" value="0.25" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_actor_layout.xml" value="0.5" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_folder_layout.xml" value="0.33" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_media_layout.xml" value="0.41025641025641024" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_menu_library_layout.xml" value="0.4088397790055249" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/item_slider_layout.xml" value="0.33" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/list_item.xml" value="0.30085470085470084" />
         <entry key="..\:/MoexFilm/app/src/main/res/drawable/button_ripple.xml" value="0.3675" />
         <entry key="..\:/MoexFilm/app/src/main/res/drawable/ic_baseline_arrow_back.xml" value="0.3675" />
@@ -67,7 +69,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -49,4 +49,5 @@
     <string name="fileName_text">NOMBRE DEL ARCHIVO</string>
     <string name="scanningLibrary_text">Escaneando %s</string>
     <string name="noSeasons_text">No hay temporadas</string>
+    <string name="playNow_text">Reproducir ahora</string>
 </resources>

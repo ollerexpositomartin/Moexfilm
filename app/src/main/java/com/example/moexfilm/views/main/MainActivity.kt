@@ -1,24 +1,17 @@
 package com.example.moexfilm.views.main
 
-import android.content.ComponentName
-import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.moexfilm.R
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.application.Prefs
-import com.example.moexfilm.application.services.ScanLibraryService
 import com.example.moexfilm.databinding.ActivityMainBinding
 import com.example.moexfilm.models.data.mediaObjects.Library
-import com.example.moexfilm.models.interfaces.listeners.ServiceListener
 import com.example.moexfilm.util.StringUtil
 import com.example.moexfilm.views.ScanActivity
-import com.example.moexfilm.views.main.fragments.HomeFragment
+import com.example.moexfilm.views.main.fragments.homeFragment.HomeFragment
 import com.example.moexfilm.views.main.fragments.librariesMenu.LibrariesMenuFragment
 
 
