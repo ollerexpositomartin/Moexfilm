@@ -85,18 +85,19 @@ object FirebaseDBRepository {
     }
 
     fun setListenerItemLibrary(library: Library, items: MutableLiveData<List<TMDBItem>>) {
-        database.child("users").child(prefs.readUid()).child("libraries").child(library.id).child("content")
+        database.child("users").child(prefs.readUid()).child("libraries").child(library.id)
+            .child("content")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val list = ArrayList<TMDBItem>()
 
-                    if(library.type == "Peliculas") {
+                    if (library.type == "Peliculas") {
                         for (dataSnapShot in snapshot.children) {
                             list.add(dataSnapShot.getValue(Movie::class.java)!!)
                         }
                     }
 
-                    if(library.type == "Series") {
+                    if (library.type == "Series") {
                         for (dataSnapShot in snapshot.children) {
                             list.add(dataSnapShot.getValue(TvShow::class.java)!!)
                         }
@@ -112,10 +113,10 @@ object FirebaseDBRepository {
     }
 
 
-    fun getRandomContent(randomItems:MutableLiveData<MutableList<TMDBItem>>){
+    fun getRandomContent(randomItems: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .orderByChild("type")
-            .equalTo("Peliculas").addListenerForSingleValueEvent(object:ValueEventListener{
+            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val listMovies = mutableListOf<Movie>()
                     val randomLocalItems = mutableListOf<TMDBItem>()
@@ -128,22 +129,46 @@ object FirebaseDBRepository {
                     val size = 4
                     val s = HashSet<Int>(size)
 
-                    while(s.size<size){
-                        s.add(Random.nextInt(0,listMovies.size))
+                    while (s.size < size) {
+                        s.add((0..listMovies.size).random())
                     }
 
                     s.stream().forEach { random ->
                         randomLocalItems.add(listMovies.get(random))
                     }
-
                     randomItems.postValue(randomLocalItems)
+                }
 
+                override fun onCancelled(error: DatabaseError) {}
+            })
+    }
+
+    fun getMostPopularMovies(popularMovies: MutableLiveData<MutableList<Movie>>) {
+        database.child("users").child(prefs.readUid()).child("libraries")
+            .orderByChild("type")
+            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var listMovies: MutableList<Movie> = mutableListOf()
+                    val moviesNoRepeat:HashMap<String,Movie> = hashMapOf()
+                    for (dataSnapShot in snapshot.children) {
+                        val data = dataSnapShot.getValue(LibraryMovies::class.java)!!
+                        val movies = data.content.values.stream().collect(Collectors.toList())
+                        for(movie in movies){
+                            moviesNoRepeat[movie.name] = movie
+                        }
+                    }
+                    listMovies.addAll(moviesNoRepeat.values)
+                    listMovies = listMovies.stream().sorted{movie1,movie2 -> (movie2.popularity!!*1000 - movie1.popularity!!*1000).toInt() }.collect(Collectors.toList()).subList(0,9)
+
+                    popularMovies.postValue(listMovies)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
 
 
                 }
+            })
 
-                override fun onCancelled(error: DatabaseError) {} })
+
     }
-
-
 }

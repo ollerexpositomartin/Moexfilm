@@ -37,6 +37,7 @@ public class SliderAdapter() : SliderViewAdapter<SliderAdapter.SliderAdapterVH>(
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
         val sliderItem: TMDBItem = mSliderItems[position]
+        viewHolder.binding.tvNameSlider.text = sliderItem.name
         viewHolder.binding.imvSlider.loadImage(TMDB_IMAGE_URL.format(sliderItem.backdrop_path))
     }
 

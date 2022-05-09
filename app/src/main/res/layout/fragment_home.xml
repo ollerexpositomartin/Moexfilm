@@ -22,25 +22,38 @@
 
     <com.smarteist.autoimageslider.SliderView
         android:id="@+id/imageSlider"
-        android:layout_width="match_parent"
+        android:layout_width="275dp"
         android:layout_height="240dp"
-        android:layout_margin="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
+        android:saveEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
         app:sliderAnimationDuration="300"
         app:sliderAutoCycleDirection="back_and_forth"
         app:sliderAutoCycleEnabled="true"
         app:sliderIndicatorAnimationDuration="300"
+        app:sliderIndicatorEnabled="false"
         app:sliderIndicatorGravity="center_horizontal|bottom"
-        app:sliderIndicatorMargin="15dp"
         app:sliderIndicatorOrientation="horizontal"
         app:sliderIndicatorPadding="3dp"
         app:sliderIndicatorRadius="2dp"
         app:sliderIndicatorSelectedColor="@color/accent_moexfilm"
         app:sliderIndicatorUnselectedColor="@color/browser_actions_bg_grey"
-        app:sliderScrollTimeInSec="1"
+        app:sliderScrollTimeInSec="3"
         app:sliderStartAutoCycle="true" />
+
+    <LinearLayout
+        android:id="@+id/LinearItems"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageSlider"></LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

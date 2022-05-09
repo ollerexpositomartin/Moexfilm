@@ -33,17 +33,17 @@
 
         <TextView
             android:id="@+id/tvMediaName"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="0dp"
             android:layout_marginTop="3dp"
             android:layout_weight="1"
             android:breakStrategy="high_quality"
             android:ellipsize="end"
             android:fontFamily="@font/red_hat_display_bold"
-            android:maxLines="2"
+            android:maxEms="11"
+            android:maxLines="1"
             android:paddingStart="3dp"
             android:paddingEnd="3dp"
-            android:text="TextView"
             android:textStyle="bold"
             tools:text="Eternals" />
 

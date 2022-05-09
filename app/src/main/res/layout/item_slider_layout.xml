@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="275dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
     app:cardPreventCornerOverlap="false"
@@ -14,16 +14,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imvSlider"
-            android:layout_width="match_parent"
+            android:layout_width="275dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             tools:srcCompat="@drawable/image_background" />
+
+        <View
+            android:layout_width="275dp"
+            android:layout_height="200dp"
+            android:background="@drawable/background_image_slider" />
+
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -31,16 +42,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/cardView2"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
+        <View
             android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="0dp"
+            android:background="@drawable/ic_round_play"
+            android:backgroundTint="@color/white"
             app:srcCompat="@drawable/ic_round_play" />
 
         <TextView
@@ -49,8 +63,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/red_hat_display_bold"
+            android:gravity="center_vertical"
             android:text="@string/playNow_text"
+            android:textColor="@color/white"
             android:textStyle="bold" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvNameSlider"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
