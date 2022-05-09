@@ -105,7 +105,7 @@ class CreateLibraryActivity : AppCompatActivity() {
         binding.btnSelectFolder.setOnClickListener { signinGoogle() }
         binding.btnFinish.setOnClickListener {
             if (checkData())
-                createLibraryViewModel.createLibrary(accountId, folderSelected!!.idDrive, name,emptyMap<String,Any>(),type, language)
+                createLibraryViewModel.createLibrary(accountId, folderSelected!!.idDrive, name,type, language)
         }
     }
 

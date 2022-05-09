@@ -6,6 +6,8 @@ import com.example.moexfilm.models.data.Account
 import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
+import java.util.stream.Collectors
+import kotlin.random.Random
 
 object FirebaseDBRepository {
     private const val FIREBASE_DB_URL =
@@ -108,5 +110,40 @@ object FirebaseDBRepository {
 
             })
     }
+
+
+    fun getRandomContent(randomItems:MutableLiveData<MutableList<TMDBItem>>){
+        database.child("users").child(prefs.readUid()).child("libraries")
+            .orderByChild("type")
+            .equalTo("Peliculas").addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val listMovies = mutableListOf<Movie>()
+                    val randomLocalItems = mutableListOf<TMDBItem>()
+
+                    for (dataSnapShot in snapshot.children) {
+                        val data = dataSnapShot.getValue(LibraryMovies::class.java)!!
+                        listMovies.addAll(data.content.values.stream().collect(Collectors.toList()))
+                    }
+
+                    val size = 4
+                    val s = HashSet<Int>(size)
+
+                    while(s.size<size){
+                        s.add(Random.nextInt(0,listMovies.size))
+                    }
+
+                    s.stream().forEach { random ->
+                        randomLocalItems.add(listMovies.get(random))
+                    }
+
+                    randomItems.postValue(randomLocalItems)
+
+
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {} })
+    }
+
 
 }

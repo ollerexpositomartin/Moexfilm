@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.FragmentHomeBinding
+import com.example.moexfilm.viewModels.HomeFragmentViewModel
+import com.google.android.material.slider.Slider
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 
@@ -14,6 +17,7 @@ import com.smarteist.autoimageslider.SliderAnimations
 class HomeFragment : Fragment() {
     lateinit var binding:FragmentHomeBinding
     lateinit var sliderAdapter:SliderAdapter
+    val homeFragmentViewModel:HomeFragmentViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +30,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sliderAdapter = SliderAdapter()
         setSlider()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        homeFragmentViewModel.mutableListRandomItemsMutableLiveData.observe(viewLifecycleOwner){ randomItems ->
+            sliderAdapter.renewItems(randomItems)
+        }
     }
 
     private fun setSlider() {
