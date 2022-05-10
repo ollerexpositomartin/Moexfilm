@@ -9,9 +9,9 @@ class Episode : TMDBItem,Serializable,Playable {
     @SerializedName("still_path")
     var stillPath: String = ""
     @SerializedName("episode_number")
-    var episode_number:Int = 0
+    var episode_number:Int = -1
     @SerializedName("season_number")
-    var season_number:Int = 0
+    var season_number:Int = -1
     var tvShowName:String = ""
     var seasonPosterPath:String = ""
 

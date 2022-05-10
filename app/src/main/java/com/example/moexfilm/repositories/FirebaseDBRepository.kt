@@ -1,5 +1,6 @@
 package com.example.moexfilm.repositories
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
@@ -184,13 +185,17 @@ object FirebaseDBRepository {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val listMovies = mutableListOf<TMDBItem>()
                     for (dataSnapShot in snapshot.children) {
-                        val data: TMDBItem = try {
-                            dataSnapShot.getValue(Episode::class.java)!!
+                        val data: Episode = dataSnapShot.getValue(Episode::class.java)!!
 
-                        }catch (_:Exception){
+                        val realData:TMDBItem = if(data.season_number == 0 ){
                             dataSnapShot.getValue(Movie::class.java)!!
+                        }else{
+                            dataSnapShot.getValue(Episode::class.java)!!
                         }
-                        listMovies.add(data)
+
+
+
+                        listMovies.add(realData)
                     }
                     inProgress.postValue(listMovies)
                 }
