@@ -8,7 +8,6 @@ import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.repositories.TMDBRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.function.Predicate
 import java.util.stream.Collectors
 
 class DetailsMovieViewModel(val movie: Movie, val language: String) : ViewModel() {
@@ -18,7 +17,7 @@ class DetailsMovieViewModel(val movie: Movie, val language: String) : ViewModel(
         getCastMovie()
     }
 
-    fun getCastMovie() {
+    private fun getCastMovie() {
         viewModelScope.launch(Dispatchers.IO) {
             TMDBRepository.getMovieCast(movie, language) { castReceived(it) }
         }
@@ -30,7 +29,6 @@ class DetailsMovieViewModel(val movie: Movie, val language: String) : ViewModel(
         }
     }
 
-//    private fun getCastMovie
 
 
 }

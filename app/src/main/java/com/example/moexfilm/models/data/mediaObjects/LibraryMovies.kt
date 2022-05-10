@@ -6,7 +6,7 @@ class LibraryMovies:Library,Serializable {
 
     constructor():super()
 
-    constructor(owner: String,id: String,name:String,content:Map<String,Movie>,type: String, language: String):super(owner, id, name, type, language){
+    constructor(owner: String, id: String, name:String, content:Map<String,Movie>, type: String, language: String):super(owner, id, name, type, language){
         this.content = content
     }
 

@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.webkit.CookieManager
+import androidx.activity.viewModels
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.application.Application.Access.GOOGLE_DRIVE_PLAY_URL
 import com.example.moexfilm.databinding.ActivityVideoPlayerBinding
+import com.example.moexfilm.models.data.mediaObjects.Episode
+import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.models.data.mediaObjects.TMDBItem
+import com.example.moexfilm.util.MediaUtil
+import com.example.moexfilm.viewModels.VideoPlayerViewModel
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
@@ -17,6 +22,8 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 class VideoPlayerActivity : AppCompatActivity() {
     lateinit var binding: ActivityVideoPlayerBinding
     private lateinit var mediaSourceFactory: DefaultHttpDataSource.Factory
+    private val videoPlayerViewModel: VideoPlayerViewModel by viewModels()
+    private lateinit var content: TMDBItem
     private lateinit var videoUrl:String
     private lateinit var player: ExoPlayer
 
@@ -40,8 +47,8 @@ class VideoPlayerActivity : AppCompatActivity() {
 
     private fun getData() {
         val data = intent.extras
-        val id  = data!!.getString("ID")!!
-        videoUrl = GOOGLE_DRIVE_PLAY_URL.format(id)
+        content = data!!.getSerializable("CONTENT")!! as TMDBItem
+        videoUrl = GOOGLE_DRIVE_PLAY_URL.format(content.idDrive)
     }
 
     private fun setHeaders(){
@@ -96,8 +103,36 @@ class VideoPlayerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+
+        if(player.currentPosition < player.duration - 300000)
+        addToInProgress()
+        else
+            removeInProgress()
+
+
         player.stop()
+        super.onDestroy()
+
+    }
+
+    private fun removeInProgress() {
+        videoPlayerViewModel.removeMediaInProgress(content)
+    }
+
+    private fun addToInProgress() {
+        if(content is Movie){
+            val movie = content as Movie
+            movie.duration = MediaUtil.msToMinutes(player.duration)
+            movie.playedTime = MediaUtil.msToMinutes(player.currentPosition)
+        }
+
+        if(content is Episode){
+            val episode = content as Episode
+            episode.duration = MediaUtil.msToMinutes(player.duration)
+            episode.playedTime = MediaUtil.msToMinutes(player.currentPosition)
+        }
+
+        videoPlayerViewModel.saveMediaInProgress(content)
     }
 
 }

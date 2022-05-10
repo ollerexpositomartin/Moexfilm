@@ -89,7 +89,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
             correlationViewEpisode[view] = episode
             view.setOnClickListener{
                 startActivity(Intent(this,VideoPlayerActivity::class.java).apply {
-                    putExtra("ID",correlationViewEpisode[view]?.idDrive)
+                    putExtra("CONTENT",correlationViewEpisode[view])
                 })
             }
 

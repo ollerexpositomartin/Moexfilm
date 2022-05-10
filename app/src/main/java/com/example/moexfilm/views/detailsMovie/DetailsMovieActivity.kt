@@ -13,6 +13,7 @@ import com.example.moexfilm.application.expandCollapseTextView
 import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.databinding.ActivityDetailsMovieBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.util.MediaUtil
 import com.example.moexfilm.util.StringUtil
 import com.example.moexfilm.viewModels.DetailsMovieViewModel
 import com.example.moexfilm.views.VideoPlayerActivity
@@ -21,7 +22,7 @@ import com.example.moexfilm.views.detailsMovie.adapters.CastAdapter
 
 class DetailsMovieActivity : AppCompatActivity() {
     lateinit var binding: ActivityDetailsMovieBinding
-    private lateinit var movie:Movie
+    private lateinit var movie: Movie
     private lateinit var language:String
     private var expandOrCollapse:Boolean = true
     private lateinit var detailsMovieViewModel:DetailsMovieViewModel
@@ -43,7 +44,7 @@ class DetailsMovieActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.btnEspandCollapse.setOnClickListener{ expandCollapse() }
         binding.btnPlay.setOnClickListener { startActivity(Intent(this,VideoPlayerActivity::class.java).apply {
-            putExtra("ID",movie.idDrive)
+            putExtra("CONTENT",movie)
         }) }
     }
 
@@ -91,7 +92,7 @@ class DetailsMovieActivity : AppCompatActivity() {
         binding.tvOverview.text = movie.overview
         binding.tvFileName.text = movie.fileName
         binding.tvDate.text = movie.release_date
-        binding.tvDuration.text = StringUtil.minToHoursAndMinutes(movie.duration)
+        binding.tvDuration.text = MediaUtil.minToHoursAndMinutes(MediaUtil.msToMinutes(movie.duration))
         binding.tvGenres.text = StringUtil.genresToString(movie.genres)
     }
 }

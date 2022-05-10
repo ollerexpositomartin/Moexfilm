@@ -1,6 +1,5 @@
 package com.example.moexfilm.repositories
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
@@ -8,7 +7,6 @@ import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
 import java.util.stream.Collectors
-import kotlin.random.Random
 
 object FirebaseDBRepository {
     private const val FIREBASE_DB_URL =
@@ -54,7 +52,7 @@ object FirebaseDBRepository {
             }
     }
 
-    fun saveEpisode(episode: Episode, callback: FirebaseDBCallBack? = null) {
+    fun saveEpisode(episode: Episode) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .child(episode.parentLibrary)
             .child("content").child(episode.parentTvShow).child("seasons")
@@ -145,12 +143,12 @@ object FirebaseDBRepository {
             })
     }
 
-    fun getMostPopularMovies(popularMovies: MutableLiveData<MutableList<Movie>>) {
+    fun getMostPopularMovies(popularMovies: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .orderByChild("type")
             .equalTo("Peliculas").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    var listMovies: MutableList<Movie> = mutableListOf()
+                    var listMovies: MutableList<TMDBItem> = mutableListOf()
                     val moviesNoRepeat:HashMap<String,Movie> = hashMapOf()
                     for (dataSnapShot in snapshot.children) {
                         val data = dataSnapShot.getValue(LibraryMovies::class.java)!!
@@ -172,11 +170,36 @@ object FirebaseDBRepository {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
-
                 }
             })
-
-
     }
+
+    fun saveMediaInProgress(media: TMDBItem) {
+        database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive).setValue(media)
+    }
+
+    fun getMediaInProgress(inProgress: MutableLiveData<MutableList<TMDBItem>>) {
+        database.child("users").child(prefs.readUid()).child("inProgress")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val listMovies = mutableListOf<TMDBItem>()
+                    for (dataSnapShot in snapshot.children) {
+                        val data: TMDBItem = try {
+                            dataSnapShot.getValue(Episode::class.java)!!
+
+                        }catch (_:Exception){
+                            dataSnapShot.getValue(Movie::class.java)!!
+                        }
+                        listMovies.add(data)
+                    }
+                    inProgress.postValue(listMovies)
+                }
+
+                override fun onCancelled(error: DatabaseError) {} })
+    }
+
+    fun removeMediaInProgress(media: TMDBItem) {
+        database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive).removeValue()
+    }
+
 }

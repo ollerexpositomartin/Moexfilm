@@ -31,7 +31,7 @@ interface TMDBService {
     suspend fun searchTvShow(
         @Query("api_key") api_key: String,
         @Query("query") query: String,
-        @Query("year") year: String,
+        @Query("first_air_date_year") year: String,
         @Query("language") language:String
     ): Response<TMDBResponseTvShow>
 

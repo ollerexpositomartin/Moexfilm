@@ -1,13 +1,13 @@
 package com.example.moexfilm.models.data.mediaObjects
 
+import com.example.moexfilm.models.interfaces.Playable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-import java.util.*
 
-class Movie : TMDBItem,Serializable {
+class Movie : TMDBItem,Serializable,Playable {
      @SerializedName("runtime")
      var duration: Long = 0
-     var timePlayed: Long = 0
+     var playedTime: Long = 0
      var quality: Long = 0
 
     constructor():super()
@@ -27,7 +27,7 @@ class Movie : TMDBItem,Serializable {
         vote_average: Double,
         overview: String,
         duration:Long,
-        timePlayed:Long,
+        playedTime:Long,
         quality:Long
     ) : super(
         idDrive,
@@ -45,10 +45,12 @@ class Movie : TMDBItem,Serializable {
         released_date
     ){
         this.duration = duration
-        this.timePlayed = timePlayed
+        this.playedTime = playedTime
         this.quality = quality
     }
 
+    override fun duration(): Long  = duration
+    override fun playedTime(): Long = playedTime
 
 
 }

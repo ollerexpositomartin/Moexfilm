@@ -7,20 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.FragmentHomeBinding
 import com.example.moexfilm.databinding.ItemListFragmentHomeLayoutBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 import com.example.moexfilm.viewModels.HomeFragmentViewModel
-import com.example.moexfilm.views.main.MainActivity
-import com.example.moexfilm.views.main.fragments.homeFragment.adapters.PopularAdapter
+import com.example.moexfilm.views.library.adapters.LibraryItemsAdapter
+import com.example.moexfilm.views.main.fragments.homeFragment.adapters.MediaInProgressAdapter
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -42,7 +39,9 @@ class HomeFragment : Fragment() {
             sliderAdapter = SliderAdapter()
             setSlider()
             initObserverRandom()
+            initObserverMediaInProgress()
             initObserverPopular()
+
     }
 
     private fun initObserverRandom() {
@@ -52,14 +51,24 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onPopularItemClick(movie: Movie){
+    private fun initObserverMediaInProgress(){
+        homeFragmentViewModel.mutableListMediaInProgressMutableLiveData.observe(viewLifecycleOwner) { mediaInProgress ->
+            if(mediaInProgress.isNotEmpty()){
+                val adapter = MediaInProgressAdapter { onPopularItemClick(it) }
+                adapter.submitList(mediaInProgress)
+                addContentToLinearLayout(onInflateItemView("En progreso",adapter))
+            }
+        }
+    }
+
+    private fun onPopularItemClick(movie: TMDBItem){
 
     }
 
     private fun initObserverPopular(){
         homeFragmentViewModel.mutableListPopularMoviesMutableLiveData.observe(viewLifecycleOwner){ popularItems ->
            if(popularItems.isNotEmpty()){
-               val adapter = PopularAdapter { onPopularItemClick(it) }
+               val adapter = LibraryItemsAdapter { onPopularItemClick(it) }
                adapter.submitList(popularItems)
                addContentToLinearLayout(onInflateItemView("Popular",adapter))
            }

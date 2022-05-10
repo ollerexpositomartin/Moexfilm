@@ -1,10 +1,12 @@
 package com.example.moexfilm.repositories
 
+import android.util.Log
 import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.helpers.RetrofitHelper
 import com.example.moexfilm.models.interfaces.callBacks.TMDBCallBack
 import com.example.moexfilm.models.interfaces.services.TMDBService
+import com.example.moexfilm.util.MediaUtil
 import com.example.moexfilm.util.StringUtil
 
 object TMDBRepository {
@@ -102,6 +104,8 @@ object TMDBRepository {
                         )
                     if(response.isSuccessful){
                         val episodeTMDB = response.body()!!
+                        episodeTMDB.tvShowName = tvShow.name
+                        episodeTMDB.seasonPosterPath = season.poster_path.toString()
                         episodeTMDB.idDrive = episode.idDrive
                         episodeTMDB.fileName = episode.fileName
                         episodeTMDB.parentLibrary  = tvShow.parentLibrary
@@ -120,13 +124,14 @@ object TMDBRepository {
             .searchMovieDetails(movie.id, API_KEY, language)
         if (response.isSuccessful) {
             val result = response.body()!!
-            movie.duration = result.duration
+
+            movie.duration = MediaUtil.minutesToMs(result.duration)
             movie.genres = result.genres
             callback.onSearchItemCompleted(movie)
             }
         }
 
-    suspend fun getMovieCast(movie: Movie, language: String,onSuccess:((List<Cast>) -> Unit)) {
+    suspend fun getMovieCast(movie: Movie, language: String, onSuccess:((List<Cast>) -> Unit)) {
         val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java).getMovieCast(movie.id, API_KEY, language)
         if (response.isSuccessful) {
             val result = response.body()!!

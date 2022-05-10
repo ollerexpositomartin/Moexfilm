@@ -1,5 +1,6 @@
 package com.example.moexfilm.util
 
+import android.util.Log
 import com.example.moexfilm.models.data.mediaObjects.Genre
 import com.example.moexfilm.models.data.utilObjects.FormatedTitle
 import com.example.moexfilm.models.data.mediaObjects.Library
@@ -67,14 +68,12 @@ object StringUtil {
         return ""
     }
 
-    fun minToHoursAndMinutes(min:Long):String{
-        val hours = min/60
-        val minutes = min%60
-        return "${hours}h ${minutes}m"
-    }
+
 
     fun genresToString(genres: List<Genre>): String {
         return genres.map {genre -> genre.name }.joinToString(separator = ", ")
     }
+
+
 
 }

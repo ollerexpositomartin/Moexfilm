@@ -9,6 +9,8 @@ open class TMDBItem: Serializable {
     var parentFolder: String = ""
     var parentLibrary:String = ""
 
+
+
     @SerializedName("title", alternate = ["name"])
     var name:String = ""
 
