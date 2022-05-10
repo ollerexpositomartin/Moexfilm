@@ -2,6 +2,7 @@ package com.example.moexfilm.views.library
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityLibraryBinding
@@ -40,7 +41,7 @@ class LibraryActivity :ScanActivity() {
     }
 
     override fun isRunning(libraryItemList: MutableList<Library>) {
-        if(libraryItemList.isEmpty())
+        if(!libraryItemList.contains(library))
             binding.swipeRefreshLayout.isRefreshing = false
     }
 

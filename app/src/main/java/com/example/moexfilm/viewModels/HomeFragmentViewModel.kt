@@ -2,9 +2,12 @@ package com.example.moexfilm.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 import com.example.moexfilm.repositories.FirebaseDBRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeFragmentViewModel: ViewModel() {
     val mutableListRandomItemsMutableLiveData:MutableLiveData<MutableList<TMDBItem>> = MutableLiveData()
@@ -15,11 +18,13 @@ class HomeFragmentViewModel: ViewModel() {
         loadPopularMovies()
     }
 
+
+
     private fun loadRandomContent(){
         FirebaseDBRepository.getRandomContent(mutableListRandomItemsMutableLiveData)
     }
 
-    private fun  loadPopularMovies(){
+    private fun loadPopularMovies(){
         FirebaseDBRepository.getMostPopularMovies(mutableListPopularMoviesMutableLiveData)
     }
 

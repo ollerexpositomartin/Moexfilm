@@ -1,5 +1,6 @@
 package com.example.moexfilm.repositories
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
@@ -68,7 +69,7 @@ object FirebaseDBRepository {
 
     fun getLibraries(libraries: MutableLiveData<List<Library>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val list = ArrayList<Library>()
 
@@ -116,9 +117,9 @@ object FirebaseDBRepository {
     fun getRandomContent(randomItems: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .orderByChild("type")
-            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
+            .equalTo("Peliculas").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val listMovies = mutableListOf<Movie>()
+                    val listMovies = mutableListOf<TMDBItem>()
                     val randomLocalItems = mutableListOf<TMDBItem>()
 
                     for (dataSnapShot in snapshot.children) {
@@ -126,19 +127,20 @@ object FirebaseDBRepository {
                         listMovies.addAll(data.content.values.stream().collect(Collectors.toList()))
                     }
 
+
                     val size = 4
                     val s = HashSet<Int>(size)
+                        if (listMovies.size > size) {
+                            while (s.size < size) {
+                                s.add((0 until listMovies.size).random())
+                            }
 
-                    while (s.size < size) {
-                        s.add((0..listMovies.size).random())
-                    }
-
-                    s.stream().forEach { random ->
-                        randomLocalItems.add(listMovies.get(random))
-                    }
-                    randomItems.postValue(randomLocalItems)
+                            s.stream().forEach { random ->
+                                randomLocalItems.add(listMovies.get(random))
+                            }
+                            randomItems.postValue(randomLocalItems)
+                        }
                 }
-
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
@@ -146,19 +148,25 @@ object FirebaseDBRepository {
     fun getMostPopularMovies(popularMovies: MutableLiveData<MutableList<Movie>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .orderByChild("type")
-            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
+            .equalTo("Peliculas").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var listMovies: MutableList<Movie> = mutableListOf()
                     val moviesNoRepeat:HashMap<String,Movie> = hashMapOf()
                     for (dataSnapShot in snapshot.children) {
                         val data = dataSnapShot.getValue(LibraryMovies::class.java)!!
                         val movies = data.content.values.stream().collect(Collectors.toList())
+
                         for(movie in movies){
                             moviesNoRepeat[movie.name] = movie
                         }
                     }
                     listMovies.addAll(moviesNoRepeat.values)
-                    listMovies = listMovies.stream().sorted{movie1,movie2 -> (movie2.popularity!!*1000 - movie1.popularity!!*1000).toInt() }.collect(Collectors.toList()).subList(0,9)
+                    listMovies = listMovies.stream().sorted{movie1,movie2 -> (movie2.popularity!!*1000 - movie1.popularity!!*1000).toInt() }.collect(Collectors.toList())
+
+                    try {
+                        listMovies = listMovies.subList(0,9)
+                    }catch (_:Exception){
+                    }
 
                     popularMovies.postValue(listMovies)
                 }

@@ -1,6 +1,7 @@
 package com.example.moexfilm.views.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -11,11 +12,14 @@ import com.example.moexfilm.databinding.ActivityMainBinding
 import com.example.moexfilm.models.data.mediaObjects.Library
 import com.example.moexfilm.util.StringUtil
 import com.example.moexfilm.views.ScanActivity
+import com.example.moexfilm.views.main.fragments.FavoriteFragment
+import com.example.moexfilm.views.main.fragments.ProfileFragment
+import com.example.moexfilm.views.main.fragments.SearchFragment
 import com.example.moexfilm.views.main.fragments.homeFragment.HomeFragment
 import com.example.moexfilm.views.main.fragments.librariesMenu.LibrariesMenuFragment
 
 
-class MainActivity :ScanActivity() {
+class MainActivity:ScanActivity() {
     private lateinit var binding:ActivityMainBinding
 
     val responseLibraryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ response ->
@@ -32,6 +36,7 @@ class MainActivity :ScanActivity() {
         setContentView(binding.root)
         prefs = Prefs(this)
 
+
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home -> {
@@ -40,10 +45,12 @@ class MainActivity :ScanActivity() {
                 }
 
                 R.id.favorite ->{
+                    loadFragment(FavoriteFragment())
                     true
                 }
 
                 R.id.search -> {
+                    loadFragment(SearchFragment())
                     true
                 }
 
@@ -53,6 +60,7 @@ class MainActivity :ScanActivity() {
                 }
 
                 R.id.profile -> {
+                    loadFragment(ProfileFragment())
                     true
                 }
 
@@ -72,10 +80,12 @@ class MainActivity :ScanActivity() {
             binding.tvScanningLibrary.text = getString(R.string.scanningLibrary_text).format(StringUtil.scanItemListToText(libraryItemList))
             binding.tvScanningLibrary.isSelected = true
             binding.scanningNotification.visibility = View.VISIBLE
+            scanning = true
         }else{
             service!!.onDestroy()
             binding.tvScanningLibrary.isSelected = false
             binding.scanningNotification.visibility = View.INVISIBLE
+            scanning = false
         }
     }
 }

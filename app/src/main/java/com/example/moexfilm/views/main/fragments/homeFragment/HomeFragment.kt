@@ -14,9 +14,13 @@ import com.example.moexfilm.databinding.FragmentHomeBinding
 import com.example.moexfilm.databinding.ItemListFragmentHomeLayoutBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.viewModels.HomeFragmentViewModel
+import com.example.moexfilm.views.main.MainActivity
 import com.example.moexfilm.views.main.fragments.homeFragment.adapters.PopularAdapter
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -35,15 +39,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sliderAdapter = SliderAdapter()
-        setSlider()
-        initObserverRandom()
-        initObserverPopular()
+            sliderAdapter = SliderAdapter()
+            setSlider()
+            initObserverRandom()
+            initObserverPopular()
     }
 
     private fun initObserverRandom() {
-        homeFragmentViewModel.mutableListRandomItemsMutableLiveData.observe(viewLifecycleOwner){ randomItems ->
-            sliderAdapter.renewItems(randomItems)
+        homeFragmentViewModel.mutableListRandomItemsMutableLiveData.observe(viewLifecycleOwner) { randomItems ->
+            if(randomItems.isNotEmpty())
+                sliderAdapter.renewItems(randomItems)
         }
     }
 

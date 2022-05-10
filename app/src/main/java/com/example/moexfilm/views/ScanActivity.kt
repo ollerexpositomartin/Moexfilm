@@ -15,6 +15,11 @@ abstract class ScanActivity : AppCompatActivity(), ServiceListener {
     var service: ScanLibraryService? = null
     lateinit var library: Library
 
+    companion object{
+        var scanning = false
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        startConnection()
@@ -42,6 +47,5 @@ abstract class ScanActivity : AppCompatActivity(), ServiceListener {
             service!!.startScan(library)
         }
     }
-
 
 }
