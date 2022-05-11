@@ -12,6 +12,7 @@ import com.example.moexfilm.models.interfaces.Likable
 import com.example.moexfilm.models.interfaces.Playable
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import java.util.stream.Collectors
 
 object FirebaseDBRepository {
@@ -206,6 +207,34 @@ object FirebaseDBRepository {
     fun removeMediaInProgress(media: TMDBItem) {
         database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive).removeValue()
     }
+
+    fun getMediaLikes(likes: MutableLiveData<List<TMDBItem>>) {
+        database.child("users").child(prefs.readUid()).child("likes").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+               val listMedia = mutableListOf<TMDBItem>()
+
+                for(dataSnapShot in snapshot.children){
+                    val data:FirebaseObjectIdentificator = dataSnapShot.getValue(FirebaseObjectIdentificator::class.java)!!
+
+                    if(data.firebaseType == Movie::class.java.simpleName){
+                        val movie:Movie = dataSnapShot.getValue(Movie::class.java)!!
+                        listMedia.add(movie)
+                    }
+
+                    if(data.firebaseType == TvShow::class.java.simpleName){
+                        val tvShow:TvShow = dataSnapShot.getValue(TvShow::class.java)!!
+                        listMedia.add(tvShow)
+                    }
+
+                }
+                likes.postValue(listMedia)
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
+    }
+
 
     fun likeMedia(media: TMDBItem) {
         val likable:Likable = media as Likable

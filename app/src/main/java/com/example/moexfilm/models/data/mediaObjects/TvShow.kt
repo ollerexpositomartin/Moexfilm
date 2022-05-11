@@ -8,6 +8,7 @@ import kotlin.collections.HashMap
 class TvShow : TMDBItem,Serializable,Likable {
     var seasons:HashMap<String,Season> = hashMapOf()
     var like:Boolean = false
+    var firebaseType:String = ""
 
     constructor() : super()
 
@@ -25,7 +26,8 @@ class TvShow : TMDBItem,Serializable,Likable {
         popularity: Double,
         vote_average: Double,
         overview: String,
-        like:Boolean
+        like:Boolean,
+        firebaseType:String
     ) : super(
         idDrive,
         name,
@@ -42,6 +44,7 @@ class TvShow : TMDBItem,Serializable,Likable {
         released_date,
     ){
         this.like = like
+        this.firebaseType = firebaseType
     }
 
 

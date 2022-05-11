@@ -27,6 +27,7 @@ class DetailsTvShowActivity : LikeActivity() {
     private lateinit var seasons:List<Season>
     private var correlationViewEpisode:HashMap<View,Episode> = hashMapOf()
     private var expandOrCollapse:Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsTvShowBinding.inflate(layoutInflater)

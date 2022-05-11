@@ -72,10 +72,15 @@ class ScanLibraryService : Service() {
 
         TMDBRepository.searchTvShows(tvShows, library.language, object : TMDBCallBack {
             override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
-                itemTMDB.parentFolder = library.id
-                itemTMDB.parentLibrary = library.id
-                tvShowsTMDB.add(itemTMDB as TvShow)
-                FirebaseDBRepository.saveMovieAndTvShowInLibrary(itemTMDB)
+                val tvShow = itemTMDB as TvShow
+
+                tvShow.parentFolder = library.id
+                tvShow.parentLibrary = library.id
+                tvShow.firebaseType = tvShow::class.java.simpleName
+
+                tvShowsTMDB.add(tvShow)
+
+                FirebaseDBRepository.saveMovieAndTvShowInLibrary(tvShow)
             }
             override fun onAllSearchsFinish() {
                runBlocking(Dispatchers.IO){

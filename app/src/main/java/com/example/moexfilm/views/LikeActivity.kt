@@ -18,12 +18,6 @@ abstract class LikeActivity:AppCompatActivity() {
     lateinit var media: TMDBItem
     private val likeViewModel: LikeViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
-
-    }
-
      fun btnLikeListener() {
          btnLike.setMaxProgress(0.60F)
         btnLike.setOnClickListener {
@@ -39,8 +33,6 @@ abstract class LikeActivity:AppCompatActivity() {
             likeViewModel.likeMedia(media)
         }
     }
-
-
 
     fun checkLike() {
         val likable: Likable = media as Likable
