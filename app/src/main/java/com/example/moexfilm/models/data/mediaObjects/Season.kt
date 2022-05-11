@@ -7,11 +7,13 @@ import kotlin.collections.HashMap
 
 class Season : TMDBItem,Serializable {
 
-    constructor():super()
+
     @SerializedName("")
     var episodes:HashMap<String,Episode> = hashMapOf()
     @SerializedName("season_number")
     var season_number: Int = 0
+
+    constructor():super()
 
     constructor(
         idDrive: String,

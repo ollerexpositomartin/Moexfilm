@@ -6,7 +6,6 @@ import com.example.moexfilm.repositories.FirebaseDBRepository
 
 class VideoPlayerViewModel: ViewModel() {
 
-
     fun saveMediaInProgress(media: TMDBItem){
         FirebaseDBRepository.saveMediaInProgress(media)
     }

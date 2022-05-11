@@ -4,5 +4,6 @@ interface Playable {
 
     fun duration():Long
     fun playedTime():Long
+    fun like():Boolean
 
 }

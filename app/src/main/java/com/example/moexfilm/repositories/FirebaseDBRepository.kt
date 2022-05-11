@@ -4,7 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.models.data.Account
+import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.mediaObjects.*
+import com.example.moexfilm.models.data.utilObjects.FirebaseObjectIdentificator
+import com.example.moexfilm.models.data.utilObjects.FormatedTitle
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
 import java.util.stream.Collectors
@@ -116,7 +119,7 @@ object FirebaseDBRepository {
     fun getRandomContent(randomItems: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .orderByChild("type")
-            .equalTo("Peliculas").addValueEventListener(object : ValueEventListener {
+            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val listMovies = mutableListOf<TMDBItem>()
                     val randomLocalItems = mutableListOf<TMDBItem>()
@@ -125,7 +128,6 @@ object FirebaseDBRepository {
                         val data = dataSnapShot.getValue(LibraryMovies::class.java)!!
                         listMovies.addAll(data.content.values.stream().collect(Collectors.toList()))
                     }
-
 
                     val size = 4
                     val s = HashSet<Int>(size)
@@ -147,7 +149,7 @@ object FirebaseDBRepository {
     fun getMostPopularMovies(popularMovies: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .orderByChild("type")
-            .equalTo("Peliculas").addValueEventListener(object : ValueEventListener {
+            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var listMovies: MutableList<TMDBItem> = mutableListOf()
                     val moviesNoRepeat:HashMap<String,Movie> = hashMapOf()
@@ -181,25 +183,21 @@ object FirebaseDBRepository {
 
     fun getMediaInProgress(inProgress: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(prefs.readUid()).child("inProgress")
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val listMovies = mutableListOf<TMDBItem>()
                     for (dataSnapShot in snapshot.children) {
-                        val data: Episode = dataSnapShot.getValue(Episode::class.java)!!
+                        val data:FirebaseObjectIdentificator = dataSnapShot.getValue(FirebaseObjectIdentificator::class.java)!!
 
-                        val realData:TMDBItem = if(data.season_number == 0 ){
+                        val realData:TMDBItem = if(data.firebaseType == Movie::class.java.simpleName){
                             dataSnapShot.getValue(Movie::class.java)!!
                         }else{
                             dataSnapShot.getValue(Episode::class.java)!!
                         }
-
-
-
                         listMovies.add(realData)
                     }
                     inProgress.postValue(listMovies)
                 }
-
                 override fun onCancelled(error: DatabaseError) {} })
     }
 

@@ -132,6 +132,7 @@ class ScanLibraryService : Service() {
         TMDBRepository.searchTvEpisode(tvShows,library.language,object:TMDBCallBack{
             override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
                 val episode = itemTMDB as Episode
+                episode.firebaseType = Episode::class.java.simpleName
                 FirebaseDBRepository.saveEpisode(episode)
             }
             override fun onAllSearchsFinish() {
@@ -153,9 +154,9 @@ class ScanLibraryService : Service() {
                             override fun onSearchItemCompleted(itemTMDB: TMDBItem) {
                                 CoroutineScope(Dispatchers.IO).launch {
                                     val movie = itemTMDB as Movie
-
                                     movie.parentFolder = library.id
                                     movie.parentLibrary = library.id
+                                    movie.firebaseType = Movie::class.java.simpleName
                                     FirebaseDBRepository.saveMovieAndTvShowInLibrary(movie)
                                 }
                             }

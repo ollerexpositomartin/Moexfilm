@@ -9,6 +9,8 @@ class Movie : TMDBItem,Serializable,Playable {
      var duration: Long = 0
      var playedTime: Long = 0
      var quality: Long = 0
+    var firebaseType:String = ""
+    var like:Boolean = false
 
     constructor():super()
 
@@ -28,7 +30,9 @@ class Movie : TMDBItem,Serializable,Playable {
         overview: String,
         duration:Long,
         playedTime:Long,
-        quality:Long
+        quality:Long,
+        firebaseType:String,
+        like:Boolean
     ) : super(
         idDrive,
         name,
@@ -47,10 +51,15 @@ class Movie : TMDBItem,Serializable,Playable {
         this.duration = duration
         this.playedTime = playedTime
         this.quality = quality
+        this.firebaseType = firebaseType
+        this.like = like
     }
 
     override fun duration(): Long  = duration
     override fun playedTime(): Long = playedTime
+    override fun toString(): String {
+        return "Movie(duration=$duration, playedTime=$playedTime, quality=$quality)"
+    }
 
 
 }

@@ -14,13 +14,10 @@ class Episode : TMDBItem,Serializable,Playable {
     var season_number:Int = -1
     var tvShowName:String = ""
     var seasonPosterPath:String = ""
-
     var parentTvShow: String = ""
-
-
-
     var duration:Long = 0
     var playedTime:Long = 0
+    var firebaseType:String = ""
 
 
     constructor():super()
@@ -45,7 +42,8 @@ class Episode : TMDBItem,Serializable,Playable {
         vote_average: Double,
         overview: String,
         duration:Long,
-        playedTime:Long
+        playedTime:Long,
+        firebaseType:String
     ) : super(
         idDrive,
         name,
@@ -68,11 +66,15 @@ class Episode : TMDBItem,Serializable,Playable {
         this.season_number = season_number
         this.duration = duration
         this.playedTime = playedTime
+        this.firebaseType = firebaseType
     }
 
     override fun duration(): Long = duration
 
     override fun playedTime(): Long = playedTime
+    override fun toString(): String {
+        return "Episode(stillPath='$stillPath', episode_number=$episode_number, season_number=$season_number, tvShowName='$tvShowName', seasonPosterPath='$seasonPosterPath', parentTvShow='$parentTvShow', duration=$duration, playedTime=$playedTime)"
+    }
 
 
 }

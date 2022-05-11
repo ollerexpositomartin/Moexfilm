@@ -3,6 +3,7 @@ package com.example.moexfilm.views.detailsMovie
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,7 @@ class DetailsMovieActivity : AppCompatActivity() {
         setTransparentStatusBar()
         getData()
         detailsMovieViewModel = DetailsMovieViewModel(movie,language)
+        binding.btnLike.setMaxProgress(0.60F)
         setRecycler()
         initCastObserver()
         setListeners()
@@ -46,6 +48,16 @@ class DetailsMovieActivity : AppCompatActivity() {
         binding.btnPlay.setOnClickListener { startActivity(Intent(this,VideoPlayerActivity::class.java).apply {
             putExtra("CONTENT",movie)
         }) }
+
+        binding.btnLike.setOnClickListener {
+            if(!movie.like) {
+                binding.btnLike.playAnimation()
+                movie.like = true
+            }else{
+                binding.btnLike.progress = 0F
+                movie.like = false
+            }
+        }
     }
 
     private fun setTransparentStatusBar() {

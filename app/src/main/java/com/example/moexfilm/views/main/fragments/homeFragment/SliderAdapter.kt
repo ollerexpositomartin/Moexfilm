@@ -12,7 +12,7 @@ import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 import com.smarteist.autoimageslider.SliderViewAdapter
 
 
-public class SliderAdapter() : SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {
+public class SliderAdapter(val onItemclick:(TMDBItem) -> Unit) : SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {
     private var mSliderItems: MutableList<TMDBItem> = ArrayList()
 
     fun renewItems(sliderItems: MutableList<TMDBItem>) {
@@ -39,6 +39,8 @@ public class SliderAdapter() : SliderViewAdapter<SliderAdapter.SliderAdapterVH>(
         val sliderItem: TMDBItem = mSliderItems[position]
         viewHolder.binding.tvNameSlider.text = sliderItem.name
         viewHolder.binding.imvSlider.loadImage(TMDB_IMAGE_URL.format(sliderItem.backdrop_path))
+
+        viewHolder.binding.root.setOnClickListener { onItemclick(mSliderItems[position]) }
     }
 
     override fun getCount(): Int {

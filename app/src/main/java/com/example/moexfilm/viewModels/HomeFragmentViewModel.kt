@@ -11,14 +11,13 @@ class HomeFragmentViewModel: ViewModel() {
     val mutableListPopularMoviesMutableLiveData:MutableLiveData<MutableList<TMDBItem>> = MutableLiveData()
     val mutableListMediaInProgressMutableLiveData:MutableLiveData<MutableList<TMDBItem>> = MutableLiveData()
 
-    init {
-        loadRandomContent()
-        loadMediaInProgress()
-        loadPopularMovies()
+   init {
+       loadRandomContent()
+       loadMediaInProgress()
+       loadPopularMovies()
+   }
 
-    }
-
-    private fun loadMediaInProgress() {
+     fun loadMediaInProgress() {
         FirebaseDBRepository.getMediaInProgress(mutableListMediaInProgressMutableLiveData)
     }
 
@@ -26,7 +25,7 @@ class HomeFragmentViewModel: ViewModel() {
         FirebaseDBRepository.getRandomContent(mutableListRandomItemsMutableLiveData)
     }
 
-    private fun loadPopularMovies(){
+    fun loadPopularMovies(){
         FirebaseDBRepository.getMostPopularMovies(mutableListPopularMoviesMutableLiveData)
     }
 

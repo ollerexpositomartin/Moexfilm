@@ -7,7 +7,6 @@ import kotlin.collections.HashMap
 class TvShow : TMDBItem,Serializable {
     var seasons:HashMap<String,Season> = hashMapOf()
 
-
     constructor() : super()
 
     constructor(

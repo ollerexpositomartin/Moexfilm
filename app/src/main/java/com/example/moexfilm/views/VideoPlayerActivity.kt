@@ -2,6 +2,7 @@ package com.example.moexfilm.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
@@ -26,6 +27,7 @@ class VideoPlayerActivity : AppCompatActivity() {
     private lateinit var content: TMDBItem
     private lateinit var videoUrl:String
     private lateinit var player: ExoPlayer
+    private var startTime:Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ class VideoPlayerActivity : AppCompatActivity() {
     private fun getData() {
         val data = intent.extras
         content = data!!.getSerializable("CONTENT")!! as TMDBItem
+        startTime = data.getLong("PROGRESS")
         videoUrl = GOOGLE_DRIVE_PLAY_URL.format(content.idDrive)
     }
 
@@ -83,10 +86,13 @@ class VideoPlayerActivity : AppCompatActivity() {
             setMediaSourceFactory(DefaultMediaSourceFactory(mediaSourceFactory))
         }.build()
         player.setMediaItem(MediaItem.fromUri(videoUrl))
+        Log.d("STARTIME",startTime.toString())
         binding.playerView.player = player
         binding.playerView.keepScreenOn = true
         player.prepare()
+        player.seekTo(startTime)
         player.playWhenReady = true
+
     }
 
 
@@ -119,17 +125,19 @@ class VideoPlayerActivity : AppCompatActivity() {
         videoPlayerViewModel.removeMediaInProgress(content)
     }
 
+    //METER UN RESULT FINISH PARA INDICAR CUANDO REFRESCAR EL HOMEFRAGMENT
+
     private fun addToInProgress() {
         if(content is Movie){
             val movie = content as Movie
-            movie.duration = MediaUtil.msToMinutes(player.duration)
-            movie.playedTime = MediaUtil.msToMinutes(player.currentPosition)
+            movie.duration = player.duration
+            movie.playedTime = player.currentPosition
         }
 
         if(content is Episode){
             val episode = content as Episode
-            episode.duration = MediaUtil.msToMinutes(player.duration)
-            episode.playedTime = MediaUtil.msToMinutes(player.currentPosition)
+            episode.duration = player.duration
+            episode.playedTime = player.currentPosition
         }
 
         videoPlayerViewModel.saveMediaInProgress(content)

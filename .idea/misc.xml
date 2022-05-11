@@ -8,7 +8,7 @@
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/drawable/ic_add.xml" value="0.2595" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/drawable/ic_fullscreen_exit.xml" value="0.2595" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_create_library.xml" value="0.25416666666666665" />
-        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_details_movie.xml" value="0.264" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_details_movie.xml" value="0.4" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_details_tv_show.xml" value="0.4" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_file_explorer.xml" value="0.264" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/activity_library.xml" value="0.25416666666666665" />
@@ -23,6 +23,7 @@
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_actor_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_episode_layout.xml" value="0.4742468415937804" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_folder_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_list_fragment_home_layout.xml" value="0.20863616930312098" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_media_layout.xml" value="0.536" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_menu_library_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/GitHub/Moexfilm/app/src/main/res/layout/item_slider_layout.xml" value="0.4186851211072664" />

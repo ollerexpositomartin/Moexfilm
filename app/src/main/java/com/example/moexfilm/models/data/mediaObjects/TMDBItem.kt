@@ -9,8 +9,6 @@ open class TMDBItem: Serializable {
     var parentFolder: String = ""
     var parentLibrary:String = ""
 
-
-
     @SerializedName("title", alternate = ["name"])
     var name:String = ""
 
@@ -68,6 +66,10 @@ open class TMDBItem: Serializable {
         this.release_date = release_date
         this.vote_average = vote_average
         this.overview = overview
+    }
+
+    override fun toString(): String {
+        return "TMDBItem(idDrive='$idDrive', fileName='$fileName', parentFolder='$parentFolder', parentLibrary='$parentLibrary', name='$name', id=$id, poster_path=$poster_path, backdrop_path=$backdrop_path, genres=$genres, popularity=$popularity, release_date=$release_date, vote_average=$vote_average, overview=$overview)"
     }
 
 
