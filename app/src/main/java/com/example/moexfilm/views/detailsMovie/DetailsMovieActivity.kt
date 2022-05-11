@@ -3,7 +3,6 @@ package com.example.moexfilm.views.detailsMovie
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -14,51 +13,50 @@ import com.example.moexfilm.application.expandCollapseTextView
 import com.example.moexfilm.application.loadImage
 import com.example.moexfilm.databinding.ActivityDetailsMovieBinding
 import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.models.interfaces.Likable
 import com.example.moexfilm.util.MediaUtil
 import com.example.moexfilm.util.StringUtil
 import com.example.moexfilm.viewModels.DetailsMovieViewModel
+import com.example.moexfilm.viewModels.LikeViewModel
+import com.example.moexfilm.views.LikeActivity
 import com.example.moexfilm.views.VideoPlayerActivity
 import com.example.moexfilm.views.detailsMovie.adapters.CastAdapter
 
 
-class DetailsMovieActivity : AppCompatActivity() {
+class DetailsMovieActivity : LikeActivity() {
     lateinit var binding: ActivityDetailsMovieBinding
     private lateinit var movie: Movie
     private lateinit var language:String
     private var expandOrCollapse:Boolean = true
     private lateinit var detailsMovieViewModel:DetailsMovieViewModel
+
     private lateinit var adapter:CastAdapter
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsMovieBinding.inflate(layoutInflater)
+        btnLike = binding.btnLike
         setContentView(binding.root)
         setTransparentStatusBar()
         getData()
         detailsMovieViewModel = DetailsMovieViewModel(movie,language)
-        binding.btnLike.setMaxProgress(0.60F)
         setRecycler()
         initCastObserver()
+        checkLike()
         setListeners()
-
     }
+
 
     private fun setListeners() {
-        binding.btnEspandCollapse.setOnClickListener{ expandCollapse() }
-        binding.btnPlay.setOnClickListener { startActivity(Intent(this,VideoPlayerActivity::class.java).apply {
-            putExtra("CONTENT",movie)
-        }) }
-
-        binding.btnLike.setOnClickListener {
-            if(!movie.like) {
-                binding.btnLike.playAnimation()
-                movie.like = true
-            }else{
-                binding.btnLike.progress = 0F
-                movie.like = false
-            }
+        binding.btnEspandCollapse.setOnClickListener { expandCollapse() }
+        binding.btnPlay.setOnClickListener {
+            startActivity(Intent(this, VideoPlayerActivity::class.java).apply {
+                putExtra("CONTENT", movie)
+            })
         }
+        btnLikeListener()
     }
+
 
     private fun setTransparentStatusBar() {
         window.apply {
@@ -96,6 +94,7 @@ class DetailsMovieActivity : AppCompatActivity() {
     private fun getData() {
         val data = intent.extras
         movie = data!!.getSerializable("MOVIE") as Movie
+        media = movie
         language = data.getString("LANGUAGE")!!
         binding.imvBackground.loadImage(TMDB_IMAGE_URL.format(movie.backdrop_path))
         binding.imvPoster.loadImage(TMDB_IMAGE_URL.format(movie.poster_path))

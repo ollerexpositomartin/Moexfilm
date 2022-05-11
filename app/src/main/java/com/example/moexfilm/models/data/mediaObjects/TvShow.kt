@@ -1,11 +1,13 @@
 package com.example.moexfilm.models.data.mediaObjects
 
+import com.example.moexfilm.models.interfaces.Likable
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashMap
 
-class TvShow : TMDBItem,Serializable {
+class TvShow : TMDBItem,Serializable,Likable {
     var seasons:HashMap<String,Season> = hashMapOf()
+    var like:Boolean = false
 
     constructor() : super()
 
@@ -22,7 +24,8 @@ class TvShow : TMDBItem,Serializable {
         genres: List<Genre>,
         popularity: Double,
         vote_average: Double,
-        overview: String
+        overview: String,
+        like:Boolean
     ) : super(
         idDrive,
         name,
@@ -36,7 +39,14 @@ class TvShow : TMDBItem,Serializable {
         popularity,
         vote_average,
         overview,
-        released_date
-    )
+        released_date,
+    ){
+        this.like = like
+    }
+
+
+    override fun assingLike(like: Boolean) { this.like = like }
+
+    override fun obtainLike(): Boolean = like
 
 }

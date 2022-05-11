@@ -1,7 +1,10 @@
 package com.example.moexfilm.views.library
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityLibraryBinding
@@ -33,6 +36,7 @@ class LibraryActivity :ScanActivity() {
         initObserverItems()
     }
 
+
     private fun setListeners() {
         binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getColor(R.color.background_moexfilm))
         binding.swipeRefreshLayout.setColorSchemeColors(getColor(R.color.accent_moexfilm))
@@ -46,7 +50,6 @@ class LibraryActivity :ScanActivity() {
 
     private fun initObserverItems() {
         libraryViewModel.itemsMutableLiveData.observe(this){ items ->
-            binding.recyclerView.scheduleLayoutAnimation()
             adapter.submitList(items)
         }
     }
@@ -57,6 +60,7 @@ class LibraryActivity :ScanActivity() {
     }
 
     private fun setRecycler() {
+
         adapter = LibraryItemsAdapter { onItemTouch(it) }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this,3)

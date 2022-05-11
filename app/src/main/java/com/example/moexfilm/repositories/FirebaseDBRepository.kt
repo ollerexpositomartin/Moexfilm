@@ -8,6 +8,8 @@ import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.data.utilObjects.FirebaseObjectIdentificator
 import com.example.moexfilm.models.data.utilObjects.FormatedTitle
+import com.example.moexfilm.models.interfaces.Likable
+import com.example.moexfilm.models.interfaces.Playable
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
 import com.google.firebase.database.*
 import java.util.stream.Collectors
@@ -203,6 +205,18 @@ object FirebaseDBRepository {
 
     fun removeMediaInProgress(media: TMDBItem) {
         database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive).removeValue()
+    }
+
+    fun likeMedia(media: TMDBItem) {
+        val likable:Likable = media as Likable
+        database.child("users").child(prefs.readUid()).child("libraries").child(media.parentLibrary).child("content").child(media.idDrive).child("like").setValue(likable.obtainLike())
+
+        if(likable.obtainLike()) {
+            database.child("users").child(prefs.readUid()).child("likes").child(media.idDrive)
+                .setValue(media)
+            return
+        }
+        database.child("users").child(prefs.readUid()).child("likes").child(media.idDrive).removeValue()
     }
 
 }

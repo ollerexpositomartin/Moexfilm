@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moexfilm.models.data.mediaObjects.Cast
 import com.example.moexfilm.models.data.mediaObjects.Movie
+import com.example.moexfilm.repositories.FirebaseDBRepository
 import com.example.moexfilm.repositories.TMDBRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +29,5 @@ class DetailsMovieViewModel(val movie: Movie, val language: String) : ViewModel(
             mutableListCast.postValue(this)
         }
     }
-
-
 
 }

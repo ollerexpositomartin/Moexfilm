@@ -35,11 +35,13 @@
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/button_ripple.xml" value="0.3505" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_add.xml" value="0.29" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_baseline_arrow_back.xml" value="0.3675" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_favorite.xml" value="0.3675" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_folder.xml" value="0.3675" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.363" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_moexfilm.xml" value="0.29" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/ic_star.xml" value="0.29" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/drawable/splash_screen.xml" value="0.29" />
+        <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_common_like.xml" value="0.3009833262077811" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_create_library.xml" value="0.25" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_details_movie.xml" value="0.4297924297924298" />
         <entry key="..\:/Github/Moexfilm/app/src/main/res/layout/activity_details_tv_show.xml" value="0.30085470085470084" />

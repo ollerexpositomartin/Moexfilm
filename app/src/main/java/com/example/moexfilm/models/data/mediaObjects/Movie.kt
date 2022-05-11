@@ -1,10 +1,11 @@
 package com.example.moexfilm.models.data.mediaObjects
 
+import com.example.moexfilm.models.interfaces.Likable
 import com.example.moexfilm.models.interfaces.Playable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class Movie : TMDBItem,Serializable,Playable {
+class Movie : TMDBItem,Serializable,Playable,Likable {
      @SerializedName("runtime")
      var duration: Long = 0
      var playedTime: Long = 0
@@ -56,7 +57,13 @@ class Movie : TMDBItem,Serializable,Playable {
     }
 
     override fun duration(): Long  = duration
+
     override fun playedTime(): Long = playedTime
+
+    override fun assingLike(like: Boolean) { this.like = like }
+
+    override fun obtainLike(): Boolean = like
+
     override fun toString(): String {
         return "Movie(duration=$duration, playedTime=$playedTime, quality=$quality)"
     }

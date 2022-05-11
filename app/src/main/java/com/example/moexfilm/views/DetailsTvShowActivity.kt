@@ -21,7 +21,7 @@ import com.example.moexfilm.models.data.mediaObjects.TvShow
 import com.example.moexfilm.util.StringUtil
 import java.util.stream.Collectors
 
-class DetailsTvShowActivity : AppCompatActivity() {
+class DetailsTvShowActivity : LikeActivity() {
     lateinit var binding:ActivityDetailsTvShowBinding
     private lateinit var tvShow:TvShow
     private lateinit var seasons:List<Season>
@@ -30,9 +30,11 @@ class DetailsTvShowActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsTvShowBinding.inflate(layoutInflater)
+        btnLike = binding.btnLike
         setTransparentStatusBar()
         setContentView(binding.root)
         getData()
+        checkLike()
         loadSpinner()
         setListener()
     }
@@ -63,6 +65,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
             loadEpisodes(i)
         }
         binding.btnEspandCollapse.setOnClickListener { expandCollapse() }
+        btnLikeListener()
     }
 
     private fun loadEpisodes(numberSeason: Int) {
@@ -117,6 +120,7 @@ class DetailsTvShowActivity : AppCompatActivity() {
     private fun getData() {
         val data = intent.extras
         tvShow = data!!.getSerializable("TVSHOW") as TvShow
+        media = tvShow
         binding.tvNameTvShow.text = tvShow.name
         binding.tvOverview.text = tvShow.overview
         binding.tvDate.text = StringUtil.dateToYear(tvShow.release_date?:"")
