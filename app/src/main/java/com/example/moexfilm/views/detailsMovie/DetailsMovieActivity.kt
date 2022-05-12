@@ -54,6 +54,8 @@ class DetailsMovieActivity : LikeActivity() {
                 putExtra("CONTENT", movie)
             })
         }
+        binding.btnBack.setOnClickListener { finish() }
+
         btnLikeListener()
     }
 

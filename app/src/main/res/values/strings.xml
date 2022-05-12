@@ -50,6 +50,6 @@
     <string name="scanningLibrary_text">Escaneando %s</string>
     <string name="noSeasons_text">No hay temporadas</string>
     <string name="playNow_text">Reproducir ahora</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_text">Perfil</string>
+    <string name="singOut_text">Cerrar sesión</string>
 </resources>

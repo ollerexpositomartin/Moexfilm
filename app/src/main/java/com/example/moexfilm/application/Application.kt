@@ -17,6 +17,5 @@ class Application : Application() {
         super.onCreate()
         CLIENT_ID = getString(R.string.oauth_client)
         CLIENT_SECRET = getString(R.string.oauth_secret)
-        prefs = Prefs(this)
     }
 }

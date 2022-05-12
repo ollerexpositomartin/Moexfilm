@@ -66,6 +66,7 @@ class DetailsTvShowActivity : LikeActivity() {
             loadEpisodes(i)
         }
         binding.btnEspandCollapse.setOnClickListener { expandCollapse() }
+        binding.btnBack.setOnClickListener { finish() }
         btnLikeListener()
     }
 
