@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
 
 val View.changeVisibility:View get() = apply { visibility = if(isVisible) View.INVISIBLE else View.VISIBLE }
 
@@ -31,5 +32,14 @@ fun TextView.expandCollapseTextView() {
 }
 
 fun Double.round():Double = Math.round(this * 10.0) / 10.0
+
+fun String.capitalize():String {
+        if(this.isEmpty()) {
+            return this;
+        }
+        return this.substring(0, 1).uppercase(Locale.getDefault()) + this.substring(1);
+    }
+
+
 
 

@@ -3,6 +3,7 @@ package com.example.moexfilm.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.moexfilm.application.Application.Access.prefs
+import com.example.moexfilm.application.capitalize
 import com.example.moexfilm.models.data.Account
 import com.example.moexfilm.models.data.GDriveItem
 import com.example.moexfilm.models.data.mediaObjects.*
@@ -245,5 +246,46 @@ object FirebaseDBRepository {
         }
         database.child("users").child(prefs.readUid()).child("likes").child(media.idDrive).removeValue()
     }
+
+    fun searchTMDBItems(query:String,searchedsItems:MutableLiveData<List<TMDBItem>>){
+        database.child("users").child(prefs.readUid()).child("libraries")
+            .addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val listSearchedsItems = mutableListOf<TMDBItem>()
+
+                    for(library in snapshot.children) {
+                        Log.d("LIBRARY", library.key.toString())
+
+                        library.child("content").ref.orderByChild("name").startAt(query).endAt(query+"\uf8ff")
+                            .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+
+                                for (dataSnapshot in snapshot.children) {
+                                    val firebaseIdentificator = dataSnapshot.getValue(FirebaseObjectIdentificator::class.java)!!
+
+                                    if (firebaseIdentificator.firebaseType == Movie::class.java.simpleName) {
+                                        val movie = dataSnapshot.getValue(Movie::class.java)!!
+                                        listSearchedsItems.add(movie)
+                                    }
+
+                                    if (firebaseIdentificator.firebaseType == TvShow::class.java.simpleName) {
+                                        val tvShow: TvShow = dataSnapshot.getValue(TvShow::class.java)!!
+                                        listSearchedsItems.add(tvShow)
+                                    }
+                                }
+                                searchedsItems.postValue(listSearchedsItems)
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {} })
+
+    }
+
+
 
 }

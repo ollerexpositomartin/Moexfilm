@@ -6,14 +6,13 @@
         <item name="colorPrimaryVariant">@color/accent_moexfilm</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/accent_moexfilm</item>
+        <item name="colorSecondaryVariant">@color/accent_moexfilm</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/background_moexfilm</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/red_hat_display_medium</item>
-
     </style>
 
     <style name="SplashScreenTheme" parent="Theme.MaterialComponents.NoActionBar">
@@ -33,13 +32,8 @@
     </style>
 
     <style name="Widget.TextInputLayout.Moexfilm" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxBackgroundColor">@color/background_moexfilm</item>
         <item name="boxStrokeColor">@color/accent_moexfilm</item>
         <item name="android:textColorHint">@color/white</item>
     </style>
-
-
-
-
 
 </resources>

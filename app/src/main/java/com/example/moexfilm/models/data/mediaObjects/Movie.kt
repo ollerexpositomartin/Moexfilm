@@ -65,7 +65,7 @@ class Movie : TMDBItem,Serializable,Playable,Likable {
     override fun obtainLike(): Boolean = like
 
     override fun toString(): String {
-        return "Movie(duration=$duration, playedTime=$playedTime, quality=$quality)"
+        return  super.toString()+ "Movie(duration=$duration, playedTime=$playedTime, quality=$quality)"
     }
 
 

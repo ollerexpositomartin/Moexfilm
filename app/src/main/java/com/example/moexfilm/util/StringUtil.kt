@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.moexfilm.models.data.mediaObjects.Genre
 import com.example.moexfilm.models.data.utilObjects.FormatedTitle
 import com.example.moexfilm.models.data.mediaObjects.Library
+import java.util.*
 import java.util.regex.Pattern
 import java.util.stream.Collectors
 
@@ -68,12 +69,8 @@ object StringUtil {
         return ""
     }
 
-
-
     fun genresToString(genres: List<Genre>): String {
         return genres.map {genre -> genre.name }.joinToString(separator = ", ")
     }
-
-
 
 }
