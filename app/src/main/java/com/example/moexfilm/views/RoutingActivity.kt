@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 class RoutingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       
+
         prefs = Prefs(this)
 
         if(prefs.readUid().isEmpty())
