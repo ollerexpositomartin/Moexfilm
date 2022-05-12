@@ -131,8 +131,8 @@ object TMDBRepository {
             }
         }
 
-    suspend fun getMovieCast(movie: Movie, language: String, onSuccess:((List<Cast>) -> Unit)) {
-        val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java).getMovieCast(movie.id, API_KEY, language)
+    suspend fun getMovieCast(movie: Movie,onSuccess:((List<Cast>) -> Unit)) {
+        val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java).getMovieCast(movie.id, API_KEY)
         if (response.isSuccessful) {
             val result = response.body()!!
             onSuccess(result.cast)

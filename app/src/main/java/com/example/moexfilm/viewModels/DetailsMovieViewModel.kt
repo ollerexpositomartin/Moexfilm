@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.stream.Collectors
 
-class DetailsMovieViewModel(val movie: Movie, val language: String) : ViewModel() {
+class DetailsMovieViewModel(val movie: Movie) : ViewModel() {
     val mutableListCast = MutableLiveData<List<Cast>>()
 
     init{
@@ -20,7 +20,7 @@ class DetailsMovieViewModel(val movie: Movie, val language: String) : ViewModel(
 
     private fun getCastMovie() {
         viewModelScope.launch(Dispatchers.IO) {
-            TMDBRepository.getMovieCast(movie, language) { castReceived(it) }
+            TMDBRepository.getMovieCast(movie) { castReceived(it) }
         }
     }
 

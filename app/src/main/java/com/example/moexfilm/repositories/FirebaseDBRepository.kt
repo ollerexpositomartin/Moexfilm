@@ -230,9 +230,7 @@ object FirebaseDBRepository {
                 likes.postValue(listMedia)
             }
 
-            override fun onCancelled(error: DatabaseError) {}
-
-        })
+            override fun onCancelled(error: DatabaseError) {} })
     }
 
 

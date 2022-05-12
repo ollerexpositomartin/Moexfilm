@@ -7,7 +7,7 @@ import com.example.moexfilm.repositories.FirebaseDBRepository
 
 class FavoriteViewModel: ViewModel() {
     val mutableLikesMutableLiveData:MutableLiveData<List<TMDBItem>> = MutableLiveData()
-    
+
     init {
         getMediaLikes()
     }

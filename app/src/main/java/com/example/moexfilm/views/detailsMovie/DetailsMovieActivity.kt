@@ -39,7 +39,7 @@ class DetailsMovieActivity : LikeActivity() {
         setContentView(binding.root)
         setTransparentStatusBar()
         getData()
-        detailsMovieViewModel = DetailsMovieViewModel(movie,language)
+        detailsMovieViewModel = DetailsMovieViewModel(movie)
         setRecycler()
         initCastObserver()
         checkLike()
@@ -95,7 +95,6 @@ class DetailsMovieActivity : LikeActivity() {
         val data = intent.extras
         movie = data!!.getSerializable("MOVIE") as Movie
         media = movie
-        language = data.getString("LANGUAGE")!!
         binding.imvBackground.loadImage(TMDB_IMAGE_URL.format(movie.backdrop_path))
         binding.imvPoster.loadImage(TMDB_IMAGE_URL.format(movie.poster_path))
         binding.tvNameMovie.text = movie.name
