@@ -2,16 +2,19 @@ package com.example.moexfilm.repositories
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.moexfilm.application.Application.Access.REFRESH_TOKEN
 import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.application.capitalize
 import com.example.moexfilm.models.data.Account
 import com.example.moexfilm.models.data.GDriveItem
+import com.example.moexfilm.models.data.Token
 import com.example.moexfilm.models.data.mediaObjects.*
 import com.example.moexfilm.models.data.utilObjects.FirebaseObjectIdentificator
 import com.example.moexfilm.models.data.utilObjects.FormatedTitle
 import com.example.moexfilm.models.interfaces.Likable
 import com.example.moexfilm.models.interfaces.Playable
 import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
+import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import java.util.stream.Collectors
@@ -281,9 +284,31 @@ object FirebaseDBRepository {
                     }
 
                 }
-
                 override fun onCancelled(error: DatabaseError) {} })
+    }
 
+    fun getRefreshToken(accountId:String,callBack: TokenCallBack){
+        Log.d("ACCOUNT_ID",accountId)
+        database.child("users").child(prefs.readUid()).child("accounts").child(accountId).addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val refreshToken:String = snapshot.getValue(String::class.java)!!
+                REFRESH_TOKEN = refreshToken
+                callBack.onSucess()
+            }
+            override fun onCancelled(error: DatabaseError) { callBack.onFailure() }
+        })
+    }
+
+    fun getAccountId(libraryId:String,callback:FirebaseDBCallBack){
+        database.child("users").child(prefs.readUid()).child("libraries").child(libraryId).addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val library = snapshot.getValue(Library::class.java)!!
+                callback.onSuccess(library.owner)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                callback.onFailure()
+            }
+        })
     }
 
 

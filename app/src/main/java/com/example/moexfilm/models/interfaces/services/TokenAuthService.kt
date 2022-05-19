@@ -18,4 +18,12 @@ interface TokenAuthService {
         @Query("access_type") access_type:String,
         @Query("prompt") prompt:String
     ): Response<Token>
+
+    @POST("token")
+    suspend fun getAccessToken(
+        @Query("grant_type") grant_type: String,
+        @Query("client_id") client_id: String,
+        @Query("client_secret") client_secret: String,
+        @Query("refresh_token") refresh_token: String,
+    ): Response<Token>
 }

@@ -138,7 +138,7 @@ object TMDBRepository {
             onSuccess(result.cast)
             }
         }
-    }
+}
 
 
 

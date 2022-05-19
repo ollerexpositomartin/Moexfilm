@@ -9,15 +9,21 @@ import androidx.activity.viewModels
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.application.Application.Access.GOOGLE_DRIVE_PLAY_URL
 import com.example.moexfilm.databinding.ActivityVideoPlayerBinding
+import com.example.moexfilm.models.data.Token
 import com.example.moexfilm.models.data.mediaObjects.Episode
 import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.data.mediaObjects.TMDBItem
+import com.example.moexfilm.models.interfaces.callBacks.FirebaseDBCallBack
+import com.example.moexfilm.models.interfaces.callBacks.TokenCallBack
+import com.example.moexfilm.repositories.FirebaseDBRepository
+import com.example.moexfilm.repositories.TokenRepository
 import com.example.moexfilm.util.MediaUtil
 import com.example.moexfilm.viewModels.VideoPlayerViewModel
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import kotlinx.coroutines.*
 
 
 class VideoPlayerActivity : AppCompatActivity() {
@@ -33,12 +39,22 @@ class VideoPlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //COMPROBAR TOKEN DE ACCESO Y SI NO ES VALIDO REFRESCARLO
-        setFullScreen()
+        //COMPROBAR TOKEN DE ACCESO Y SI NO ES VALIDO REFRESCARLO MEDIO MEDIO HECHO
         getData()
-        setHeaders()
-        startVideoPlayer()
-        setListeners()
+        setFullScreen()
+        callTokens()
+    }
+
+    private fun callTokens() {
+        CoroutineScope(Dispatchers.IO).launch {
+           TokenRepository.getTokens(content.parentLibrary, object : TokenCallBack {
+               override fun onSucess(token: Token?) {
+                       setHeaders()
+                       startVideoPlayer()
+                       setListeners()
+               }
+               override fun onFailure() {} })
+        }
     }
 
     private fun setFullScreen() {
