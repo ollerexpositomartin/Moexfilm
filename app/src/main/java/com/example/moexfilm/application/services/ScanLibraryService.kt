@@ -18,7 +18,10 @@ import kotlinx.coroutines.*
 import java.util.stream.Collectors
 import kotlin.properties.Delegates
 
-
+/**
+ * Esta clase se ejecuta en segundo plano con un ciclo de vida distinto al de la aplicación y es la encargada de llamar a los metodos para realizar la busquedad de los archivos
+ * en GDRIVE, obtener la informacion referente a TMDB y almacenar los resultados en la base de datos
+ */
 class ScanLibraryService : Service() {
     private lateinit var serviceListener: ServiceListener
     private val mBinder = LocalBinder()
@@ -30,6 +33,9 @@ class ScanLibraryService : Service() {
         }
     }
 
+    /**
+     * Esta clase es devuelta al cliente cuando el servicio se inicia para que poder establecer una conexion con el servicio
+     */
     inner class LocalBinder : Binder() {
         fun getService(): ScanLibraryService {
             return this@ScanLibraryService
@@ -40,10 +46,18 @@ class ScanLibraryService : Service() {
         return mBinder
     }
 
+    /**
+     * Este metodo sirve para poder asignarle al servicio un listener y escuchar los cambios en su estado
+     * @param serviceListener listener que notifica al cliente cuando el servicio se inicia o se detiene
+     */
     fun setScanServiceListener(serviceListener: ServiceListener) {
         this.serviceListener = serviceListener
     }
 
+    /**
+     * Este metodo añade la libreria a la lista de librerias en escaneo y se encarga de llamar a los metodos para obtener las subfolders de la libreria y decidir si se debe escanear como peliculas o como series
+     * @param library libreria a escanear
+     */
     fun startScan(library: Library) {
             CoroutineScope(Dispatchers.IO).launch {
                 currentLibrariesScanning.add(library)
@@ -67,6 +81,11 @@ class ScanLibraryService : Service() {
             }
     }
 
+    /**
+     *Este metodo se encargar de llamar a los metodos para obtener las series,temporadas, episodios de la libreria y almacenarlos en la base de datos
+     * @param library libreria padre de las series
+     * @param tvShows Series a escanear
+     */
     suspend fun scanTvShows(library: Library, tvShows: ArrayList<GDriveItem>?) {
         val tvShowsTMDB:MutableList<TvShow> = mutableListOf()
 
@@ -90,6 +109,11 @@ class ScanLibraryService : Service() {
         })
     }
 
+    /**
+     * Este metodo se encarga de llamar a los metodos para obtener las temporadas de las series buscar su informacion en TMDB y almacenarlos en la base de datos
+     * @param library libreria padre de las series
+     * @param tvShows Series ya escaneadas
+     */
     private suspend fun scanTvSeasons(library: Library, tvShows: MutableList<TvShow>) {
         tvShows.forEach { tvShow ->
             GDriveRepository.getChildItems(queryFormatFolders.format(tvShow.idDrive), object : GDriveCallBack {
@@ -119,6 +143,11 @@ class ScanLibraryService : Service() {
         })
     }
 
+    /**
+     * Este metodo se encarga de llamar a los metodos para obtener los episodios de las temporadas, buscar su informacion en TMDB y almacenarlos en la base de datos
+     * @param library libreria padre de las series
+     * @param tvShows Series ya escaneadas con las temporadas escaneadas
+     */
     private suspend fun scanTvEpisodes(library: Library, tvShows:MutableList<TvShow>) {
             tvShows.forEach { tvShow ->
                 tvShow.seasons.values.forEach { season ->
@@ -146,8 +175,13 @@ class ScanLibraryService : Service() {
         })
     }
 
-    suspend fun scanMovies(library: Library, response: ArrayList<GDriveItem>?) {
-        val foldersToScan: MutableList<GDriveItem> = response ?: mutableListOf()
+    /**
+     * Este metodo se encarga de llamar a los metodos para obtener las peliculas, buscar su informacion en TMDB y almacenarlos en la base de datos
+     * @param library libreria padre de las peliculas
+     * @param movieFolders peliculas a escanear
+     */
+    suspend fun scanMovies(library: Library, movieFolders: ArrayList<GDriveItem>?) {
+        val foldersToScan: MutableList<GDriveItem> = movieFolders ?: mutableListOf()
         foldersToScan.add(GDriveItem(library.name, library.id))
         val query: String = foldersToScan.stream().map { item -> queryFormatFiles.format(item.idDrive) }
             .collect(Collectors.joining(" or ")).plus(" and mimeType = 'video/x-matroska'")
@@ -178,6 +212,10 @@ class ScanLibraryService : Service() {
         })
     }
 
+    /**
+     * Este metodo se encarga de eliminar la libreria de la lista de liberias en escaneo
+     * @param library libreria a eliminar de la lista
+     */
     fun removeLibrary(library: Library) {
         currentLibrariesScanning.remove(library)
         currentLibrariesScanning = currentLibrariesScanning

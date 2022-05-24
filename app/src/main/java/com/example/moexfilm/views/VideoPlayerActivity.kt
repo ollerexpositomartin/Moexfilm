@@ -48,7 +48,7 @@ class VideoPlayerActivity : AppCompatActivity() {
     private fun callTokens() {
         CoroutineScope(Dispatchers.IO).launch {
            TokenRepository.getTokens(content.parentLibrary, object : TokenCallBack {
-               override fun onSucess(token: Token?) {
+               override fun onSucess() {
                        setHeaders()
                        startVideoPlayer()
                        setListeners()

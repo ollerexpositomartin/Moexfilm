@@ -3,7 +3,9 @@ package com.example.moexfilm.application
 import android.app.Application
 import com.example.moexfilm.R
 
-
+/**
+ *
+ */
 class Application : Application() {
     companion object Access {
         lateinit var CLIENT_ID: String
