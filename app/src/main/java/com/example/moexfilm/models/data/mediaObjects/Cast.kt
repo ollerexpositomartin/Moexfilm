@@ -2,6 +2,9 @@ package com.example.moexfilm.models.data.mediaObjects
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Clase para almacenar los actores de los elementos Multimedia
+ */
 data class Cast(
     @SerializedName("name")
     val name: String,

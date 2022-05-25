@@ -4,6 +4,9 @@ import com.example.moexfilm.models.interfaces.Playable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * 
+ */
 class Episode : TMDBItem,Serializable,Playable {
 
     @SerializedName("still_path")

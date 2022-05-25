@@ -14,11 +14,20 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
+/**
+ *Cambia el estado de visibilidad de la vista al estado contrario
+ */
 val View.changeVisibility:View get() = apply { visibility = if(isVisible) View.INVISIBLE else View.VISIBLE }
 
+/**
+ *Carga en el imageView la url usando Glide
+ * @param url enlace a la imagen
+ */
 fun ImageView.loadImage(url:String){ Glide.with(context).load(url).centerCrop().transition(DrawableTransitionOptions.withCrossFade()).into(this) }
 
-
+/**
+ *Cambia la longitud maxima de un texto realizando una animación
+ */
 fun TextView.expandCollapseTextView() {
     if(this.maxLines == this.lineCount)
         ObjectAnimator.ofInt(this, "maxLines",3).apply {
@@ -31,8 +40,14 @@ fun TextView.expandCollapseTextView() {
         }
 }
 
+/**
+ * Redondea el valor a un decimal
+ */
 fun Double.round():Double = Math.round(this * 10.0) / 10.0
 
+/**
+ * Establece el primer caracter del String a mayuscula
+ */
 fun String.capitalize():String {
         if(this.isEmpty()) {
             return this;
