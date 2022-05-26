@@ -3,6 +3,9 @@ package com.example.moexfilm.models.data.mediaObjects
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Clase base para los objetos de TMDB
+ */
 open class TMDBItem: Serializable {
     var idDrive: String = ""
     var fileName: String = ""

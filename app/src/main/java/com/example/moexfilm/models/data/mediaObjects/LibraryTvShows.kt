@@ -2,6 +2,10 @@ package com.example.moexfilm.models.data.mediaObjects
 
 import java.io.Serializable
 
+
+/**
+ * Clase que representa una libreria de Series en la base de datos
+ */
 class LibraryTvShows:Library,Serializable {
     var content:Map<String,TvShow> = emptyMap()
 

@@ -5,6 +5,9 @@ import com.example.moexfilm.models.interfaces.Playable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Clase para almacenar los datos de una pelicula
+ */
 class Movie : TMDBItem,Serializable,Playable,Likable {
      @SerializedName("runtime")
      var duration: Long = 0
@@ -56,12 +59,27 @@ class Movie : TMDBItem,Serializable,Playable,Likable {
         this.like = like
     }
 
+    /**
+     * Devuelve la duracion del episodio
+     * @return Duracion del episodio en milisegundos
+     */
     override fun duration(): Long  = duration
 
+    /**
+     * Devuelve el tiempo que se ha reproducido del episodio
+     * @return Tiempo que se ha reproducido del episodio en milisegundos
+     */
     override fun playedTime(): Long = playedTime
 
+    /**
+     * Asigna si el elemento esta o no como favorito
+     */
     override fun assingLike(like: Boolean) { this.like = like }
 
+    /**
+     * Devuelve si el elemento esta o no como favorito
+     * @return devuelve si el elemento esta o no como favorito
+     */
     override fun obtainLike(): Boolean = like
 
     override fun toString(): String {

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
- * 
+ * Clase para almacenar los episodios de las Temporadas
  */
 class Episode : TMDBItem,Serializable,Playable {
 
@@ -72,8 +72,16 @@ class Episode : TMDBItem,Serializable,Playable {
         this.firebaseType = firebaseType
     }
 
+    /**
+     * Devuelve la duracion del episodio
+     * @return Duracion del episodio en milisegundos
+     */
     override fun duration(): Long = duration
 
+    /**
+     * Devuelve el tiempo que se ha reproducido del episodio
+     * @return Tiempo que se ha reproducido del episodio en milisegundos
+     */
     override fun playedTime(): Long = playedTime
     override fun toString(): String {
         return "Episode(stillPath='$stillPath', episode_number=$episode_number, season_number=$season_number, tvShowName='$tvShowName', seasonPosterPath='$seasonPosterPath', parentTvShow='$parentTvShow', duration=$duration, playedTime=$playedTime)"

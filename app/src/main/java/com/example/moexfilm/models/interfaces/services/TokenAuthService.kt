@@ -7,6 +7,18 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface TokenAuthService {
+
+    /**
+     * Obtiene el token de acceso a Google Drive usando un authCode
+     * @param grant_type Indica de la forma que se va a obtener el token
+     * @param client_id El ID de cliente
+     * @param client_secret El secreto de cliente
+     * @param redirect_uri uri de redireccion listada en el proyecto
+     * @param authCode El codigo de autorizacion
+     * @param id_token El idToken
+     * @param access_type Indica si su aplicación puede actualizar tokens de acceso cuando el usuario no está presente en el navegador
+     * @return
+     */
     @POST("token")
     suspend fun getAccessToken(
         @Query("grant_type") grant_type: String,
@@ -19,6 +31,14 @@ interface TokenAuthService {
         @Query("prompt") prompt:String
     ): Response<Token>
 
+    /**
+     * Obtiene el token de acceso a Google Drive usando un refreshToken
+     * @param grant_type Indica de la forma que se va a obtener el token
+     * @param client_id El ID de cliente
+     * @param client_secret El secreto de cliente
+     * @param refresh_token El refreshToken
+     * @return
+     */
     @POST("token")
     suspend fun getAccessToken(
         @Query("grant_type") grant_type: String,

@@ -5,8 +5,10 @@ import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashMap
 
+/**
+ * Clase para almacenar las temporadas de una serie
+ */
 class Season : TMDBItem,Serializable {
-
 
     @SerializedName("")
     var episodes:HashMap<String,Episode> = hashMapOf()
@@ -49,6 +51,5 @@ class Season : TMDBItem,Serializable {
         this.episodes = episodes
         this.season_number = season_number
     }
-
 
 }

@@ -5,6 +5,9 @@ import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashMap
 
+/**
+ * Clase para almacenar los datos de una serie de televisión
+ */
 class TvShow : TMDBItem,Serializable,Likable {
     var seasons:HashMap<String,Season> = hashMapOf()
     var like:Boolean = false
