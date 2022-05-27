@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.application.Prefs
 import com.example.moexfilm.util.StringUtil
 import com.example.moexfilm.views.main.MainActivity
@@ -15,9 +14,7 @@ class RoutingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        prefs = Prefs(this)
-
-        if(prefs.readUid().isEmpty())
+        if(Prefs.readUid().isEmpty())
         startActivity(Intent(this,LoginActivity::class.java))
         else
             startActivity(Intent(this,MainActivity::class.java))

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.moexfilm.R
-import com.example.moexfilm.application.Application.Access.prefs
+import com.example.moexfilm.application.Prefs
 import com.example.moexfilm.databinding.FragmentProfileBinding
 import kotlin.system.exitProcess
 
@@ -26,7 +26,7 @@ class ProfileFragment : Fragment() {
 
     private fun setListener() {
         binding.btnSignout.setOnClickListener {
-            prefs.closeSession()
+            Prefs.closeSession()
             requireActivity().finishAndRemoveTask()
         }
     }
