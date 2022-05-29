@@ -10,6 +10,11 @@ import com.example.moexfilm.models.helpers.RetrofitHelper
 object GDriveRepository {
     private const val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"
 
+    /**
+     * Metodo para obtener los hijos de una carpeta de Google Drive
+     * @param query Consulta a realizar
+     * @param gDriveCallBack Callback para notificar el resultado
+     */
     suspend fun getChildItems(query:String, gDriveCallBack: GDriveCallBack) {
             var nextPageToken: String = ""
             var success: Boolean = true
@@ -46,6 +51,10 @@ object GDriveRepository {
     }
 
 
+    /**
+     * Metodo para obtener los teamDrive de un usuario de Google Drive
+     * @param gDriveCallBack Callback para notificar el resultado
+     */
     suspend fun getTeamDrives(gDriveCallBack: GDriveCallBack){
         var nextPageToken:String = ""
         var success:Boolean = true

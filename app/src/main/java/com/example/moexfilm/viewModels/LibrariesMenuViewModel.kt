@@ -18,7 +18,7 @@ class LibrariesMenuViewModel: ViewModel() {
 
 
     fun getLibraries(){
-        viewModelScope.launch(Dispatchers.IO) {FirebaseDBRepository.getLibraries(librariesMutableLiveData)}
+        viewModelScope.launch(Dispatchers.IO) {FirebaseDBRepository.setListenerLibraries(librariesMutableLiveData)}
     }
 
 }

@@ -47,7 +47,7 @@ object FirebaseDBRepository {
     }
 
     /**
-     * Metodo que crea una lista de librerias en la base de datos
+     * Metodo que almacena una pelicula o serie en la base de datos
      * @param item TMDBItem a guardar en la libreria
      * @param callback callback de la operacion de guardado del item
      */
@@ -61,6 +61,11 @@ object FirebaseDBRepository {
             }
     }
 
+    /**
+     * Metodo que almacena una temporada en la base de datos
+     * @param season temporada a guardar en la libreria
+     * @param callback callback de la operacion de guardado de la temporada
+     */
     fun saveSeason(season: Season, callback: FirebaseDBCallBack? = null) {
         database.child("users").child(Prefs.readUid()).child("libraries")
             .child(season.parentLibrary)
@@ -73,6 +78,11 @@ object FirebaseDBRepository {
             }
     }
 
+    /**
+     * Metodo que almacena un capitulo en la base de datos
+     * @param episode episodio a guardar en la libreria
+     * @param callback callback de la operacion de guardado del episodio
+     */
     fun saveEpisode(episode: Episode) {
         database.child("users").child(Prefs.readUid()).child("libraries")
             .child(episode.parentLibrary)
@@ -80,13 +90,20 @@ object FirebaseDBRepository {
             .child(episode.parentFolder).child("episodes").child(episode.idDrive).setValue(episode)
     }
 
-
+    /**
+     * Almacena el refreshToken de la cuenta del usuario que crear la libreria en la base de datos
+     * @param account cuenta del usuario
+     */
     fun saveAccountRefreshToken(account: Account) {
         database.child("users").child(Prefs.readUid()).child("accounts")
             .child(account.id).setValue(account.refreshToken)
     }
 
-    fun getLibraries(libraries: MutableLiveData<List<Library>>) {
+    /**
+     * Metodo que obtiene las librerias del usuario y les hace un post a lista pasada como parametro
+     * @param libraries librerias del usuario
+     */
+    fun setListenerLibraries(libraries: MutableLiveData<List<Library>>) {
         database.child("users").child(Prefs.readUid()).child("libraries")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -100,10 +117,14 @@ object FirebaseDBRepository {
 
                 override fun onCancelled(error: DatabaseError) {
                 }
-
             })
     }
 
+    /**
+     * Metodo que obtiene el contenido de una libreria y añade sus items a la lista pasada como parametro
+     * @param library libreria a obtener el contenido
+     * @param items lista donde se añadiran los items
+     */
     fun setListenerItemLibrary(library: Library, items: MutableLiveData<List<TMDBItem>>) {
         database.child("users").child(Prefs.readUid()).child("libraries").child(library.id)
             .child("content")
@@ -132,7 +153,10 @@ object FirebaseDBRepository {
             })
     }
 
-
+    /**
+     * Metodo que obtiene 4 elementos aleatorios de las librerias de peliculas del usuario y lo añade a la lista pasada como parametro
+     * @param randomItems lista donde se añadiran los items
+     */
     fun getRandomContent(randomItems: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(Prefs.readUid()).child("libraries")
             .orderByChild("type")
@@ -163,6 +187,10 @@ object FirebaseDBRepository {
             })
     }
 
+    /**
+     * Metodo que obtiene los 10 elementos mas populares de las librerias de peliculas del usuario y lo añade a la lista pasada como parametro
+     * @param randomItems lista donde se añadiran los items
+     */
     fun getMostPopularMovies(popularMovies: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(Prefs.readUid()).child("libraries")
             .orderByChild("type")
@@ -194,10 +222,18 @@ object FirebaseDBRepository {
             })
     }
 
+    /**
+     * Metodo que almacena en la base de datos una pelicula o episodio a medio reproducir
+     * @param media el item a almacenar
+     */
     fun saveMediaInProgress(media: TMDBItem) {
         database.child("users").child(Prefs.readUid()).child("inProgress").child(media.idDrive).setValue(media)
     }
 
+    /**
+     * Metodo que obtiene todos los elementos a medio reproducir y los añade a la lista pasada como parametro
+     * @param inProgress lista donde se añadiran los items
+     */
     fun getMediaInProgress(inProgress: MutableLiveData<MutableList<TMDBItem>>) {
         database.child("users").child(Prefs.readUid()).child("inProgress")
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -218,10 +254,18 @@ object FirebaseDBRepository {
                 override fun onCancelled(error: DatabaseError) {} })
     }
 
+    /**
+     * Metodo que elimina un elemento a medio reproducir de la base de datos
+     * @param media elemento a eliminar
+     */
     fun removeMediaInProgress(media: TMDBItem) {
         database.child("users").child(Prefs.readUid()).child("inProgress").child(media.idDrive).removeValue()
     }
 
+    /**
+     * Metodo que obtiene los elementos likeados por el usuario y los añade a la lista pasada como parametro
+     * @param likes lista donde se añadiran los items
+     */
     fun getMediaLikes(likes: MutableLiveData<List<TMDBItem>>) {
         database.child("users").child(Prefs.readUid()).child("likes").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -247,7 +291,10 @@ object FirebaseDBRepository {
             override fun onCancelled(error: DatabaseError) {} })
     }
 
-
+    /**
+     * Metodo que añade un elemento likeado por el usuario a la base de datos y en caso de que este likeado lo elimina
+     * @param media elemento a añadir
+     */
     fun likeMedia(media: TMDBItem) {
         val likable:Likable = media as Likable
         database.child("users").child(Prefs.readUid()).child("libraries").child(media.parentLibrary).child("content").child(media.idDrive).child("like").setValue(likable.obtainLike())
@@ -260,6 +307,11 @@ object FirebaseDBRepository {
         database.child("users").child(Prefs.readUid()).child("likes").child(media.idDrive).removeValue()
     }
 
+    /**
+     * Metodo que busca un elemento en la base de datos usando su nombre
+     * @param query nombre del elemento a buscar
+     * @param searchedsItems lista donde se añadiran los elementos encontrados
+     */
     fun searchTMDBItems(query:String,searchedsItems:MutableLiveData<List<TMDBItem>>){
         database.child("users").child(Prefs.readUid()).child("libraries")
             .addListenerForSingleValueEvent(object:ValueEventListener{
@@ -296,6 +348,11 @@ object FirebaseDBRepository {
                 override fun onCancelled(error: DatabaseError) {} })
     }
 
+    /**
+     * Metodo que obtiene el refresh token almacenado en la base de datos
+     * @param accountId id de la cuenta de google
+     * @param callBack callback que se ejecutara al obtener el refresh token
+     */
     fun getRefreshToken(accountId:String,callBack: TokenCallBack){
         Log.d("ACCOUNT_ID",accountId)
         database.child("users").child(Prefs.readUid()).child("accounts").child(accountId).addListenerForSingleValueEvent(object:ValueEventListener{
@@ -308,6 +365,11 @@ object FirebaseDBRepository {
         })
     }
 
+    /**
+     * Metodo que obtiene el account id de una libreria almacenada en la base de datos
+     * @param libraryId id de la libreria
+     * @param callback callback que se ejecutara al obtener el account id
+     */
     fun getAccountId(libraryId:String,callback:FirebaseDBCallBack){
         database.child("users").child(Prefs.readUid()).child("libraries").child(libraryId).addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
