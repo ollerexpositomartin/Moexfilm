@@ -19,6 +19,9 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import java.util.stream.Collectors
 
+/**
+ * Clase que contiene los metodos para poder interactuar con la base de datos de Firebase
+ */
 object FirebaseDBRepository {
     private const val FIREBASE_DB_URL =
         "https://moexfilm-default-rtdb.europe-west1.firebasedatabase.app/"

@@ -7,6 +7,9 @@ import com.example.moexfilm.models.interfaces.services.GDriveService
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.models.helpers.RetrofitHelper
 
+/**
+ * Clase que contiene los métodos para interactuar con el servicio de Google Drive
+ */
 object GDriveRepository {
     private const val GOOGLE_DRIVE_API_URL: String = "https://www.googleapis.com"
 

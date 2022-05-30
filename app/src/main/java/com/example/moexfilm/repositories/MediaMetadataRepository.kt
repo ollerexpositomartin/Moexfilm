@@ -8,6 +8,9 @@ import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.application.Application.Access.GOOGLE_DRIVE_PLAY_URL
 import com.example.moexfilm.models.data.mediaObjects.VideoMetaData
 
+/**
+ * NO SE USA EN ESTE MOMENTO
+ */
 object MediaMetadataRepository {
 
     fun getMediaMetadata(id:String):VideoMetaData{
