@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.moexfilm.application.Application.Access.ACCESS_TOKEN
 import com.example.moexfilm.application.Application.Access.GOOGLE_DRIVE_PLAY_URL
@@ -23,7 +24,7 @@ import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import kotlinx.coroutines.*
+import com.example.moexfilm.R
 
 
 class VideoPlayerActivity : AppCompatActivity() {
@@ -43,18 +44,24 @@ class VideoPlayerActivity : AppCompatActivity() {
         getData()
         setFullScreen()
         callTokens()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        videoPlayerViewModel.isAccessTokenObtained.observe(this){
+            if(it){
+                setHeaders()
+                startVideoPlayer()
+                setListeners()
+            }else{
+                Toast.makeText(this,getString(R.string.accessToken_error),Toast.LENGTH_LONG).show()
+                finish()
+            }
+        }
     }
 
     private fun callTokens() {
-        CoroutineScope(Dispatchers.IO).launch {
-           TokenRepository.getTokens(content.parentLibrary, object : TokenCallBack {
-               override fun onSucess() {
-                       setHeaders()
-                       startVideoPlayer()
-                       setListeners()
-               }
-               override fun onFailure() {} })
-        }
+        videoPlayerViewModel.callTokens(content.parentLibrary)
     }
 
     private fun setFullScreen() {
@@ -102,15 +109,12 @@ class VideoPlayerActivity : AppCompatActivity() {
             setMediaSourceFactory(DefaultMediaSourceFactory(mediaSourceFactory))
         }.build()
         player.setMediaItem(MediaItem.fromUri(videoUrl))
-        Log.d("STARTIME",startTime.toString())
         binding.playerView.player = player
         binding.playerView.keepScreenOn = true
         player.prepare()
         player.seekTo(startTime)
         player.playWhenReady = true
-
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -131,10 +135,8 @@ class VideoPlayerActivity : AppCompatActivity() {
         else
             removeInProgress()
 
-
         player.stop()
         super.onDestroy()
-
     }
 
     private fun removeInProgress() {
@@ -155,7 +157,6 @@ class VideoPlayerActivity : AppCompatActivity() {
             episode.duration = player.duration
             episode.playedTime = player.currentPosition
         }
-
         videoPlayerViewModel.saveMediaInProgress(content)
     }
 

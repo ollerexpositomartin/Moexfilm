@@ -52,4 +52,8 @@
     <string name="playNow_text">Reproducir ahora</string>
     <string name="profile_text">Perfil</string>
     <string name="singOut_text">Cerrar sesión</string>
+    <string name="libraries_scanned_text">Bibliotecas Escaneadas</string>
+    <string name="movies_scanned_text">Peliculas Escaneadas</string>
+    <string name="tvShows_scanned_text">Series Escaneadas</string>
+    <string name="accessToken_error">Error al obtener el token de acceso</string>
 </resources>

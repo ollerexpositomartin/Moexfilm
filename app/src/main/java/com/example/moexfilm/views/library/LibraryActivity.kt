@@ -1,10 +1,8 @@
 package com.example.moexfilm.views.library
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ActivityLibraryBinding
@@ -21,9 +19,8 @@ import com.example.moexfilm.views.library.adapters.LibraryItemsAdapter
 class LibraryActivity :ScanActivity() {
     private lateinit var binding:ActivityLibraryBinding
     lateinit var adapter: LibraryItemsAdapter
-    lateinit var libraryViewModel: LibraryViewModel
+    private lateinit var libraryViewModel: LibraryViewModel
 
-    //AÑADIR ACCESSTOKEN ADQUISICION POR LO DEMAS FUNCIONATODO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +30,14 @@ class LibraryActivity :ScanActivity() {
         libraryViewModel = LibraryViewModel(library)
         setRecycler()
         setListeners()
-        initObserverItems()
+        setObservers()
     }
 
 
     private fun setListeners() {
         binding.swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getColor(R.color.background_moexfilm))
         binding.swipeRefreshLayout.setColorSchemeColors(getColor(R.color.accent_moexfilm))
-        binding.swipeRefreshLayout.setOnRefreshListener { initService() }
+        binding.swipeRefreshLayout.setOnRefreshListener { libraryViewModel.callTokens(library.id) }
     }
 
     override fun isRunning(libraryItemList: MutableList<Library>) {
@@ -48,9 +45,17 @@ class LibraryActivity :ScanActivity() {
             binding.swipeRefreshLayout.isRefreshing = false
     }
 
-    private fun initObserverItems() {
+    private fun setObservers() {
         libraryViewModel.itemsMutableLiveData.observe(this){ items ->
             adapter.submitList(items)
+        }
+        libraryViewModel.isAccessTokenObtained.observe(this){
+            if(it)
+                initService()
+            else {
+                binding.swipeRefreshLayout.isRefreshing = false
+                Toast.makeText(this,getString(R.string.scanningLibraries_error).format(library.name),Toast.LENGTH_LONG).show()
+            }
         }
     }
 

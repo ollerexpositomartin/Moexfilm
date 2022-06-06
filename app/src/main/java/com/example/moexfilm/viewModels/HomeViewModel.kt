@@ -6,7 +6,7 @@ import com.example.moexfilm.models.data.mediaObjects.Movie
 import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 import com.example.moexfilm.repositories.FirebaseDBRepository
 
-class HomeFragmentViewModel: ViewModel() {
+class HomeViewModel: ViewModel() {
     val mutableListRandomItemsMutableLiveData:MutableLiveData<MutableList<TMDBItem>> = MutableLiveData()
     val mutableListPopularMoviesMutableLiveData:MutableLiveData<MutableList<TMDBItem>> = MutableLiveData()
     val mutableListMediaInProgressMutableLiveData:MutableLiveData<MutableList<TMDBItem>> = MutableLiveData()

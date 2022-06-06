@@ -9,11 +9,20 @@ import com.example.moexfilm.models.interfaces.services.TMDBService
 import com.example.moexfilm.util.MediaUtil
 import com.example.moexfilm.util.StringUtil
 
+/**
+ * Clase que contiene los métodos para interactuar con el servicio de TMDB
+ */
 object TMDBRepository {
 
     private const val TMDB_URL = "https://api.themoviedb.org"
     private const val API_KEY = "8be905875a365e0038efdb4a5a19d4fe"
 
+    /**
+     * Metodo que busca la informacion de una lista de pelicula por su nombre en TMDB
+     * @param files lista de peliculas
+     * @param language idioma en el que se busca la informacion
+     * @param callback callback que se ejecuta al terminar la busqueda
+     */
     suspend fun searchMovies(files: MutableList<GDriveItem>, language: String, callback: TMDBCallBack) {
         if (files.size > 0)
             for (file in files) {

@@ -45,19 +45,24 @@ object TokenRepository {
                     FirebaseDBRepository.getRefreshToken(owner,object :TokenCallBack{
                         override fun onSucess() {
                             CoroutineScope(Dispatchers.IO).launch {
-                                val response = RetrofitHelper.getRetrofit(GOOGLE_URL_TOKEN)
-                                    .create(TokenAuthService::class.java)
-                                    .getAccessToken(
-                                        "refresh_token", CLIENT_ID,
-                                        CLIENT_SECRET, REFRESH_TOKEN
-                                    )
-                                if (response.isSuccessful) {
-                                    val responseToken = response.body()!!
-                                    ACCESS_TOKEN = responseToken.accessToken!!
-                                    withContext(Dispatchers.Main) { callback.onSucess() }
+                                try {
+                                    val response = RetrofitHelper.getRetrofit(GOOGLE_URL_TOKEN)
+                                        .create(TokenAuthService::class.java)
+                                        .getAccessToken(
+                                            "refresh_token", CLIENT_ID,
+                                            CLIENT_SECRET, REFRESH_TOKEN
+                                        )
+                                    if (response.isSuccessful) {
+                                        val responseToken = response.body()!!
+                                        ACCESS_TOKEN = responseToken.accessToken!!
+                                        withContext(Dispatchers.Main) { callback.onSucess() }
+                                    }
+                                }catch (e:Exception){
+                                    withContext(Dispatchers.Main) { callback.onFailure() }
                                 }
                             }
                         }
+
                         override fun onFailure() {} })
                 }
             override fun onFailure() {} })

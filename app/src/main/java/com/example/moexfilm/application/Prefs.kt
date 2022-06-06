@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
  * Esta Clase es la contiene los metodos para controlar la sesion actual del cliente
  */
 
-object Prefs{
+class Prefs{
     private val fbUser = FirebaseAuth.getInstance().currentUser
 
     /**

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.iterator
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +16,7 @@ import com.example.moexfilm.databinding.FragmentHomeBinding
 import com.example.moexfilm.databinding.ItemListFragmentHomeLayoutBinding
 import com.example.moexfilm.models.data.mediaObjects.TMDBItem
 import com.example.moexfilm.models.interfaces.Playable
-import com.example.moexfilm.viewModels.HomeFragmentViewModel
+import com.example.moexfilm.viewModels.HomeViewModel
 import com.example.moexfilm.views.VideoPlayerActivity
 import com.example.moexfilm.views.library.adapters.LibraryItemsAdapter
 import com.example.moexfilm.views.main.fragments.homeFragment.adapters.MediaInProgressAdapter
@@ -29,7 +28,7 @@ class HomeFragment : Fragment() {
     lateinit var binding:FragmentHomeBinding
     lateinit var sliderAdapter:SliderAdapter
 
-    val homeFragmentViewModel:HomeFragmentViewModel by viewModels()
+    val homeFragmentViewModel:HomeViewModel by viewModels()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View{

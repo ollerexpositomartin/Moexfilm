@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.moexfilm.R
+import com.example.moexfilm.application.Application.Access.prefs
 import com.example.moexfilm.application.Prefs
 import com.example.moexfilm.databinding.ActivityMainBinding
 import com.example.moexfilm.models.data.mediaObjects.Library
@@ -33,6 +34,7 @@ class MainActivity:ScanActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        prefs = Prefs()
 
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
