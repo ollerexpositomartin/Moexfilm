@@ -55,7 +55,12 @@ object TMDBRepository {
         callback.onAllSearchsFinish()
     }
 
-
+    /**
+     * Metodo que busca la informacion de una lista de series por su nombre en TMDB
+     * @param folders lista de series
+     * @param language idioma en el que se busca la informacion
+     * @param callback callback que se ejecuta al terminar la busqueda
+     */
     suspend fun searchTvShows(folders: MutableList<GDriveItem>?, language: String, callback: TMDBCallBack) {
         if (folders != null) {
             if (folders.size > 0)
@@ -78,6 +83,12 @@ object TMDBRepository {
         callback.onAllSearchsFinish()
     }
 
+    /**
+     * Metodo que busca la informacion de las temporadas de una lista de series ya escaneadas
+     * @param tvShows lista de series
+     * @param language idioma en el que se busca la informacion
+     * @param callback callback que se ejecuta al terminar la busqueda
+     */
     suspend fun searchTvSeason(tvShows:MutableList<TvShow>, language: String, callback: TMDBCallBack) {
         tvShows.forEach { tvShow ->
             tvShow.seasons.values.forEach { season ->
@@ -98,6 +109,12 @@ object TMDBRepository {
         callback.onAllSearchsFinish()
         }
 
+    /**
+     * Metodo que busca la informacion de los episodios de una lista de series ya escaneadas
+     * @param tvShows lista de episodios
+     * @param language idioma en el que se busca la informacion
+     * @param callback callback que se ejecuta al terminar la busqueda
+     */
     suspend fun searchTvEpisode(tvShows:MutableList<TvShow>,language: String, callback: TMDBCallBack) {
         tvShows.forEach { tvShow ->
             tvShow.seasons.values.forEach { season ->
@@ -128,6 +145,12 @@ object TMDBRepository {
         callback.onAllSearchsFinish()
     }
 
+    /**
+     * Metodo que busca los detalles de una pelicula
+     * @param movie la pelicula a buscar los detalles
+     * @param language idioma en el que se busca la informacion
+     * @param callback callback que se ejecuta al terminar la busqueda
+     */
     private suspend fun searchMovieDetails(movie: Movie, language: String, callback: TMDBCallBack) {
         val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java)
             .searchMovieDetails(movie.id, API_KEY, language)
@@ -140,6 +163,11 @@ object TMDBRepository {
             }
         }
 
+    /**
+     * Metodo que busca el reparto de una pelicula
+     * @param movie la pelicula a buscar el reparto
+     * @param onSuccess callback que devuelve el reparto de la pelicula
+     */
     suspend fun getMovieCast(movie: Movie,onSuccess:((List<Cast>) -> Unit)) {
         val response = RetrofitHelper.getRetrofit(TMDB_URL).create(TMDBService::class.java).getMovieCast(movie.id, API_KEY)
         if (response.isSuccessful) {

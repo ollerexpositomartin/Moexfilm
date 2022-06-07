@@ -9,14 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moexfilm.R
 import com.example.moexfilm.databinding.ItemMenuLibraryLayoutBinding
 import com.example.moexfilm.models.data.mediaObjects.Library
+import com.example.moexfilm.models.interfaces.listeners.LibrariesMenuListener
 
 
-class LibrariesMenuAdapter(val onFolderTouchListener:(Library)->Unit): ListAdapter<Library, LibrariesMenuAdapter.ViewHolder>(DiffUtilCallBack) {
+class LibrariesMenuAdapter(val onLibrariesMenuListener: LibrariesMenuListener): ListAdapter<Library, LibrariesMenuAdapter.ViewHolder>(DiffUtilCallBack) {
 
     inner class ViewHolder(v: View):RecyclerView.ViewHolder(v){
         val binding = ItemMenuLibraryLayoutBinding.bind(v)
         init {
-            binding.root.setOnClickListener { onFolderTouchListener(getItem(adapterPosition)) }
+            binding.root.setOnClickListener { onLibrariesMenuListener.onLibraryClick(getItem(adapterPosition)) }
+            binding.btnMenuPopUp.setOnClickListener { onLibrariesMenuListener.onMenuClick(adapterPosition) }
         }
     }
 

@@ -29,5 +29,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Peliculas" />
+
+        <TextView
+            android:id="@+id/btnMenuPopUp"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/red_hat_display_bold"
+            android:gravity="center"
+            android:text="⋮"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

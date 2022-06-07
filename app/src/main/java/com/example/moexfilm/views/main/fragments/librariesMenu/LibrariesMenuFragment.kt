@@ -2,17 +2,20 @@ package com.example.moexfilm.views.main.fragments.librariesMenu
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moexfilm.R
 import com.example.moexfilm.databinding.FragmentLibrariesMenuBinding
 import com.example.moexfilm.models.data.mediaObjects.Library
+import com.example.moexfilm.models.interfaces.listeners.LibrariesMenuListener
 import com.example.moexfilm.viewModels.LibrariesMenuViewModel
 import com.example.moexfilm.views.CreateLibraryActivity
 import com.example.moexfilm.views.library.LibraryActivity
@@ -20,7 +23,7 @@ import com.example.moexfilm.views.main.MainActivity
 import com.example.moexfilm.views.main.fragments.librariesMenu.adapter.LibrariesMenuAdapter
 import com.example.moexfilm.views.main.fragments.librariesMenu.adapter.SwipeGesture
 
-class LibrariesMenuFragment : Fragment() {
+class LibrariesMenuFragment : Fragment(),LibrariesMenuListener {
     private lateinit var binding: FragmentLibrariesMenuBinding
     private lateinit var adapter: LibrariesMenuAdapter
     private val libraryMenuViewModel:LibrariesMenuViewModel by viewModels()
@@ -35,9 +38,7 @@ class LibrariesMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initObserverLibraries()
         binding.btnAdd.setOnClickListener { (activity as MainActivity).responseLibraryLauncher.launch(Intent(requireContext(), CreateLibraryActivity::class.java)) }
-        adapter = LibrariesMenuAdapter {
-            onClickLibrary(it)
-        }
+        adapter = LibrariesMenuAdapter(this)
         setRecycler()
     }
 
@@ -53,29 +54,33 @@ class LibrariesMenuFragment : Fragment() {
         }
     }
 
-    private fun onClickLibrary(library: Library) {
+
+    private fun setRecycler() {
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun onLibraryClick(library: Library) {
         startActivity(Intent(requireContext(),LibraryActivity::class.java).apply {
             putExtra("LIBRARY",library)
         })
     }
 
-    private fun setRecycler() {
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    override fun onMenuClick(positionMenu:Int) {
+        val poupMenu = PopupMenu(requireContext(), binding.recyclerView[positionMenu].findViewById(R.id.btnMenuPopUp))
+        poupMenu.inflate(R.menu.options_library_menu)
 
-        val swipeGesture = object : SwipeGesture() {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                super.onSwiped(viewHolder, direction)
-
-                if(direction == ItemTouchHelper.LEFT){
-                    libraryMenuViewModel.removeLibrary(libraries[viewHolder.adapterPosition])
+        poupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.delete -> {
+                    libraryMenuViewModel.removeLibrary(libraries[positionMenu])
+                    true
                 }
+                else -> false
 
             }
         }
-
-        val itemTouchHelper = ItemTouchHelper(swipeGesture)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+        poupMenu.show()
     }
 
 }

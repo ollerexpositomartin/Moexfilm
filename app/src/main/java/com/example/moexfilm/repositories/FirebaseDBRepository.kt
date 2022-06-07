@@ -24,8 +24,7 @@ import java.util.stream.Collectors
  * Clase que contiene los metodos para poder interactuar con la base de datos de Firebase
  */
 object FirebaseDBRepository {
-    private const val FIREBASE_DB_URL =
-        "https://moexfilm-default-rtdb.europe-west1.firebasedatabase.app/"
+    private const val FIREBASE_DB_URL = "https://moexfilm-default-rtdb.europe-west1.firebasedatabase.app/"
     private val dataBaseReference: FirebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_DB_URL)
     private var database: DatabaseReference
 
@@ -56,6 +55,7 @@ object FirebaseDBRepository {
      * @param firebaseDBCallBack callback de la operacion de creación libreria
      */
     fun removeLibrary(library: Library, firebaseDBCallBack: FirebaseDBCallBack) {
+
         database.child("users").child(prefs.readUid()).child("libraries").child(library.id)
             .removeValue()
             .addOnSuccessListener {
@@ -65,26 +65,29 @@ object FirebaseDBRepository {
                 firebaseDBCallBack.onFailure()
             }
 
-            database.child("users").child(prefs.readUid()).child("inProgress").orderByChild("parentLibrary").equalTo(library.id)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(error: DatabaseError) {
-                        firebaseDBCallBack.onFailure()
-                    }
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        snapshot.children.forEach {
+        database.child("users").child(prefs.readUid()).child("inProgress")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {}
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        if (it.getValue<TMDBItem>()?.parentLibrary == library.id) {
                             it.ref.removeValue()
                         }
                     }
-                })
+                }
+            })
 
-        database.child("users").child(prefs.readUid()).child("likes").orderByChild("parentLibrary").equalTo(library.id)
+        database.child("users").child(prefs.readUid()).child("likes")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     firebaseDBCallBack.onFailure()
                 }
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach {
-                        it.ref.removeValue()
+                        if (it.getValue<TMDBItem>()?.parentLibrary == library.id) {
+                            it.ref.removeValue()
+                        }
                     }
                 }
             })
@@ -103,9 +106,6 @@ object FirebaseDBRepository {
             .addOnFailureListener {
                 callback?.onFailure()
             }
-
-
-
     }
 
     /**
@@ -219,17 +219,18 @@ object FirebaseDBRepository {
 
                     val size = 4
                     val s = HashSet<Int>(size)
-                        if (listMovies.size > size) {
-                            while (s.size < size) {
-                                s.add((0 until listMovies.size).random())
-                            }
-
-                            s.stream().forEach { random ->
-                                randomLocalItems.add(listMovies.get(random))
-                            }
-                            randomItems.postValue(randomLocalItems)
+                    if (listMovies.size > size) {
+                        while (s.size < size) {
+                            s.add((0 until listMovies.size).random())
                         }
+
+                        s.stream().forEach { random ->
+                            randomLocalItems.add(listMovies.get(random))
+                        }
+                        randomItems.postValue(randomLocalItems)
+                    }
                 }
+
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
@@ -244,21 +245,23 @@ object FirebaseDBRepository {
             .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var listMovies: MutableList<TMDBItem> = mutableListOf()
-                    val moviesNoRepeat:HashMap<String,Movie> = hashMapOf()
+                    val moviesNoRepeat: HashMap<String, Movie> = hashMapOf()
                     for (dataSnapShot in snapshot.children) {
                         val data = dataSnapShot.getValue(LibraryMovies::class.java)!!
                         val movies = data.content.values.stream().collect(Collectors.toList())
 
-                        for(movie in movies){
+                        for (movie in movies) {
                             moviesNoRepeat[movie.name] = movie
                         }
                     }
                     listMovies.addAll(moviesNoRepeat.values)
-                    listMovies = listMovies.stream().sorted{movie1,movie2 -> (movie2.popularity!!*1000 - movie1.popularity!!*1000).toInt() }.collect(Collectors.toList())
+                    listMovies = listMovies.stream()
+                        .sorted { movie1, movie2 -> (movie2.popularity!! * 1000 - movie1.popularity!! * 1000).toInt() }
+                        .collect(Collectors.toList())
 
                     try {
-                        listMovies = listMovies.subList(0,9)
-                    }catch (_:Exception){
+                        listMovies = listMovies.subList(0, 9)
+                    } catch (_: Exception) {
                     }
 
                     popularMovies.postValue(listMovies)
@@ -274,7 +277,8 @@ object FirebaseDBRepository {
      * @param media el item a almacenar
      */
     fun saveMediaInProgress(media: TMDBItem) {
-        database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive).setValue(media)
+        database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive)
+            .setValue(media)
     }
 
     /**
@@ -287,18 +291,22 @@ object FirebaseDBRepository {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val listMovies = mutableListOf<TMDBItem>()
                     for (dataSnapShot in snapshot.children) {
-                        val data:FirebaseObjectIdentificator = dataSnapShot.getValue(FirebaseObjectIdentificator::class.java)!!
+                        val data: FirebaseObjectIdentificator =
+                            dataSnapShot.getValue(FirebaseObjectIdentificator::class.java)!!
 
-                        val realData:TMDBItem = if(data.firebaseType == Movie::class.java.simpleName){
-                            dataSnapShot.getValue(Movie::class.java)!!
-                        }else{
-                            dataSnapShot.getValue(Episode::class.java)!!
-                        }
+                        val realData: TMDBItem =
+                            if (data.firebaseType == Movie::class.java.simpleName) {
+                                dataSnapShot.getValue(Movie::class.java)!!
+                            } else {
+                                dataSnapShot.getValue(Episode::class.java)!!
+                            }
                         listMovies.add(realData)
                     }
                     inProgress.postValue(listMovies)
                 }
-                override fun onCancelled(error: DatabaseError) {} })
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     /**
@@ -306,7 +314,8 @@ object FirebaseDBRepository {
      * @param media elemento a eliminar
      */
     fun removeMediaInProgress(media: TMDBItem) {
-        database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive).removeValue()
+        database.child("users").child(prefs.readUid()).child("inProgress").child(media.idDrive)
+            .removeValue()
     }
 
     /**
@@ -314,28 +323,31 @@ object FirebaseDBRepository {
      * @param likes lista donde se añadiran los items
      */
     fun getMediaLikes(likes: MutableLiveData<List<TMDBItem>>) {
-        database.child("users").child(prefs.readUid()).child("likes").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-               val listMedia = mutableListOf<TMDBItem>()
+        database.child("users").child(prefs.readUid()).child("likes")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val listMedia = mutableListOf<TMDBItem>()
 
-                for(dataSnapShot in snapshot.children){
-                    val data:FirebaseObjectIdentificator = dataSnapShot.getValue(FirebaseObjectIdentificator::class.java)!!
+                    for (dataSnapShot in snapshot.children) {
+                        val data: FirebaseObjectIdentificator =
+                            dataSnapShot.getValue(FirebaseObjectIdentificator::class.java)!!
 
-                    if(data.firebaseType == Movie::class.java.simpleName){
-                        val movie:Movie = dataSnapShot.getValue(Movie::class.java)!!
-                        listMedia.add(movie)
+                        if (data.firebaseType == Movie::class.java.simpleName) {
+                            val movie: Movie = dataSnapShot.getValue(Movie::class.java)!!
+                            listMedia.add(movie)
+                        }
+
+                        if (data.firebaseType == TvShow::class.java.simpleName) {
+                            val tvShow: TvShow = dataSnapShot.getValue(TvShow::class.java)!!
+                            listMedia.add(tvShow)
+                        }
+
                     }
-
-                    if(data.firebaseType == TvShow::class.java.simpleName){
-                        val tvShow:TvShow = dataSnapShot.getValue(TvShow::class.java)!!
-                        listMedia.add(tvShow)
-                    }
-
+                    likes.postValue(listMedia)
                 }
-                likes.postValue(listMedia)
-            }
 
-            override fun onCancelled(error: DatabaseError) {} })
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     /**
@@ -343,15 +355,17 @@ object FirebaseDBRepository {
      * @param media elemento a añadir
      */
     fun likeMedia(media: TMDBItem) {
-        val likable:Likable = media as Likable
-        database.child("users").child(prefs.readUid()).child("libraries").child(media.parentLibrary).child("content").child(media.idDrive).child("like").setValue(likable.obtainLike())
+        val likable: Likable = media as Likable
+        database.child("users").child(prefs.readUid()).child("libraries").child(media.parentLibrary)
+            .child("content").child(media.idDrive).child("like").setValue(likable.obtainLike())
 
-        if(likable.obtainLike()) {
+        if (likable.obtainLike()) {
             database.child("users").child(prefs.readUid()).child("likes").child(media.idDrive)
                 .setValue(media)
             return
         }
-        database.child("users").child(prefs.readUid()).child("likes").child(media.idDrive).removeValue()
+        database.child("users").child(prefs.readUid()).child("likes").child(media.idDrive)
+            .removeValue()
     }
 
     /**
@@ -359,40 +373,45 @@ object FirebaseDBRepository {
      * @param query nombre del elemento a buscar
      * @param searchedsItems lista donde se añadiran los elementos encontrados
      */
-    fun searchTMDBItems(query:String,searchedsItems:MutableLiveData<List<TMDBItem>>){
+    fun searchTMDBItems(query: String, searchedsItems: MutableLiveData<List<TMDBItem>>) {
         database.child("users").child(prefs.readUid()).child("libraries")
-            .addListenerForSingleValueEvent(object:ValueEventListener{
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val listSearchedsItems = mutableListOf<TMDBItem>()
 
-                    for(library in snapshot.children) {
+                    for (library in snapshot.children) {
                         Log.d("LIBRARY", library.key.toString())
 
-                        library.child("content").ref.orderByChild("name").startAt(query).endAt(query+"\uf8ff")
+                        library.child("content").ref.orderByChild("name").startAt(query)
+                            .endAt(query + "\uf8ff")
                             .addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
+                                override fun onDataChange(snapshot: DataSnapshot) {
 
-                                for (dataSnapshot in snapshot.children) {
-                                    val firebaseIdentificator = dataSnapshot.getValue(FirebaseObjectIdentificator::class.java)!!
+                                    for (dataSnapshot in snapshot.children) {
+                                        val firebaseIdentificator =
+                                            dataSnapshot.getValue(FirebaseObjectIdentificator::class.java)!!
 
-                                    if (firebaseIdentificator.firebaseType == Movie::class.java.simpleName) {
-                                        val movie = dataSnapshot.getValue(Movie::class.java)!!
-                                        listSearchedsItems.add(movie)
+                                        if (firebaseIdentificator.firebaseType == Movie::class.java.simpleName) {
+                                            val movie = dataSnapshot.getValue(Movie::class.java)!!
+                                            listSearchedsItems.add(movie)
+                                        }
+
+                                        if (firebaseIdentificator.firebaseType == TvShow::class.java.simpleName) {
+                                            val tvShow: TvShow =
+                                                dataSnapshot.getValue(TvShow::class.java)!!
+                                            listSearchedsItems.add(tvShow)
+                                        }
                                     }
-
-                                    if (firebaseIdentificator.firebaseType == TvShow::class.java.simpleName) {
-                                        val tvShow: TvShow = dataSnapshot.getValue(TvShow::class.java)!!
-                                        listSearchedsItems.add(tvShow)
-                                    }
+                                    searchedsItems.postValue(listSearchedsItems)
                                 }
-                                searchedsItems.postValue(listSearchedsItems)
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {}
-                        })
+                                override fun onCancelled(error: DatabaseError) {}
+                            })
                     }
                 }
-                override fun onCancelled(error: DatabaseError) {} })
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     /**
@@ -400,16 +419,20 @@ object FirebaseDBRepository {
      * @param accountId id de la cuenta de google
      * @param callBack callback que se ejecutara al obtener el refresh token
      */
-    fun getRefreshToken(accountId:String,callBack: TokenCallBack){
-        Log.d("ACCOUNT_ID",accountId)
-        database.child("users").child(prefs.readUid()).child("accounts").child(accountId).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val refreshToken:String = snapshot.getValue(String::class.java)!!
-                REFRESH_TOKEN = refreshToken
-                callBack.onSucess()
-            }
-            override fun onCancelled(error: DatabaseError) { callBack.onFailure() }
-        })
+    fun getRefreshToken(accountId: String, callBack: TokenCallBack) {
+        Log.d("ACCOUNT_ID", accountId)
+        database.child("users").child(prefs.readUid()).child("accounts").child(accountId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val refreshToken: String = snapshot.getValue(String::class.java)!!
+                    REFRESH_TOKEN = refreshToken
+                    callBack.onSucess()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callBack.onFailure()
+                }
+            })
     }
 
     /**
@@ -417,69 +440,86 @@ object FirebaseDBRepository {
      * @param libraryId id de la libreria
      * @param callback callback que se ejecutara al obtener el account id
      */
-    fun getAccountId(libraryId:String,callback:FirebaseDBCallBack){
-        database.child("users").child(prefs.readUid()).child("libraries").child(libraryId).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val library = snapshot.getValue(Library::class.java)!!
-                callback.onSuccess(library.owner)
-            }
-            override fun onCancelled(error: DatabaseError) {
-                callback.onFailure()
-            }
-        })
-    }
-
-
-    fun getLibrariesNumber(callback:FirebaseDBCallBack){
-        database.child("users").child(prefs.readUid()).child("libraries").addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val libraries = snapshot.children.count()
-                callback.onSuccess(libraries)
-            }
-            override fun onCancelled(error: DatabaseError) {
-                callback.onFailure()
-            }
-        })
-    }
-
-    fun getMoviesNumber(callback:FirebaseDBCallBack){
-        database.child("users").child(prefs.readUid()).child("libraries")
-            .orderByChild("type")
-            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
+    fun getAccountId(libraryId: String, callback: FirebaseDBCallBack) {
+        database.child("users").child(prefs.readUid()).child("libraries").child(libraryId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                   var moviesNumber = 0
-
-                    for (child in snapshot.children){
-                        val library = child.getValue(LibraryMovies::class.java)!!
-                        moviesNumber += library.content.size
-                    }
-                    callback.onSuccess(moviesNumber)
+                    val library = snapshot.getValue(Library::class.java)!!
+                    callback.onSuccess(library.owner)
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     callback.onFailure()
                 }
             })
     }
 
-    fun getTvShowsNumber(callback:FirebaseDBCallBack){
+
+    /**
+     * Metodo que obtiene el numero de librerias almacenadas en la base de datos
+     * @param callback callback que devolvera el numero de librerias
+     */
+    fun getLibrariesNumber(callback: FirebaseDBCallBack) {
+        database.child("users").child(prefs.readUid()).child("libraries")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val libraries = snapshot.children.count()
+                    callback.onSuccess(libraries)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback.onFailure()
+                }
+            })
+    }
+
+    /**
+     * Metodo que obtiene el numero de peliculas almacenadas en la base de datos
+     * @param callback callback que devolvera el numero de peliculas
+     */
+    fun getMoviesNumber(callback: FirebaseDBCallBack) {
+        database.child("users").child(prefs.readUid()).child("libraries")
+            .orderByChild("type")
+            .equalTo("Peliculas").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var moviesNumber = 0
+
+                    for (child in snapshot.children) {
+                        val library = child.getValue(LibraryMovies::class.java)!!
+                        moviesNumber += library.content.size
+                    }
+                    callback.onSuccess(moviesNumber)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback.onFailure()
+                }
+            })
+    }
+
+    /**
+     * Metodo que obtiene el numero de Series almacenadas en la base de datos
+     * @param callback callback que devolvera el numero de Series
+     */
+    fun getTvShowsNumber(callback: FirebaseDBCallBack) {
         database.child("users").child(prefs.readUid()).child("libraries")
             .orderByChild("type")
             .equalTo("Series").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var tvShowNumber = 0
 
-                    for (child in snapshot.children){
+                    for (child in snapshot.children) {
                         val library = child.getValue(LibraryTvShows::class.java)!!
                         tvShowNumber += library.content.size
                     }
                     callback.onSuccess(tvShowNumber)
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     callback.onFailure()
                 }
             })
     }
-
 
 
 }

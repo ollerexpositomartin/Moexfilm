@@ -1,5 +1,6 @@
 package com.example.moexfilm.repositories
 
+import android.util.Log
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
@@ -20,6 +21,9 @@ object AuthRepository {
         firebaseAuth.signInWithCredential(googleAuthCredential!!)
             .addOnSuccessListener {
                 authenticated = true
+            }
+            .addOnFailureListener {
+                Log.d("MAL LOGUEO", it.message.toString())
             }
             .await()
         return authenticated

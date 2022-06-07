@@ -15,6 +15,13 @@ import kotlinx.coroutines.*
 object TokenRepository {
     private val GOOGLE_URL_TOKEN = "https://oauth2.googleapis.com"
 
+    /**
+     * Metodo que obtiene el token de acceso de un usuario atraves de un authcode
+     * @param accountId id del usuario
+     * @param authCode codigo de autorizacion
+     * @param idToken token de identificacion
+     * @param callback callback de respuesta
+     */
     suspend fun getTokens(accountId:String,authCode:String, idToken:String,callback:TokenCallBack) {
         //https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=
         val response = RetrofitHelper.getRetrofit(GOOGLE_URL_TOKEN).create(TokenAuthService::class.java)
@@ -38,6 +45,11 @@ object TokenRepository {
         callback.onFailure()
     }
 
+    /**
+     * Metodo que obtiene el token de acceso de un usuario atraves de un refreshToken
+     * @param libraryId id de la biblioteca
+     * @param callback callback de respuesta
+     */
     suspend fun getTokens(libraryId: String,callback:TokenCallBack) {
         FirebaseDBRepository.getAccountId(libraryId,object:FirebaseDBCallBack{
             override fun onSuccess(item: Any) {
