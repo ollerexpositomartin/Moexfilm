@@ -28,9 +28,9 @@ import com.smarteist.autoimageslider.SliderAnimations
 
 class HomeFragment : Fragment() {
     lateinit var binding:FragmentHomeBinding
-    lateinit var sliderAdapter:SliderAdapter
+    private lateinit var sliderAdapter:SliderAdapter
 
-    val homeFragmentViewModel:HomeViewModel by viewModels()
+    private val homeFragmentViewModel:HomeViewModel by viewModels()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View{
@@ -65,6 +65,8 @@ class HomeFragment : Fragment() {
                 val adapter = MediaInProgressAdapter { onMediaInProgressClick(it)}
                 adapter.submitList(mediaInProgress)
                 addContentToLinearLayout(onInflateItemView("En progreso",adapter))
+                if(mediaInProgress.isNotEmpty())
+                    binding.infoLayout.visibility = View.INVISIBLE
             }
         }
     }

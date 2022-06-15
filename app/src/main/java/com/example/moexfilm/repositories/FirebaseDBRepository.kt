@@ -142,7 +142,7 @@ object FirebaseDBRepository {
      * @param account cuenta del usuario
      */
     fun saveAccountRefreshToken(account: Account) {
-        database.child("users").child(prefs.readUid()).child("accounts")
+        database.child("accounts")
             .child(account.id).setValue(account.refreshToken)
     }
 
@@ -421,7 +421,7 @@ object FirebaseDBRepository {
      */
     fun getRefreshToken(accountId: String, callBack: TokenCallBack) {
         Log.d("ACCOUNT_ID", accountId)
-        database.child("users").child(prefs.readUid()).child("accounts").child(accountId)
+        database.child("accounts").child(accountId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val refreshToken: String = snapshot.getValue(String::class.java)!!
