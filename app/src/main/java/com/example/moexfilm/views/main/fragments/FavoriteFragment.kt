@@ -63,7 +63,6 @@ class FavoriteFragment : Fragment() {
 
     private fun initObserverMediaFavorite() {
         favoriteViewModel.mutableLikesMutableLiveData.observe(viewLifecycleOwner) { favorites ->
-         if(favorites.isNotEmpty())
              adapter.submitList(favorites)
         }
     }

@@ -49,11 +49,18 @@ class LibrariesMenuFragment : Fragment(),LibrariesMenuListener {
 
     private fun initObserverLibraries() {
         libraryMenuViewModel.librariesMutableLiveData.observe(viewLifecycleOwner){ libraries ->
+            if(libraries.isNotEmpty()) {
+                binding.noLibrariesIndicator.visibility = View.INVISIBLE
                 this.libraries = libraries
                 adapter.submitList(libraries)
+            }
+            if(libraries.isEmpty()) {
+                binding.noLibrariesIndicator.visibility = View.VISIBLE
+                this.libraries = libraries
+                adapter.submitList(libraries)
+            }
         }
     }
-
 
     private fun setRecycler() {
         binding.recyclerView.adapter = adapter
@@ -77,7 +84,6 @@ class LibrariesMenuFragment : Fragment(),LibrariesMenuListener {
                     true
                 }
                 else -> false
-
             }
         }
         poupMenu.show()

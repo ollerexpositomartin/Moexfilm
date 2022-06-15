@@ -7,44 +7,79 @@
     android:layout_height="match_parent"
     android:background="@color/background_moexfilm"
     tools:context=".views.main.fragments.homeFragment.HomeFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <View
-        android:id="@+id/view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/ic_moexfilm"
-        android:backgroundTint="@color/accent_moexfilm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/imageSlider"
-        android:layout_width="275dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="30dp"
-        android:saveEnabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        app:sliderAnimationDuration="300"
-        app:sliderAutoCycleDirection="back_and_forth"
-        app:sliderAutoCycleEnabled="true"
-        app:sliderIndicatorAnimationDuration="300"
-        app:sliderIndicatorEnabled="false"
-        app:sliderIndicatorGravity="center_horizontal|bottom"
-        app:sliderIndicatorOrientation="horizontal"
-        app:sliderIndicatorPadding="3dp"
-        app:sliderIndicatorRadius="2dp"
-        app:sliderIndicatorSelectedColor="@color/accent_moexfilm"
-        app:sliderIndicatorUnselectedColor="@color/browser_actions_bg_grey"
-        app:sliderScrollTimeInSec="3"
-        app:sliderStartAutoCycle="true" />
+        <View
+            android:id="@+id/view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_moexfilm"
+            android:backgroundTint="@color/accent_moexfilm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/infoLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:id="@+id/view7"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/ic_info"
+                android:backgroundTint="@color/background2_moexfilm" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/red_hat_display_bold"
+                android:gravity="center"
+                android:text="@string/noMovies_text"
+                android:textColor="@color/background2_moexfilm"
+                android:textSize="20sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="275dp"
+            android:layout_height="240dp"
+            android:layout_marginTop="30dp"
+            android:saveEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:sliderAnimationDuration="300"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderIndicatorAnimationDuration="300"
+            app:sliderIndicatorEnabled="false"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="@color/accent_moexfilm"
+            app:sliderIndicatorUnselectedColor="@color/browser_actions_bg_grey"
+            app:sliderScrollTimeInSec="3"
+            app:sliderStartAutoCycle="true">
+
+        </com.smarteist.autoimageslider.SliderView>
 
         <LinearLayout
             android:id="@+id/LinearItems"

@@ -2,6 +2,8 @@ package com.example.moexfilm.views.main.fragments.homeFragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,8 +49,13 @@ class HomeFragment : Fragment() {
 
     private fun initObserverRandom() {
         homeFragmentViewModel.mutableListRandomItemsMutableLiveData.observe(viewLifecycleOwner) { randomItems ->
-            if(randomItems.isNotEmpty())
+            if(randomItems.isNotEmpty()) {
                 sliderAdapter.renewItems(randomItems)
+                binding.infoLayout.visibility = View.INVISIBLE
+            }
+            if(randomItems.isEmpty())
+                binding.infoLayout.visibility = View.VISIBLE
+
         }
     }
 

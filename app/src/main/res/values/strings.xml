@@ -27,6 +27,7 @@
     <string name="add_text">Añadir</string>
     <string name="baseErrorRetry_error">Ha ocurrido un error reintetelo mas tarde</string>
     <string name="noLibraries_text">No hemos encontrado\n bibliotecas. ¡Prueba a\n añadir a una! </string>
+    <string name="noMovies_text">No hemos encontrado\n bibliotecas de peliculas. ¡Prueba a\n añadir a una! </string>
     <string name="noDriveScope_error">Tienes que aceptar los permisos de Drive para poder usar la aplicación</string>
     <string name="selectFolder_text">Selecciona una carpeta</string>
     <string name="select_text">Seleccionar</string>

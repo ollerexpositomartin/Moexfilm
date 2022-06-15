@@ -61,9 +61,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/red_hat_display_bold"
+            android:gravity="center"
             android:text="@string/noLibraries_text"
             android:textColor="@color/background2_moexfilm"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
