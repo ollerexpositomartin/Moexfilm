@@ -22,29 +22,36 @@
         <activity
             android:name=".views.DetailsTvShowActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".views.detailsMovie.DetailsMovieActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".views.library.LibraryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".views.CreateLibraryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".views.fileExplorer.FileExplorerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".views.main.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".views.RegisterActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".views.RoutingActivity"
@@ -58,6 +65,7 @@
         </activity>
         <activity
             android:name=".views.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <meta-data
